@@ -9,13 +9,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="AppResources\CollapseWindpwIcon.png" />
+    <None Remove="AppResources\PowerOffButtonIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="AppResources\CollapseWindpwIcon.png" />
+    <Resource Include="AppResources\PowerOffButtonIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="StaticData\" />
     <Folder Include="Stores\" />
-    <Folder Include="Styles\" />
     <Folder Include="View\" />
-    <Folder Include="ViewModel\" />
     <Folder Include="CustomeControls\" />
-    <Folder Include="Commands\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="MainWindow.xaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Page>
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,78 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style 
+       TargetType="ListViewItem"
+       x:Key="RankingListItemStyle">
+        <Setter Property="TextBlock.Foreground"
+                Value="#7d4c94"/>
+        <Setter Property="Background"
+            Value="Transparent"/>
+        <Setter Property="BorderBrush"
+            Value="Transparent"/>
+        <Setter Property="BorderThickness"
+            Value="1"/>
+        <Setter Property="Margin"
+            Value="0,0,0,1"/>
+        <Setter Property="Padding"
+            Value="5,2,5,2"/>
+        <Setter Property="VerticalContentAlignment"
+            Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                    <Border BorderThickness="{TemplateBinding BorderThickness}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="2"
+                        SnapsToDevicePixels="true">
+                        <Border Name="InnerBorder"
+                            CornerRadius="1"
+                            BorderThickness="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition MaxHeight="11"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Rectangle Name="UpperHighlight"
+                                       Visibility="Collapsed"
+                                       Fill="#75FFFFFF"/>
+                                <ContentPresenter
+                                Grid.Row="1"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                </ContentPresenter>
+                            </Grid>
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                             Value="true">
+                            <Setter Property="Background"
+                                Value="#a0a7bd"/>
+                            <Setter Property="BorderBrush"
+                                Value="#a0a7bd"/>
+                            <Setter TargetName="UpperHighlight"
+                                Property="Visibility"
+                                Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected"
+                             Value="true">
+                            <Setter Property="Background"
+                                Value="#653bbb"/>
+                            <Setter Property="BorderBrush"
+                                Value="#492a87"/>
+                            <Setter Property="TextBlock.Foreground" 
+                                    Value="AliceBlue"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                             Value="false">
+                            <Setter Property="Foreground"
+                                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

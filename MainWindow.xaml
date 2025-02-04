@@ -93,30 +93,41 @@
                     ScrollViewer.CanContentScroll="False"
                     HorizontalContentAlignment="Left"
                     BorderThickness="0"
-                    ItemsSource="{Binding StudentItems}"
+                    ItemsSource="{Binding RankingCategoriesItems}"
                     Background="Transparent"
                     Padding="0 10 20 10"
-                    SelectedValue="{Binding SelectedStudentFilter}"
-                    ItemContainerStyle="{StaticResource RankingListItemStyle}"
                       >
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource RankingListItemStyle}">
+                                <Setter Property="ToolTip" Value="{Binding Descryption}"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="75"/>
+                                        <RowDefinition Height="150"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition Width="150"/>
                                         <ColumnDefinition Width="3*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Image
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Grid.Column="0" 
-                Grid.Row="0"
-                    Source="AppResources\PowerOffButtonIcon.png"/>
+                                    <Border
+                                        BorderBrush="#f7f9fe"
+                                        BorderThickness="5"
+                                        ClipToBounds="True"
+                                        Background="#512f95"
+                                        >
+                                        <Image
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Grid.Column="0" 
+                                            Grid.Row="0"
+                                            Source="{Binding RankingIconPath}"/>
+                                    </Border>
                                     <TextBlock 
+                                        Margin="25"
                                         FontSize="20"
                                         TextWrapping="Wrap"
                                         HorizontalAlignment="Left"
@@ -124,26 +135,10 @@
                                         Grid.Column="1"
                                         Grid.Row="0"
                                         MaxWidth="450"
-                                        Text="Ranking Category n..."/>
+                                        Text="{Binding Tytle}"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
-                        <ListView.Items>
-                            <ItemContainerTemplate/>
-                            <ItemContainerTemplate/>
-                            <ItemContainerTemplate/>
-                            <ItemContainerTemplate/>
-                            <ItemContainerTemplate/>
-                            <ItemContainerTemplate/>
-                            <ItemContainerTemplate/>
-                            <ItemContainerTemplate/>
-                            <ItemContainerTemplate/>
-                            <ItemContainerTemplate/>
-                            <ItemContainerTemplate/>
-                            <ItemContainerTemplate/>
-                            <ItemContainerTemplate/>
-                            <ItemContainerTemplate/>
-                        </ListView.Items>
                         <ListView.Resources>
                             <Style TargetType="ScrollBar" BasedOn="{StaticResource WhiteScrollBarStyle}"/>
                         </ListView.Resources>

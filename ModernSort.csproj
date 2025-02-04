@@ -11,11 +11,21 @@
   <ItemGroup>
     <None Remove="AppResources\CollapseWindpwIcon.png" />
     <None Remove="AppResources\PowerOffButtonIcon.png" />
+    <None Remove="UserResources\RankingCategories.json" />
+    <None Remove="UserResources\RankingCategory_1\Ranking_Icon.jpg" />
+    <None Remove="UserResources\RankingCategory_2\Ranking_Icon.jpg" />
+    <None Remove="UserResources\RankingCategory_3\Ranking_Icon.jpg" />
+    <None Remove="UserResources\RankingCategory_4\Ranking_Icon.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="AppResources\CollapseWindpwIcon.png" />
     <Resource Include="AppResources\PowerOffButtonIcon.png" />
+    <Resource Include="UserResources\RankingCategories.json" />
+    <Resource Include="UserResources\RankingCategory_1\Ranking_Icon.jpg" />
+    <Resource Include="UserResources\RankingCategory_2\Ranking_Icon.jpg" />
+    <Resource Include="UserResources\RankingCategory_3\Ranking_Icon.jpg" />
+    <Resource Include="UserResources\RankingCategory_4\Ranking_Icon.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +33,10 @@
     <Folder Include="Stores\" />
     <Folder Include="View\" />
     <Folder Include="CustomeControls\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RankingEntityes\RankingEntityes.csproj" />
   </ItemGroup>
 
   <ItemGroup>

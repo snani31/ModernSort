@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RankingEntityes.Ranking_Entityes.Ranking_Categories;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ModernSort.ViewModel
 {
-    class ViewModelBase : INotifyPropertyChanged
+    internal class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 

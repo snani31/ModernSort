@@ -120,6 +120,7 @@
                                         Background="#512f95"
                                         >
                                         <Image
+                                            Stretch="Fill"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Center"
                                             Grid.Column="0" 
@@ -152,6 +153,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Button
+                        Command="{Binding OpenNewRankingWindow}"
                         Content="Make new Ranking"
                         Style="{StaticResource Button}"
                         Margin="20"

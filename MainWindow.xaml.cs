@@ -21,5 +21,9 @@ namespace ModernSort
             InitializeComponent();
         }
 
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

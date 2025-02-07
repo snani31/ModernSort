@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="Styles/UserControlStyles/ScrollerStyles.xaml"/>
                 <ResourceDictionary Source="Styles/UserControlStyles/ListViewRankingStyles.xaml"/>
                 <ResourceDictionary Source="Styles/UserControlStyles/TextBoxStyles.xaml"/>
+                <ResourceDictionary Source="Styles/UserControlStyles/TextBlockStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

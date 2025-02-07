@@ -16,7 +16,7 @@
                     BorderThickness="2"
                     BorderBrush="#7d4c94"
                     Background="White">
-                            
+
                             <Grid VerticalAlignment="Stretch"
                           HorizontalAlignment="Stretch">
                                 <TextBlock

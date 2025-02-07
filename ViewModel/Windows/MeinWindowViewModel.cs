@@ -11,11 +11,14 @@ using System.Collections.ObjectModel;
 using ModernSort.ViewModel.Items;
 using System.Linq;
 using RankingEntityes.IO_Entities.Interfaces;
+using ModernSort.View.Windows;
+using ModernSort.ViewModel.Windows;
 
 namespace ModernSort.ViewModel
 {
     class MeinWindowViewModel : ViewModelBase
     {
+        public ICommand OpenNewRankingWindow { get; init; }
         private IDeserializer _Deserializer {  get; init; }
         private ISerializer _Serializer { get; init; }
         private IoCollection<RankingCategory> _rankingCategories;
@@ -29,15 +32,25 @@ namespace ModernSort.ViewModel
 
         public MeinWindowViewModel(IDeserializer deserializer,ISerializer serializer)
         {
+            OpenNewRankingWindow = new OpenNewWindowCommand(GetOpenNewWindow);
             _Deserializer = deserializer;
             _Serializer = serializer;
 
             _rankingCategories = new IoCollection<RankingCategory>();
-            _rankingCategories.Deserialize(deserializer, @"RankingCategories.json");
+           //_rankingCategories.Deserialize(deserializer, @"\UserResources\RankingCategories.json");
 
             CloseApplicationCommand = new ApplicationCloseCommand();
             CollapselicationCommand = new CollapseApplicationCommand();
         }
+
+        private void GetOpenNewWindow()
+        {
+            /////////////////////////
+            ViewModelBase ass = new AddNewRankingCategoryViewModel();
+            Window window = new AddNewRankingCategoryWindowView() { DataContext = ass };
+            window.Show();
+        }
+
         public ICommand CloseApplicationCommand { get; }
         public ICommand CollapselicationCommand { get; }
 

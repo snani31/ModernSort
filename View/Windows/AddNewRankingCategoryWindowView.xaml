@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ModernSort.View.Windows"
+        xmlns:vms="clr-namespace:ModernSort.ViewModel.Windows"
         mc:Ignorable="d"
         WindowStyle="none"
         ResizeMode="NoResize"
@@ -12,6 +13,9 @@
         Background="Transparent"
         Title="AddNewRankingCategoryWindowView" Height="600" Width="500"
         >
+    <Window.DataContext>
+        <vms:AddNewRankingCategoryViewModel/>
+    </Window.DataContext>
     <Border
         Background= "#f7f9fe"
         CornerRadius="20"
@@ -101,7 +105,13 @@
                             Style="{StaticResource SpanDefoult}"
                             Text="Select tytle for new Category"
                             />
+                        <Label
+                            FontSize="25"
+                            Foreground="Red"
+                            Content="{Binding ElementName=InputTytle, Path=(Validation.Errors)[0].ErrorContent}"
+                            />
                         <TextBox
+                            x:Name="InputTytle"
                             FontSize="30"
                             Foreground="#6795de"
                             TextWrapping="Wrap"
@@ -109,6 +119,7 @@
                             Style="{StaticResource TuskDataTextBoxStyle}"
                             Margin="15"
                             Padding="10"
+                            Text="{Binding NewRankingTytle}"
                             />
                         <TextBlock
                             TextWrapping="Wrap"
@@ -125,6 +136,7 @@
                             Style="{StaticResource TuskDataTextBoxStyle}"
                             Margin="15"
                             Padding="10"
+                            Text="{Binding NewRankingDescryption}"
                             />
                         <Grid >
                             <Grid.ColumnDefinitions>
@@ -181,6 +193,7 @@
                 Content="Make new Ranking"
                 Margin="20"
                 Style="{StaticResource Button}"
+                Command="{Binding MakeNewRankingCommand}"
                             />
         </Grid>
     </Border>

@@ -32,7 +32,7 @@ namespace ModernSort.ViewModel
 
         public MeinWindowViewModel(IDeserializer deserializer,ISerializer serializer)
         {
-            OpenNewRankingWindow = new OpenNewWindowCommand(GetOpenNewWindow);
+            OpenNewRankingWindow = new ActionCommand(GetOpenNewWindow);
             _Deserializer = deserializer;
             _Serializer = serializer;
 
@@ -47,7 +47,7 @@ namespace ModernSort.ViewModel
         {
             /////////////////////////
             ViewModelBase ass = new AddNewRankingCategoryViewModel();
-            Window window = new AddNewRankingCategoryWindowView() { DataContext = ass };
+            Window window = new AddNewRankingCategoryWindowView();
             window.Show();
         }
 

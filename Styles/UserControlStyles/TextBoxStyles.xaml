@@ -7,7 +7,7 @@
         <Style.Setters>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="TextBox">
+                    <ControlTemplate TargetType="TextBox" x:Name="ctrtmp">
                         <Border x:Name="brd" 
                             CornerRadius="15" 
                             Background ="{TemplateBinding Background}"
@@ -37,6 +37,19 @@
                                        >
                                 </TextBlock>
                             </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border
+                            CornerRadius="15"
+                            BorderBrush="#7d4c94" 
+                            BorderThickness="2"
+                            >
+                            <AdornedElementPlaceholder />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>

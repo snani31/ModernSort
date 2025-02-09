@@ -32,6 +32,11 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="brd" Property="Background" Value="#7d4c94"/>
                                 <Setter TargetName="txt" Property="Foreground" Value="White"/>
+                                
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="txt" Property="Foreground" Value="#ccd5f0"/>
+                                <Setter TargetName="brd" Property="BorderBrush" Value="#ccd5f0"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

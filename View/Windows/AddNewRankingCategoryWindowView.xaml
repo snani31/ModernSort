@@ -105,10 +105,12 @@
                             Style="{StaticResource SpanDefoult}"
                             Text="Select tytle for new Category"
                             />
-                        <Label
-                            FontSize="25"
+                        <TextBlock
+                            TextWrapping="Wrap"
+                            Margin="10 5 10 0"
+                            FontSize="20"
                             Foreground="Red"
-                            Content="{Binding ElementName=InputTytle, Path=(Validation.Errors)[0].ErrorContent}"
+                            Text="{Binding ElementName=InputTytle, Path=(Validation.Errors)[0].ErrorContent}"
                             />
                         <TextBox
                             x:Name="InputTytle"
@@ -117,7 +119,7 @@
                             TextWrapping="Wrap"
                             Background= "#f7f9fe"
                             Style="{StaticResource TuskDataTextBoxStyle}"
-                            Margin="15"
+                            Margin="15 5 15 15"
                             Padding="10"
                             Text="{Binding NewRankingTytle}"
                             />
@@ -128,15 +130,29 @@
                             Style="{StaticResource SpanDefoult}"
                             Text="Write some descripryons for your category"
                             />
+                        <TextBlock
+                            TextWrapping="Wrap"
+                            Margin="10 5 10 0"
+                            FontSize="20"
+                            Foreground="Red"
+                            Text="{Binding ElementName=InputDescryption, Path=(Validation.Errors)[0].ErrorContent}"
+                            />
                         <TextBox
+                            x:Name="InputDescryption"
                             FontSize="30"
                             Foreground="#6795de"
                             TextWrapping="Wrap"
                             Background= "#f7f9fe"
                             Style="{StaticResource TuskDataTextBoxStyle}"
-                            Margin="15"
+                            Margin="15 5 15 15"
                             Padding="10"
                             Text="{Binding NewRankingDescryption}"
+                            />
+                        <Label
+                            Margin="10 5 10 0"
+                            FontSize="20"
+                            Foreground="Red"
+                            Content="{Binding ElementName=InputImage, Path=(Validation.Errors)[0].ErrorContent}"
                             />
                         <Grid >
                             <Grid.ColumnDefinitions>
@@ -179,6 +195,7 @@
                             Background="#512f95"
                             >
                             <Image
+                                x:Name="InputImage"
                                 Margin="25"
                                 Height="300"
                                 Stretch="Fill"

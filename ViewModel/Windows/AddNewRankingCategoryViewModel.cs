@@ -14,7 +14,7 @@ namespace ModernSort.ViewModel.Windows
     internal class AddNewRankingCategoryViewModel: ViewModelValidateble
     {
         private string _selectedImagePath;
-        [Required(ErrorMessage = "you must select picture")]
+        [Required(ErrorMessage = "You must select image")]
         public string SelectedImagePath 
         {
             get
@@ -63,7 +63,7 @@ namespace ModernSort.ViewModel.Windows
         public AddNewRankingCategoryViewModel() 
         {
             SelectImageFile = new ActionCommand(SelectImage);
-            MakeNewRankingCommand = new ActionCommand(MakeNewRanking,CanExecuteByValidation);
+            MakeNewRankingCommand = new ActionCommand(MakeNewRanking,base.CanExecuteByValidation);
             base.PostValidationChange += MakeNewRankingCommand.OnCanExecuteChanged;
         }
 

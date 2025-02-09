@@ -17,17 +17,17 @@ namespace ModernSort.Static
 
         internal static string FilePickerGetImage()
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Title = "Выберите изображение допустимого формата";
-            ofd.Filter = "Изображения | *.jpg";
-            ofd.Multiselect = false;
-            if (ofd.ShowDialog() ?? false)
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.Title = "Выберите изображение допустимого формата";
+            fileDialog.Filter = "Изображения | *.jpg";
+            fileDialog.Multiselect = false;
+            if (fileDialog.ShowDialog() ?? false)
             {
-                return ofd.FileName;
+                return fileDialog.FileName;
             }
             else 
             {
-                throw new Exception("Не удалось выбрать файл");
+                return String.Empty;
             }
         }
     }

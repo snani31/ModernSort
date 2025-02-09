@@ -41,7 +41,7 @@ namespace ModernSort.ViewModel
 
             if (results.Any())
             {
-                Errors.Add(propertyName, results.Select(x => x.ErrorMessage).ToList());
+                if (!Errors.ContainsKey(propertyName)) Errors.Add(propertyName, results.Select(x => x.ErrorMessage).ToList());
                 ErrorsChanged?.Invoke(this,new DataErrorsChangedEventArgs(propertyName));
             }
             else 

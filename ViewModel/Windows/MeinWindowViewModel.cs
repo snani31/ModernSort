@@ -13,6 +13,8 @@ using System.Linq;
 using RankingEntityes.IO_Entities.Interfaces;
 using ModernSort.View.Windows;
 using ModernSort.ViewModel.Windows;
+using ModernSort.Static;
+using System.Windows.Media.Animation;
 
 namespace ModernSort.ViewModel
 {
@@ -37,7 +39,7 @@ namespace ModernSort.ViewModel
             _Serializer = serializer;
 
             _rankingCategories = new IoCollection<RankingCategory>();
-           //_rankingCategories.Deserialize(deserializer, @"\UserResources\RankingCategories.json");
+           _rankingCategories.Deserialize(deserializer, ProjactIoWorker.UserResourcesDirrectoryPath + @"\RankingCategories.json");
 
             CloseApplicationCommand = new ApplicationCloseCommand();
             CollapselicationCommand = new CollapseApplicationCommand();
@@ -46,8 +48,8 @@ namespace ModernSort.ViewModel
         private void GetOpenNewWindow()
         {
             /////////////////////////
-            ViewModelBase ass = new AddNewRankingCategoryViewModel();
-            Window window = new AddNewRankingCategoryWindowView();
+            ViewModelBase ass = new AddNewRankingCategoryViewModel(_Serializer, _Deserializer);
+            Window window = new AddNewRankingCategoryWindowView() { DataContext = ass };
             window.Show();
         }
 

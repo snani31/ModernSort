@@ -1,8 +1,11 @@
 ﻿using ModernSort.Commands;
 using ModernSort.Static;
+using RankingEntityes.IO_Entities.Interfaces;
+using RankingEntityes.Ranking_Entityes.Ranking_Categories;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +16,8 @@ namespace ModernSort.ViewModel.Windows
 {
     internal class AddNewRankingCategoryViewModel: ViewModelValidateble
     {
+        private readonly ISerializer _serializer;
+        private readonly IDeserializer _deserializer;
         private string _selectedImagePath;
         [Required(ErrorMessage = "You must select image")]
         public string SelectedImagePath 
@@ -60,11 +65,16 @@ namespace ModernSort.ViewModel.Windows
         public ICommand BackToPastWindow {  get; init; }
         public ICommand SelectImageFile { get; init; }
         public ActionCommand MakeNewRankingCommand { get; init; }
-        public AddNewRankingCategoryViewModel() 
+        public AddNewRankingCategoryViewModel()
         {
             SelectImageFile = new ActionCommand(SelectImage);
-            MakeNewRankingCommand = new ActionCommand(MakeNewRanking,base.CanExecuteByValidation);
+            MakeNewRankingCommand = new ActionCommand(MakeNewRanking, base.CanExecuteByValidation);
             base.PostValidationChange += MakeNewRankingCommand.OnCanExecuteChanged;
+        }
+        public AddNewRankingCategoryViewModel(ISerializer serializer,IDeserializer deserializer) : this()
+        {
+            _serializer = serializer;
+            _deserializer = deserializer;
         }
 
         private void SelectImage()
@@ -72,9 +82,23 @@ namespace ModernSort.ViewModel.Windows
             SelectedImagePath = ProjactIoWorker.FilePickerGetImage();
         }
 
-        private void MakeNewRanking() // заглушка
+        private void MakeNewRanking()
         {
-            MessageBox.Show($"Добавлена новая категория ранжира под именем {NewRankingTytle}");
+            int id = 2; ////////////////////////
+            string newRankingDirrectoryPath = ProjactIoWorker.UserResourcesDirrectoryPath + @$"\{id}";
+            string newRankingIconPath = newRankingDirrectoryPath + @$"\{ProjactIoWorker.RANKING_CATEGORY_ICON_TYTLE}.jpg";
+            Directory.CreateDirectory(newRankingDirrectoryPath);
+            File.Copy(SelectedImagePath, newRankingIconPath);
+            Directory.CreateDirectory(newRankingDirrectoryPath + @"\Media");
+            RankingCategory newRanking = new RankingCategory()
+            {
+                Description = NewRankingDescryption,
+                Tytle = NewRankingTytle,
+                ID = id,
+                RankingDirrectoryPath = newRankingDirrectoryPath,
+                RankingIconPath = newRankingIconPath
+            };
+            newRanking.Serialize(_serializer, ProjactIoWorker.UserResourcesDirrectoryPath + @"\RankingCategories.json");
         }
 
     }

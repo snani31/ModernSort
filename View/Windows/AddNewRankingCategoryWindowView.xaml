@@ -48,7 +48,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Button Grid.Column="2"
-                 Command="{Binding BackToPastWindow}"
+                 Command="{Binding CloseDialogCommand}"
                  ToolTip="Закрыть">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">

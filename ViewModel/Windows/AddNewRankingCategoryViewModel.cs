@@ -1,4 +1,5 @@
 ﻿using ModernSort.Commands;
+using ModernSort.Services.Dialog;
 using ModernSort.Static;
 using RankingEntityes.IO_Entities.Interfaces;
 using RankingEntityes.Ranking_Entityes.Ranking_Categories;
@@ -14,8 +15,9 @@ using System.Windows.Input;
 
 namespace ModernSort.ViewModel.Windows
 {
-    internal class AddNewRankingCategoryViewModel: ViewModelValidateble
+    internal class AddNewRankingCategoryViewModel: ViewModelValidateble, IDialogRequestClose
     {
+        public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
         private readonly ISerializer _serializer;
         private readonly IDeserializer _deserializer;
         private string _selectedImagePath;
@@ -49,6 +51,7 @@ namespace ModernSort.ViewModel.Windows
 
         private string _newRankingDescryption;
 
+
         [Required(ErrorMessage = $"Descryption is required field")]
         public string NewRankingDescryption
         {
@@ -62,11 +65,12 @@ namespace ModernSort.ViewModel.Windows
 
 
 
-        public ICommand BackToPastWindow {  get; init; }
+        public ICommand CloseDialogCommand {  get; init; }
         public ICommand SelectImageFile { get; init; }
         public ActionCommand MakeNewRankingCommand { get; init; }
         public AddNewRankingCategoryViewModel()
         {
+            CloseDialogCommand = new ActionCommand(() => CloseRequested?.Invoke(this,new DialogCloseRequestedEventArgs(false)));
             SelectImageFile = new ActionCommand(SelectImage);
             MakeNewRankingCommand = new ActionCommand(MakeNewRanking, base.CanExecuteByValidation);
             base.PostValidationChange += MakeNewRankingCommand.OnCanExecuteChanged;

@@ -15,12 +15,14 @@ using ModernSort.View.Windows;
 using ModernSort.ViewModel.Windows;
 using ModernSort.Static;
 using System.Windows.Media.Animation;
+using ModernSort.Services.Dialog;
 
 namespace ModernSort.ViewModel
 {
     class MeinWindowViewModel : ViewModelBase
     {
         public ICommand OpenNewRankingWindow { get; init; }
+        private IDialogService _DialogService { get; init; }
         private IDeserializer _Deserializer {  get; init; }
         private ISerializer _Serializer { get; init; }
         private IoCollection<RankingCategory> _rankingCategories;
@@ -32,8 +34,9 @@ namespace ModernSort.ViewModel
             } 
         }
 
-        public MeinWindowViewModel(IDeserializer deserializer,ISerializer serializer)
+        public MeinWindowViewModel(IDeserializer deserializer,ISerializer serializer,IDialogService dialogService)
         {
+            _DialogService = dialogService;
             OpenNewRankingWindow = new ActionCommand(GetOpenNewWindow);
             _Deserializer = deserializer;
             _Serializer = serializer;
@@ -47,10 +50,8 @@ namespace ModernSort.ViewModel
 
         private void GetOpenNewWindow()
         {
-            /////////////////////////
-            ViewModelBase ass = new AddNewRankingCategoryViewModel(_Serializer, _Deserializer);
-            Window window = new AddNewRankingCategoryWindowView() { DataContext = ass };
-            window.Show();
+            var addNewRankingCategoryViewModel = new AddNewRankingCategoryViewModel(_Serializer,_Deserializer);   
+            _DialogService.ShowDialog(addNewRankingCategoryViewModel);
         }
 
         public ICommand CloseApplicationCommand { get; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModernSort.Services.Dialog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace ModernSort.View.Windows
     /// <summary>
     /// Логика взаимодействия для AddNewRankingCategoryWindowView.xaml
     /// </summary>
-    public partial class AddNewRankingCategoryWindowView : Window
+    public partial class AddNewRankingCategoryWindowView : Window,IDialog
     {
         public AddNewRankingCategoryWindowView()
         {

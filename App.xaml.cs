@@ -1,6 +1,9 @@
-﻿using ModernSort.Static;
+﻿using ModernSort.Services.Dialog;
+using ModernSort.Static;
 using ModernSort.Stores;
+using ModernSort.View.Windows;
 using ModernSort.ViewModel;
+using ModernSort.ViewModel.Windows;
 using RankingEntityes.IO_Entities.Classes;
 using RankingEntityes.IO_Entities.Interfaces;
 using System.Configuration;
@@ -20,9 +23,12 @@ namespace ModernSort
 
         private readonly IDeserializer _jsonDeserializer;
         private readonly  ISerializer _jsonSerializer;
+        private readonly IDialogService _dialogService;
 
         App()
         {
+            _dialogService = new DialogService(MainWindow);
+            _dialogService.Register<AddNewRankingCategoryViewModel,AddNewRankingCategoryWindowView>();
             _jsonDeserializer = new JsonDeserializer();
             _jsonSerializer = new JsonSerializer();
         }
@@ -31,7 +37,7 @@ namespace ModernSort
         {
             MainWindow = new MainWindow()
             {
-                DataContext = new MeinWindowViewModel(_jsonDeserializer, _jsonSerializer)
+                DataContext = new MeinWindowViewModel(_jsonDeserializer, _jsonSerializer, _dialogService)
             };
             MainWindow.Show();
         }

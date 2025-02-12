@@ -53,9 +53,5 @@ namespace ModernSort.Static
             }
         }
 
-        internal  static void MakeNewRunkingCatalog()
-        {
-
-        }
     }
 }

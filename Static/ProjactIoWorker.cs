@@ -1,5 +1,7 @@
 ﻿using Microsoft.Win32;
 using System.IO;
+using System.IO.Pipelines;
+using static System.Net.WebRequestMethods;
 
 namespace ModernSort.Static
 {
@@ -20,6 +22,7 @@ namespace ModernSort.Static
         /// Константа содержит имя файла, хранящего состояние всех категорий ранжира проекта в формате json
         /// </summary>
         internal const string RANKING_CATEGORIES_JSON = "RankingCategories.json";
+        internal const string PROJACT_GUIDS_FILE = "ProjactGUIDSFile.txt";
         private static readonly string _currentExecutableFileDirectoryPath;
         internal static string UserResourcesDirrectoryPath 
         {
@@ -35,7 +38,8 @@ namespace ModernSort.Static
         static ProjactIoWorker()
         {
             _fileDialog = new OpenFileDialog();
-            _currentExecutableFileDirectoryPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            _currentExecutableFileDirectoryPath = 
+                Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         }
 
         internal static string FilePickerGetImage()
@@ -50,6 +54,54 @@ namespace ModernSort.Static
             else 
             {
                 return String.Empty;
+            }
+        }
+        /// <summary>
+        /// Метод возвращает значение GUID, если такого не было в указанном файле
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        internal static Guid GetUniqGuid(string path)
+        {
+            FileStream file;
+            var guid = Guid.NewGuid();
+            List<string> existingGUIDs = new List<string>();
+
+            using (file = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read))
+            {
+
+                using (var filereader = new StreamReader(file))
+                {
+
+                    while (filereader.Peek() >= 0)
+                    {
+                        existingGUIDs.Add(filereader.ReadLine() ?? String.Empty);
+                    }
+                    filereader.Close();
+                }
+            }
+
+            using (file = new FileStream(path,FileMode.Append,FileAccess.Write))
+            {
+                using (var fileWriter = new StreamWriter(file))
+                {
+                    switch (existingGUIDs.Any(x => x == guid.ToString()))
+                    {
+                        case true:
+                            fileWriter.Close();
+                            fileWriter.Dispose();
+                            file.Dispose(); 
+                            return GetUniqGuid(path);
+                            break;
+                        case false:
+                            fileWriter.WriteLine(guid.ToString());
+                            fileWriter.Close();
+                            fileWriter.Dispose();
+                            file.Dispose();
+                            return guid;
+                            break;
+                    }
+                }
             }
         }
 

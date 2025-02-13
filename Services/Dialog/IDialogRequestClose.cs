@@ -13,11 +13,10 @@ namespace ModernSort.Services.Dialog
 
     internal class DialogCloseRequestedEventArgs: EventArgs
     {
-        internal bool? DialogRequest {  get; set; }
         internal bool? DialogResult {  get; }
-        public DialogCloseRequestedEventArgs(bool? dialogRequest)
+        public DialogCloseRequestedEventArgs(bool? dialogResult)
         {
-            DialogRequest = dialogRequest;
+            DialogResult = dialogResult;
         }
     }
 }

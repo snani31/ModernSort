@@ -11,9 +11,9 @@ namespace ModernSort.ViewModel.Items
     {
         private readonly RankingCategory _rankingCategor;
 
-        public int ID 
+        public string ID 
         {
-            get {  return _rankingCategor.ID; } 
+            get {  return _rankingCategor.ID.ToString(); } 
         }
         public string Tytle 
         {

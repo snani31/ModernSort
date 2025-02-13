@@ -36,7 +36,6 @@ namespace ModernSort.ViewModel.Windows
             } 
         }
         private string _newRankingTytle;
-
         [Required(ErrorMessage = "Tytle is required field")]
         [MaxLength(30, ErrorMessage = "Tytle can not be bigger then 30 symbols")]
         public string NewRankingTytle
@@ -51,7 +50,6 @@ namespace ModernSort.ViewModel.Windows
 
         private string _newRankingDescryption;
 
-
         [Required(ErrorMessage = $"Descryption is required field")]
         public string NewRankingDescryption
         {
@@ -62,9 +60,6 @@ namespace ModernSort.ViewModel.Windows
                 Validate(nameof(NewRankingDescryption), value);
             }
         }
-
-
-
         public ICommand CloseDialogCommand {  get; init; }
         public ICommand SelectImageFile { get; init; }
         public ActionCommand MakeNewRankingCommand { get; init; }
@@ -72,9 +67,12 @@ namespace ModernSort.ViewModel.Windows
         {
             CloseDialogCommand = new ActionCommand(() => CloseRequested?.Invoke(this,new DialogCloseRequestedEventArgs(false)));
             SelectImageFile = new ActionCommand(SelectImage);
-            MakeNewRankingCommand = new ActionCommand(MakeNewRanking, base.CanExecuteByValidation);
+            MakeNewRankingCommand = new ActionCommand(
+                MakeNewRanking,
+                base.CanExecuteByValidation);
             base.PostValidationChange += MakeNewRankingCommand.OnCanExecuteChanged;
         }
+
         public AddNewRankingCategoryViewModel(ISerializer serializer,IDeserializer deserializer) : this()
         {
             _serializer = serializer;
@@ -88,21 +86,37 @@ namespace ModernSort.ViewModel.Windows
 
         private void MakeNewRanking()
         {
-            int id = 2; ////////////////////////
-            string newRankingDirrectoryPath = ProjactIoWorker.UserResourcesDirrectoryPath + @$"\{id}";
-            string newRankingIconPath = newRankingDirrectoryPath + @$"\{ProjactIoWorker.RANKING_CATEGORY_ICON_TYTLE}.jpg";
-            Directory.CreateDirectory(newRankingDirrectoryPath);
-            File.Copy(SelectedImagePath, newRankingIconPath);
-            Directory.CreateDirectory(newRankingDirrectoryPath + @"\Media");
-            RankingCategory newRanking = new RankingCategory()
+            try
             {
-                Description = NewRankingDescryption,
-                Tytle = NewRankingTytle,
-                ID = id,
-                RankingDirrectoryPath = newRankingDirrectoryPath,
-                RankingIconPath = newRankingIconPath
-            };
-            newRanking.Serialize(_serializer, ProjactIoWorker.UserResourcesDirrectoryPath + @"\RankingCategories.json");
+                Guid id = ProjactIoWorker.GetUniqGuid(ProjactIoWorker.UserResourcesDirrectoryPath 
+                    + @$"\{ProjactIoWorker.PROJACT_GUIDS_FILE}");
+
+                string newRankingDirrectoryPath = ProjactIoWorker.UserResourcesDirrectoryPath 
+                    + @$"\{id.ToString()}";
+
+                string newRankingIconPath = newRankingDirrectoryPath 
+                    + @$"\{ProjactIoWorker.RANKING_CATEGORY_ICON_TYTLE}.jpg";
+
+                Directory.CreateDirectory(newRankingDirrectoryPath);
+                File.Copy(SelectedImagePath, newRankingIconPath);
+                Directory.CreateDirectory(newRankingDirrectoryPath + @"\Media");
+                RankingCategory newRanking = new RankingCategory()
+                {
+                    Description = NewRankingDescryption,
+                    Tytle = NewRankingTytle,
+                    ID = id,
+                    RankingDirrectoryPath = newRankingDirrectoryPath,
+                    RankingIconPath = newRankingIconPath
+                };
+                //Если процесс сериализации новой категории прошел успешно - закрыть текущее окно с параметров true
+                if (newRanking.Serialize(_serializer, ProjactIoWorker.UserResourcesDirrectoryPath 
+                    + @"\RankingCategories.json")) 
+                    CloseRequested?.Invoke(this,new DialogCloseRequestedEventArgs(true));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
     }

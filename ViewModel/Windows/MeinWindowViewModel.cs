@@ -16,6 +16,7 @@ using ModernSort.ViewModel.Windows;
 using ModernSort.Static;
 using System.Windows.Media.Animation;
 using ModernSort.Services.Dialog;
+using RankingEntityes.IO_Entities.Classes;
 
 namespace ModernSort.ViewModel
 {
@@ -42,7 +43,7 @@ namespace ModernSort.ViewModel
             _Serializer = serializer;
 
             _rankingCategories = new IoCollection<RankingCategory>();
-           _rankingCategories.Deserialize(deserializer, ProjactIoWorker.UserResourcesDirrectoryPath + @"\RankingCategories.json");
+           _rankingCategories.Deserialize(_Deserializer, ProjactIoWorker.UserResourcesDirrectoryPath + @"\RankingCategories.json");
 
             CloseApplicationCommand = new ApplicationCloseCommand();
             CollapselicationCommand = new CollapseApplicationCommand();
@@ -50,8 +51,16 @@ namespace ModernSort.ViewModel
 
         private void GetOpenNewWindow()
         {
-            var addNewRankingCategoryViewModel = new AddNewRankingCategoryViewModel(_Serializer,_Deserializer);   
-            _DialogService.ShowDialog(addNewRankingCategoryViewModel);
+            var addNewRankingCategoryViewModel = new AddNewRankingCategoryViewModel(_Serializer,_Deserializer);
+
+            bool? result = _DialogService.ShowDialog(addNewRankingCategoryViewModel);
+
+            if (result == true) // если добавление новой категории прошло успешно
+            {
+                _rankingCategories.Deserialize(_Deserializer, ProjactIoWorker.UserResourcesDirrectoryPath + @"\RankingCategories.json");
+                OnPropertyChenged(nameof(RankingCategoriesItems));
+            }
+            
         }
 
         public ICommand CloseApplicationCommand { get; }

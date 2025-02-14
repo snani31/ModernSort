@@ -26,9 +26,23 @@ namespace ModernSort.ViewModel
         private IDialogService _DialogService { get; init; }
         private IDeserializer _Deserializer {  get; init; }
         private ISerializer _Serializer { get; init; }
+
+        private RankingCategoryItemViewModel _selectedRankingCategory;
         private IoCollection<RankingCategory> _rankingCategories;
-        public ObservableCollection<RankingCategoryItemViewModel> RankingCategoriesItems
+        public RankingCategoryItemViewModel SelectedRankingCategory 
         { 
+            get => _selectedRankingCategory; 
+            set
+            {
+                if (value is not null)
+                {
+                    _selectedRankingCategory = value;
+                    OpenSelectedRankingCategoryWindow();
+                }
+            }
+        }
+        public ObservableCollection<RankingCategoryItemViewModel> RankingCategoriesItems
+        {
             get
             { 
                 return ParseIoToCollection(_rankingCategories);
@@ -74,6 +88,15 @@ namespace ModernSort.ViewModel
         private ObservableCollection<RankingCategoryItemViewModel> ParseIoToCollection(IEnumerable<RankingCategory> list)
         {
             return new ObservableCollection<RankingCategoryItemViewModel>(list.Select(x => new RankingCategoryItemViewModel(x)));
+        }
+        /// <summary>
+        /// Используется для открытия окна с заданной выбранной категорией ранжира
+        /// </summary>
+        private void OpenSelectedRankingCategoryWindow()
+        {
+            MessageBox.Show($"Открыта {SelectedRankingCategory.Tytle}");
+            var addNewRankingCategoryViewModel = new SelectedRankingCategoryViewModel();
+            bool? result = _DialogService.ShowDialog(addNewRankingCategoryViewModel);
         }
     }
 }

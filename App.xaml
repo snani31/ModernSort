@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="Styles/UserControlStyles/ListViewRankingStyles.xaml"/>
                 <ResourceDictionary Source="Styles/UserControlStyles/TextBoxStyles.xaml"/>
                 <ResourceDictionary Source="Styles/UserControlStyles/TextBlockStyles.xaml"/>
+                <ResourceDictionary Source="Styles/UserControlStyles/MediaObjactListContanerStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

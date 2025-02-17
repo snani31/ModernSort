@@ -65,7 +65,8 @@
                                     <RepeatButton Opacity="0" Command="{x:Static ScrollBar.PageDownCommand}"/>
                                 </Track.IncreaseRepeatButton>
                                 <Track.Thumb>
-                                    <Thumb Style="{StaticResource ScrollBarThumb}"/>
+                                    <Thumb 
+                                        Style="{StaticResource ScrollBarThumb}"/>
                                 </Track.Thumb>
                             </Track>
                         </Border>

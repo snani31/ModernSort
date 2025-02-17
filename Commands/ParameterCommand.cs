@@ -6,22 +6,21 @@ using System.Threading.Tasks;
 
 namespace ModernSort.Commands
 {
-    internal class ActionCommand : CommandBase
+    internal class ParameterCommand : CommandBase
     {
-
-        private event Action _action;
+        private event Action<object?> _action;
         private event Func<bool> _canExecutePredicate;
-        public ActionCommand(Action action)
+        public ParameterCommand(Action<object?> action)
         {
             _action = action;
         }
-        public ActionCommand(Action action,Func<bool> canExecutePredicate):this(action) 
+        public ParameterCommand(Action<object?> action, Func<bool> canExecutePredicate) : this(action)
         {
             _canExecutePredicate = canExecutePredicate;
         }
         public override void Execute(object? parameter)
         {
-            _action?.Invoke();
+            _action?.Invoke(parameter);
         }
         public override bool CanExecute(object? parameter)
         {

@@ -65,7 +65,7 @@ namespace ModernSort.ViewModel
 
         private void GetOpenNewWindow()
         {
-            var addNewRankingCategoryViewModel = new AddNewRankingCategoryViewModel(_Serializer,_Deserializer);
+            var addNewRankingCategoryViewModel = new AddNewRankingCategoryViewModel(_Serializer);
 
             bool? result = _DialogService.ShowDialog(addNewRankingCategoryViewModel);
 
@@ -94,8 +94,8 @@ namespace ModernSort.ViewModel
         /// </summary>
         private void OpenSelectedRankingCategoryWindow()
         {
-            MessageBox.Show($"Открыта {SelectedRankingCategory.Tytle}");
-            var addNewRankingCategoryViewModel = new SelectedRankingCategoryViewModel();
+            RankingCategory selectedmember = _rankingCategories.First(x => x.ID.ToString() == SelectedRankingCategory.ID);
+            var addNewRankingCategoryViewModel = new SelectedRankingCategoryViewModel(selectedmember, _DialogService,_Serializer,_Deserializer);
             bool? result = _DialogService.ShowDialog(addNewRankingCategoryViewModel);
         }
     }

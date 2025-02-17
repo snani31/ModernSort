@@ -12,6 +12,8 @@
     <None Remove="AppResources\CollapseWindpwIcon.png" />
     <None Remove="AppResources\Pictures\addPurple.png" />
     <None Remove="AppResources\Pictures\addWhite.png" />
+    <None Remove="AppResources\Pictures\redCrossBorder.png" />
+    <None Remove="AppResources\Pictures\redCrossFill.png" />
     <None Remove="AppResources\PowerOffButtonIcon.png" />
     <None Remove="UserResources\RankingCategories.json" />
     <None Remove="UserResources\RankingCategory_1\Ranking_Icon.jpg" />
@@ -25,6 +27,8 @@
     <Resource Include="AppResources\Fonts\Pribambas.ttf" />
     <Resource Include="AppResources\Pictures\addPurple.png" />
     <Resource Include="AppResources\Pictures\addWhite.png" />
+    <Resource Include="AppResources\Pictures\redCrossBorder.png" />
+    <Resource Include="AppResources\Pictures\redCrossFill.png" />
     <Resource Include="AppResources\PowerOffButtonIcon.png" />
     <Resource Include="UserResources\RankingCategory_1\Ranking_Icon.jpg" />
     <Resource Include="UserResources\RankingCategory_2\Ranking_Icon.jpg" />

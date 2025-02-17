@@ -30,6 +30,7 @@ namespace ModernSort
             _dialogService = new DialogService(MainWindow);
             _dialogService.Register<AddNewRankingCategoryViewModel,AddNewRankingCategoryWindowView>();
             _dialogService.Register<SelectedRankingCategoryViewModel,SelectedRankingCategoryWindowView >();
+            _dialogService.Register<CreateMediaObjectViewModel, CreateMediaObjectWindowView>();
             _jsonDeserializer = new JsonDeserializer();
             _jsonSerializer = new JsonSerializer();
         }

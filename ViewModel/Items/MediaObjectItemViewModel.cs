@@ -11,6 +11,7 @@ namespace ModernSort.ViewModel.Items
     internal class MediaObjectItemViewModel
     {
         private MediaObject _mediaObject;
+        private string _selectedRankingCategoryMedifilesPath;
         public MediaObject MediaObject { get => _mediaObject; set => _mediaObject = value; }
         public string ID
         {
@@ -31,9 +32,23 @@ namespace ModernSort.ViewModel.Items
                 return MediaObject.Paths;
             }
         }
-        public MediaObjectItemViewModel(MediaObject mediaObjact)
+        public string FirstImagePath
+        {
+            get
+            {
+                return SelectedRankingCategoryMedifilesPath + "\\" + Paths[0];
+            }
+        }
+        public string SelectedRankingCategoryMedifilesPath 
+        { 
+            get => _selectedRankingCategoryMedifilesPath;
+            set => _selectedRankingCategoryMedifilesPath = value;
+        }
+
+        public MediaObjectItemViewModel(MediaObject mediaObjact,string selectedRankingCategoryMedifilesPath)
         {
             MediaObject = mediaObjact;
+            SelectedRankingCategoryMedifilesPath = selectedRankingCategoryMedifilesPath;
         }
     }
 }

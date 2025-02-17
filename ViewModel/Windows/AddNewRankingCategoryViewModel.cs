@@ -19,7 +19,6 @@ namespace ModernSort.ViewModel.Windows
     {
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
         private readonly ISerializer _serializer;
-        private readonly IDeserializer _deserializer;
         private string _selectedImagePath;
         [Required(ErrorMessage = "You must select image")]
         public string SelectedImagePath 
@@ -66,22 +65,16 @@ namespace ModernSort.ViewModel.Windows
         public AddNewRankingCategoryViewModel()
         {
             CloseDialogCommand = new ActionCommand(() => CloseRequested?.Invoke(this,new DialogCloseRequestedEventArgs(false)));
-            SelectImageFile = new ActionCommand(SelectImage);
+            SelectImageFile = new ActionCommand(() => SelectedImagePath = ProjactIoWorker.FilePickerGetImage());
             MakeNewRankingCommand = new ActionCommand(
                 MakeNewRanking,
                 base.CanExecuteByValidation);
             base.PostValidationChange += MakeNewRankingCommand.OnCanExecuteChanged;
         }
 
-        public AddNewRankingCategoryViewModel(ISerializer serializer,IDeserializer deserializer) : this()
+        public AddNewRankingCategoryViewModel(ISerializer serializer) : this()
         {
             _serializer = serializer;
-            _deserializer = deserializer;
-        }
-
-        private void SelectImage()
-        {
-            SelectedImagePath = ProjactIoWorker.FilePickerGetImage();
         }
 
         private void MakeNewRanking()

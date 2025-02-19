@@ -49,7 +49,7 @@
                     <Button Grid.Column="2"
              Command="{Binding CloseDialogCommand}"
              ToolTip="Закрыть">
-                        <Button.Template>
+                        <Button.Template> 
                             <ControlTemplate TargetType="Button">
                                 <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="10 20 0 10">
                                     <Image Margin="5" Source="\AppResources\PowerOffButtonIcon.png"/>
@@ -228,11 +228,13 @@
                         Orientation="Horizontal"
                         >
                         <Button
+                            Style="{StaticResource Button}"
                             Margin="15"
                             Width="300"
-                            Content="Создать медиа объект"
                             Command="{Binding MediaObjectCreateWindowOpen}"
-                            />
+                            Content="Create MediaObject"
+                            >
+                        </Button>
                     </StackPanel>
                 </Border>
             </Grid>

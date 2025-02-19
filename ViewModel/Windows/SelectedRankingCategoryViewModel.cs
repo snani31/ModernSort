@@ -12,17 +12,18 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace ModernSort.ViewModel.Windows
 {
     internal class SelectedRankingCategoryViewModel : ViewModelBase, IDialogRequestClose
     {
         private RankingCategory _rankingCategory;
-        private readonly ISerializer _serializer;
-        private readonly IDeserializer _deserializer;
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
         private IoCollection<MediaObject> _mediaObjects;
-        public ActionCommand MediaObjectCreateWindowOpen {  get; init; }
+        public ICommand MediaObjectCreateWindowOpen {  get; init; }
+        public ICommand CloseDialogCommand { get; init; }
         private IDialogService _DialogService {  get; init; }
         public ObservableCollection<MediaObjectItemViewModel> MediaObjacts 
         { 
@@ -50,12 +51,23 @@ namespace ModernSort.ViewModel.Windows
             Serializer = serializer;
             RankingCategory = SelectedRankingCategory;
             _DialogService = dialogService;
-            CreateMediaObjectViewModel viewModel = new CreateMediaObjectViewModel(_serializer, RankingCategory);
+            CreateMediaObjectViewModel viewModel = new CreateMediaObjectViewModel(Serializer, RankingCategory);
+
+            CloseDialogCommand = new ActionCommand(
+                ()=>
+                {
+                    CloseRequested?.Invoke(this,new DialogCloseRequestedEventArgs(false));
+                });
 
             MediaObjectCreateWindowOpen = new ActionCommand(
                 () => 
                 {
-                    _DialogService.ShowDialog(viewModel);
+
+                    if (_DialogService.ShowDialog(viewModel) ?? false)
+                    {
+                        _mediaObjects.Deserialize(Deserializer, $@"{ProjactIoWorker.UserResourcesDirrectoryPath}\{RankingCategory.ID}\MediaObjacts.json");
+                        OnPropertyChenged(nameof(MediaObjacts));
+                    }
                 });
 
             _mediaObjects = new IoCollection<MediaObject>();

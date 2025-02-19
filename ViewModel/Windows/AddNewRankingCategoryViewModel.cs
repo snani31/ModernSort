@@ -93,6 +93,7 @@ namespace ModernSort.ViewModel.Windows
                 Directory.CreateDirectory(newRankingDirrectoryPath);
                 File.Copy(SelectedImagePath, newRankingIconPath);
                 Directory.CreateDirectory(newRankingDirrectoryPath + @"\Media");
+                File.Create(newRankingDirrectoryPath + @"\MediaObjacts.json");
                 RankingCategory newRanking = new RankingCategory()
                 {
                     Description = NewRankingDescryption,

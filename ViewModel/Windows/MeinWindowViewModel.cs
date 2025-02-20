@@ -32,6 +32,8 @@ namespace ModernSort.ViewModel
 
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
 
+        public ICommand CloseApplication { get; }
+
         public RankingCategoryItemViewModel SelectedRankingCategory 
         { 
             get => _selectedRankingCategory; 
@@ -82,8 +84,6 @@ namespace ModernSort.ViewModel
             }
             
         }
-
-        public ICommand CloseApplication { get; }
 
         /// <summary>
         /// Метод преобразует IoCollection в ObservableCollection

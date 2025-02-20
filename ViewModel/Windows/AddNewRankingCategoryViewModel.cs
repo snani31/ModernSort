@@ -65,7 +65,16 @@ namespace ModernSort.ViewModel.Windows
         public AddNewRankingCategoryViewModel()
         {
             CloseDialog = new RelayCommand((p) => CloseRequested?.Invoke(this,new DialogCloseRequestedEventArgs(false)));
-            SelectImageFile = new RelayCommand((p) => SelectedRankingIconPath = ProjactIoWorker.FilePickerGetImage());
+
+            SelectImageFile = new RelayCommand(
+                (p) =>
+                {
+                    string? selectedImagePath = ProjactIoWorker.FilePickerGetImagePathScalar();
+                    if (selectedImagePath is not null && selectedImagePath != String.Empty)
+                    SelectedRankingIconPath = selectedImagePath;
+                }
+                );
+
             MakeNewRanking = new RelayCommand(
                 MakeNewRankingMethod,
                 base.CanExecuteByValidation);
@@ -88,8 +97,8 @@ namespace ModernSort.ViewModel.Windows
                 string newRankingDirrectoryPath = ProjactIoWorker.UserResourcesDirrectoryPath 
                     + @$"\{id.ToString()}";
 
-                string newRankingIconPath = newRankingDirrectoryPath 
-                    + @$"\{ProjactIoWorker.RANKING_CATEGORY_ICON_TYTLE}.jpg";
+                string newRankingIconPath = newRankingDirrectoryPath
+                    + @$"\{ProjactIoWorker.RANKING_CATEGORY_ICON_TYTLE}{Path.GetExtension(SelectedRankingIconPath)}";
 
                 Directory.CreateDirectory(newRankingDirrectoryPath);
                 File.Copy(SelectedRankingIconPath, newRankingIconPath);

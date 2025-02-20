@@ -23,9 +23,9 @@ namespace ModernSort.ViewModel
     class MeinWindowViewModel : ViewModelBase, IDialogRequestClose
     {
         public ICommand OpenNewRankingWindow { get; init; }
-        private IDialogService _DialogService { get; init; }
-        private IDeserializer _Deserializer {  get; init; }
-        private ISerializer _Serializer { get; init; }
+        private IDialogService DialogService { get; init; }
+        private IDeserializer Deserializer {  get; init; }
+        private ISerializer Serializer { get; init; }
 
         private RankingCategoryItemViewModel _selectedRankingCategory;
         private IoCollection<RankingCategory> _rankingCategories;
@@ -54,36 +54,36 @@ namespace ModernSort.ViewModel
 
         public MeinWindowViewModel(IDeserializer deserializer,ISerializer serializer,IDialogService dialogService)
         {
-            _DialogService = dialogService;
+            DialogService = dialogService;
             OpenNewRankingWindow = new RelayCommand(GetOpenNewRankingWindow);
-            _Deserializer = deserializer;
-            _Serializer = serializer;
+            Deserializer = deserializer;
+            Serializer = serializer;
 
             _rankingCategories = new IoCollection<RankingCategory>();
-           _rankingCategories.Deserialize(_Deserializer, ProjactIoWorker.UserResourcesDirrectoryPath + @"\RankingCategories.json");
+           _rankingCategories.Deserialize(Deserializer, ProjactIoWorker.UserResourcesDirrectoryPath + @"\RankingCategories.json");
 
-            CloseApplicationCommand = new RelayCommand(
+            CloseApplication = new RelayCommand(
                 (a) => 
                 {
                    Environment.Exit(0);
                 });
         }
 
-        private void GetOpenNewRankingWindow(object? parametr)
+        private void GetOpenNewRankingWindow(object? parameter)
         {
-            var addNewRankingCategoryViewModel = new AddNewRankingCategoryViewModel(_Serializer);
+            var addNewRankingCategoryViewModel = new AddNewRankingCategoryViewModel(Serializer);
 
-            bool? result = _DialogService.ShowDialog(addNewRankingCategoryViewModel);
+            bool? result = DialogService.ShowDialog(addNewRankingCategoryViewModel);
 
             if (result == true) // если добавление новой категории прошло успешно
             {
-                _rankingCategories.Deserialize(_Deserializer, ProjactIoWorker.UserResourcesDirrectoryPath + @"\RankingCategories.json");
+                _rankingCategories.Deserialize(Deserializer, ProjactIoWorker.UserResourcesDirrectoryPath + @"\RankingCategories.json");
                 OnPropertyChenged(nameof(RankingCategoriesItems));
             }
             
         }
 
-        public ICommand CloseApplicationCommand { get; }
+        public ICommand CloseApplication { get; }
 
         /// <summary>
         /// Метод преобразует IoCollection в ObservableCollection
@@ -99,9 +99,9 @@ namespace ModernSort.ViewModel
         /// </summary>
         private void OpenSelectedRankingCategoryWindow()
         {
-            RankingCategory selectedmember = _rankingCategories.First(x => x.ID.ToString() == SelectedRankingCategory.ID);
-            var addNewRankingCategoryViewModel = new SelectedRankingCategoryViewModel(selectedmember, _DialogService,_Serializer,_Deserializer);
-            bool? result = _DialogService.ShowDialog(addNewRankingCategoryViewModel);
+            RankingCategory selectedCategory = _rankingCategories.First(x => x.ID.ToString() == SelectedRankingCategory.ID);
+            var addNewRankingCategoryViewModel = new SelectedRankingCategoryViewModel(selectedCategory, DialogService,Serializer,Deserializer);
+            bool? result = DialogService.ShowDialog(addNewRankingCategoryViewModel);
         }
 
     }

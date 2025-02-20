@@ -11,17 +11,17 @@ namespace ModernSort.ViewModel.Items
     {
         private readonly RankingCategory _rankingCategor;
 
-        public string ID 
+        public string ID
         {
-            get {  return _rankingCategor.ID.ToString(); } 
+            get { return _rankingCategor.ID.ToString(); }
         }
-        public string Tytle 
+        public string Tytle
         {
-            get {  return _rankingCategor.Tytle;}
+            get { return _rankingCategor.Tytle; }
         }
         public string Descryption
         {
-            get { return _rankingCategor.Description; } 
+            get { return _rankingCategor.Description; }
         }
         public string RankingDirrectoryPath
         {
@@ -31,8 +31,8 @@ namespace ModernSort.ViewModel.Items
         {
             get { return _rankingCategor.RankingIconPath; }
         }
-        public RankingCategoryItemViewModel(RankingCategory rankingCategory) 
-        { 
+        public RankingCategoryItemViewModel(RankingCategory rankingCategory)
+        {
             _rankingCategor = rankingCategory;
         }
     }

@@ -48,7 +48,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Button Grid.Column="2"
-                 Command="{Binding CloseDialogCommand}"
+                 Command="{Binding CloseDialog}"
                  ToolTip="Закрыть">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
@@ -199,7 +199,7 @@
                                 Margin="25"
                                 Height="300"
                                 Stretch="Fill"
-                                Source="{Binding SelectedImagePath}"
+                                Source="{Binding SelectedRankingIconPath}"
                                 />
                         </Border>
                     </StackPanel>
@@ -210,7 +210,7 @@
                 Content="Make new Ranking"
                 Margin="20"
                 Style="{StaticResource Button}"
-                Command="{Binding MakeNewRankingCommand}"
+                Command="{Binding MakeNewRanking}"
                             />
         </Grid>
     </Border>

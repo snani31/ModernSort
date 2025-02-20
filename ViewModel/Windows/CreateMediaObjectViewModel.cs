@@ -21,10 +21,7 @@ namespace ModernSort.ViewModel.Windows
 {
     class CreateMediaObjectViewModel : ViewModelValidateble, IDialogRequestClose
     {
-        private readonly ISerializer _serializer;
-        private readonly RankingCategory _selectedCategory;
         private ObservableCollection<MediaFileSelectedViewModel> _selectedFiles;
-        public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
         [MinLength(1,ErrorMessage = "You need to select just 1 file at least")]
         public ObservableCollection<MediaFileSelectedViewModel> SelectedFiles 
         {
@@ -36,6 +33,7 @@ namespace ModernSort.ViewModel.Windows
         }
 
         private string _title;
+
         [MaxLength(20, ErrorMessage = $"Tytle can not be bigger then 20 symbols")]
         public string Tytle 
         {
@@ -49,6 +47,7 @@ namespace ModernSort.ViewModel.Windows
                Validate(nameof(Tytle), value);
             } 
         }
+
         private string _descriptyon;
 
         [MaxLength(100, ErrorMessage = $"Descriptyon can not be bigger then 100 symbols")]
@@ -65,9 +64,14 @@ namespace ModernSort.ViewModel.Windows
             } 
         }
 
+        public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
+
         public ICommand CloseDialogCommand { get; }
         public ICommand SelectMultimediaFiles { get; }
         public RelayCommand CreateMediaObjectCommand { get; }
+
+        private ISerializer Serializer { get; init; }
+        private RankingCategory SelectedCategory { get; init; }
 
         public CreateMediaObjectViewModel()
         {
@@ -97,8 +101,8 @@ namespace ModernSort.ViewModel.Windows
 
         public CreateMediaObjectViewModel(ISerializer serializer,RankingCategory selectedRankingCategory): this()
         {
-            _serializer = serializer;
-            _selectedCategory = selectedRankingCategory;
+            Serializer = serializer;
+            SelectedCategory = selectedRankingCategory;
         }
 
         private void CreateMediaObjact(object? parameter)
@@ -111,7 +115,7 @@ namespace ModernSort.ViewModel.Windows
                 foreach(var file in SelectedFiles)
                 {
                     File.Copy(file.MediaImagePath,
-                        _selectedCategory.RankingDirrectoryPath + @"\Media" + @$"\{Path.GetFileName(file.MediaImagePath)}");
+                        SelectedCategory.RankingDirrectoryPath + @"\Media" + @$"\{Path.GetFileName(file.MediaImagePath)}");
                 }
 
                 MediaObject newMediaObjact = new MediaObject()
@@ -122,7 +126,7 @@ namespace ModernSort.ViewModel.Windows
                     Paths = new List<string>(SelectedFiles.Select(x => Path.GetFileName(x.MediaImagePath)))
                 };
                 //Если процесс сериализации нового медиа объекта прошел успешно - закрыть текущее окно с параметром true
-                if (newMediaObjact.Serialize(_serializer, _selectedCategory.RankingDirrectoryPath + @"\MediaObjacts.json"))
+                if (newMediaObjact.Serialize(Serializer, SelectedCategory.RankingDirrectoryPath + @"\MediaObjacts.json"))
                     CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(true));
             }
             catch (Exception ex)
@@ -131,9 +135,9 @@ namespace ModernSort.ViewModel.Windows
             }
         }
 
-        private void RemoveMediafileFromList(object? parametr)
+        private void RemoveMediafileFromList(object? parameter)
         {
-            if (parametr is MediaFileSelectedViewModel mediafile and not null)
+            if (parameter is MediaFileSelectedViewModel mediafile and not null)
             {
                 SelectedFiles.Remove(mediafile);
             }

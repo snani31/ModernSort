@@ -19,7 +19,7 @@
         <vms:SelectedRankingCategoryViewModel/>
     </Window.DataContext>
     <Border
-    Background="#f7f9fe"
+    Background="#f7f9fe" 
     CornerRadius="20"
     ClipToBounds="True"
     >
@@ -47,7 +47,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Button Grid.Column="2"
-             Command="{Binding CloseDialogCommand}"
+             Command="{Binding CloseDialog}"
              ToolTip="Закрыть">
                         <Button.Template> 
                             <ControlTemplate TargetType="Button">
@@ -231,7 +231,7 @@
                             Style="{StaticResource Button}"
                             Margin="15"
                             Width="300"
-                            Command="{Binding MediaObjectCreateWindowOpen}"
+                            Command="{Binding CreateMediaObjectWindowOpen}"
                             Content="Create MediaObject"
                             >
                         </Button>

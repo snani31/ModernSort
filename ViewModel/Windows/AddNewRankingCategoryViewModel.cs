@@ -18,20 +18,20 @@ namespace ModernSort.ViewModel.Windows
     internal class AddNewRankingCategoryViewModel: ViewModelValidateble, IDialogRequestClose
     {
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
-        private readonly ISerializer _serializer;
-        private string _selectedImagePath;
+        private ISerializer Serializer {  get; init; }
+        private string _selectedRankingIconPath;
         [Required(ErrorMessage = "You must select image")]
-        public string SelectedImagePath 
+        public string SelectedRankingIconPath 
         {
             get
             {
-                return _selectedImagePath;
+                return _selectedRankingIconPath;
             }
             private set 
             {
-                _selectedImagePath = value;
-                OnPropertyChenged(nameof(SelectedImagePath));
-                Validate(nameof(SelectedImagePath), value);
+                _selectedRankingIconPath = value;
+                OnPropertyChenged(nameof(SelectedRankingIconPath));
+                Validate(nameof(SelectedRankingIconPath), value);
             } 
         }
         private string _newRankingTytle;
@@ -59,26 +59,26 @@ namespace ModernSort.ViewModel.Windows
                 Validate(nameof(NewRankingDescryption), value);
             }
         }
-        public ICommand CloseDialogCommand {  get; init; }
+        public ICommand CloseDialog {  get; init; }
         public ICommand SelectImageFile { get; init; }
-        public RelayCommand MakeNewRankingCommand { get; init; }
+        public RelayCommand MakeNewRanking { get; init; }
         public AddNewRankingCategoryViewModel()
         {
-            CloseDialogCommand = new RelayCommand((p) => CloseRequested?.Invoke(this,new DialogCloseRequestedEventArgs(false)));
-            SelectImageFile = new RelayCommand((p) => SelectedImagePath = ProjactIoWorker.FilePickerGetImage());
-            MakeNewRankingCommand = new RelayCommand(
-                MakeNewRanking,
+            CloseDialog = new RelayCommand((p) => CloseRequested?.Invoke(this,new DialogCloseRequestedEventArgs(false)));
+            SelectImageFile = new RelayCommand((p) => SelectedRankingIconPath = ProjactIoWorker.FilePickerGetImage());
+            MakeNewRanking = new RelayCommand(
+                MakeNewRankingMethod,
                 base.CanExecuteByValidation);
-            base.PostValidationChange += MakeNewRankingCommand.OnCanExecuteChanged;
+            base.PostValidationChange += MakeNewRanking.OnCanExecuteChanged;
 
         }
 
         public AddNewRankingCategoryViewModel(ISerializer serializer) : this()
         {
-            _serializer = serializer;
+            Serializer = serializer;
         }
 
-        private void MakeNewRanking(object? parameter)
+        private void MakeNewRankingMethod(object? parameter)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace ModernSort.ViewModel.Windows
                     + @$"\{ProjactIoWorker.RANKING_CATEGORY_ICON_TYTLE}.jpg";
 
                 Directory.CreateDirectory(newRankingDirrectoryPath);
-                File.Copy(SelectedImagePath, newRankingIconPath);
+                File.Copy(SelectedRankingIconPath, newRankingIconPath);
                 Directory.CreateDirectory(newRankingDirrectoryPath + @"\Media");
                 File.Create(newRankingDirrectoryPath + @"\MediaObjacts.json");
                 RankingCategory newRanking = new RankingCategory()
@@ -104,7 +104,7 @@ namespace ModernSort.ViewModel.Windows
                     RankingIconPath = newRankingIconPath
                 };
                 //Если процесс сериализации новой категории прошел успешно - закрыть текущее окно с параметров true
-                if (newRanking.Serialize(_serializer, ProjactIoWorker.UserResourcesDirrectoryPath 
+                if (newRanking.Serialize(Serializer, ProjactIoWorker.UserResourcesDirrectoryPath 
                     + @"\RankingCategories.json")) 
                     CloseRequested?.Invoke(this,new DialogCloseRequestedEventArgs(true));
             }

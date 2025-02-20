@@ -44,7 +44,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Button Grid.Column="2"
-                         Command="{Binding CloseApplicationCommand}"
+                         Command="{Binding CloseApplication}"
                          ToolTip="Закрыть">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
@@ -171,7 +171,7 @@
                         Grid.Row="1"
                             />
                     <Button 
-                        Command="{Binding CloseApplicationCommand}"
+                        Command="{Binding CloseApplication}"
                         Content="Exit"
                         Style="{StaticResource Button}"
                         Margin="20"

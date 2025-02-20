@@ -20,21 +20,26 @@ namespace ModernSort.ViewModel.Windows
 {
     internal class SelectedRankingCategoryViewModel : ViewModelBase, IDialogRequestClose
     {
-        private RankingCategory _rankingCategory;
-        public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
+        private RankingCategory _selectedRankingCategory;
+
+        public RankingCategory SelectedRankingCategory { get => _selectedRankingCategory;init => _selectedRankingCategory = value; }
+
         private IoCollection<MediaObject> _mediaObjects;
-        public ICommand MediaObjectCreateWindowOpen {  get; init; }
-        public ICommand CloseDialogCommand { get; init; }
-        private IDialogService _DialogService {  get; init; }
-        public ObservableCollection<MediaObjectItemViewModel> MediaObjacts 
-        { 
-            get 
+
+        public ObservableCollection<MediaObjectItemViewModel> MediaObjacts
+        {
+            get
             {
                 return ParseIoToCollection(_mediaObjects);
             }
         }
 
-        public RankingCategory RankingCategory { get => _rankingCategory; set => _rankingCategory = value; }
+        public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
+
+        public ICommand CreateMediaObjectWindowOpen { get; init; }
+        public ICommand CloseDialog { get; init; }
+
+        private IDialogService DialogService {  get; init; }
 
         private IDeserializer Deserializer { get; init; }
 
@@ -45,40 +50,40 @@ namespace ModernSort.ViewModel.Windows
 
         }
 
-        public SelectedRankingCategoryViewModel(RankingCategory SelectedRankingCategory,
+        public SelectedRankingCategoryViewModel(RankingCategory selectedRankingCategory,
             IDialogService dialogService, ISerializer serializer, IDeserializer deserializer): this()
         {
             Deserializer = deserializer;
             Serializer = serializer;
-            RankingCategory = SelectedRankingCategory;
-            _DialogService = dialogService;
-            CreateMediaObjectViewModel viewModel = new CreateMediaObjectViewModel(Serializer, RankingCategory);
+            SelectedRankingCategory = selectedRankingCategory;
+            DialogService = dialogService;
+            CreateMediaObjectViewModel viewModel = new CreateMediaObjectViewModel(Serializer, SelectedRankingCategory);
 
-            CloseDialogCommand = new RelayCommand(
+            CloseDialog = new RelayCommand(
                 (p) =>
                 {
                     CloseRequested?.Invoke(this,new DialogCloseRequestedEventArgs(false));
                 });
 
-            MediaObjectCreateWindowOpen = new RelayCommand(
+            CreateMediaObjectWindowOpen = new RelayCommand(
                 (p) => 
                 {
 
-                    if (_DialogService.ShowDialog(viewModel) ?? false)
+                    if (DialogService.ShowDialog(viewModel) ?? false)
                     {
-                        _mediaObjects.Deserialize(Deserializer, $@"{ProjactIoWorker.UserResourcesDirrectoryPath}\{RankingCategory.ID}\MediaObjacts.json");
+                        _mediaObjects.Deserialize(Deserializer, $@"{ProjactIoWorker.UserResourcesDirrectoryPath}\{SelectedRankingCategory.ID}\MediaObjacts.json");
                         OnPropertyChenged(nameof(MediaObjacts));
                     }
                 });
 
             _mediaObjects = new IoCollection<MediaObject>();
 
-            _mediaObjects.Deserialize(Deserializer, $@"{ProjactIoWorker.UserResourcesDirrectoryPath}\{RankingCategory.ID}\MediaObjacts.json");
+            _mediaObjects.Deserialize(Deserializer, $@"{ProjactIoWorker.UserResourcesDirrectoryPath}\{SelectedRankingCategory.ID}\MediaObjacts.json");
         }
 
-        private ObservableCollection<MediaObjectItemViewModel> ParseIoToCollection(IEnumerable<MediaObject> list)
+        private ObservableCollection<MediaObjectItemViewModel> ParseIoToCollection(IEnumerable<MediaObject> mediaObjects)
         {
-            return new ObservableCollection<MediaObjectItemViewModel>(list.Select(x => new MediaObjectItemViewModel(x,RankingCategory.RankingDirrectoryPath + @"\Media")));
+            return new ObservableCollection<MediaObjectItemViewModel>(mediaObjects.Select(x => new MediaObjectItemViewModel(x,SelectedRankingCategory.RankingDirrectoryPath + @"\Media")));
         }
 
     }

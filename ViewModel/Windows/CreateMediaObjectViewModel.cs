@@ -65,9 +65,9 @@ namespace ModernSort.ViewModel.Windows
             } 
         }
 
-        public ActionCommand CloseDialogCommand { get; }
-        public ActionCommand SelectMultimediaFiles { get; }
-        public ActionCommand CreateMediaObjectCommand { get; }
+        public ICommand CloseDialogCommand { get; }
+        public ICommand SelectMultimediaFiles { get; }
+        public RelayCommand CreateMediaObjectCommand { get; }
 
         public CreateMediaObjectViewModel()
         {
@@ -77,19 +77,19 @@ namespace ModernSort.ViewModel.Windows
                 Validate(nameof(SelectedFiles), SelectedFiles);
             };
 
-            CloseDialogCommand = new ActionCommand(
-                () => CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(false)));
+            CloseDialogCommand = new RelayCommand(
+                (p) => CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(false)));
 
-            SelectMultimediaFiles = new ActionCommand(
-                () => 
+            SelectMultimediaFiles = new RelayCommand(
+                (p) => 
                 {
                     SelectedFiles.Add(new MediaFileSelectedViewModel(ProjactIoWorker.FilePickerGetImage(),
-                new ParameterCommand(RemoveMediafileFromList)));
+                new RelayCommand(RemoveMediafileFromList)));
                     Validate(nameof(SelectedFiles), SelectedFiles);
                 }
                 );
 
-            CreateMediaObjectCommand = new ActionCommand(
+            CreateMediaObjectCommand = new RelayCommand(
                 CreateMediaObjact,
                 base.CanExecuteByValidation);
             base.PostValidationChange += CreateMediaObjectCommand.OnCanExecuteChanged;
@@ -101,7 +101,7 @@ namespace ModernSort.ViewModel.Windows
             _selectedCategory = selectedRankingCategory;
         }
 
-        private void CreateMediaObjact()
+        private void CreateMediaObjact(object? parameter)
         {
             try
             {

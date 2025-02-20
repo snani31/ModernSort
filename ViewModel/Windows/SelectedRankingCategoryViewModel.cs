@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xaml.Behaviors.Core;
+using ModernSort.Commands;
 using ModernSort.Services.Dialog;
 using ModernSort.Static;
 using ModernSort.ViewModel.Items;
@@ -53,14 +54,14 @@ namespace ModernSort.ViewModel.Windows
             _DialogService = dialogService;
             CreateMediaObjectViewModel viewModel = new CreateMediaObjectViewModel(Serializer, RankingCategory);
 
-            CloseDialogCommand = new ActionCommand(
-                ()=>
+            CloseDialogCommand = new RelayCommand(
+                (p) =>
                 {
                     CloseRequested?.Invoke(this,new DialogCloseRequestedEventArgs(false));
                 });
 
-            MediaObjectCreateWindowOpen = new ActionCommand(
-                () => 
+            MediaObjectCreateWindowOpen = new RelayCommand(
+                (p) => 
                 {
 
                     if (_DialogService.ShowDialog(viewModel) ?? false)

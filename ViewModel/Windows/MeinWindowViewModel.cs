@@ -20,7 +20,7 @@ using RankingEntityes.IO_Entities.Classes;
 
 namespace ModernSort.ViewModel
 {
-    class MeinWindowViewModel : ViewModelBase
+    class MeinWindowViewModel : ViewModelBase, IDialogRequestClose
     {
         public ICommand OpenNewRankingWindow { get; init; }
         private IDialogService _DialogService { get; init; }
@@ -29,6 +29,9 @@ namespace ModernSort.ViewModel
 
         private RankingCategoryItemViewModel _selectedRankingCategory;
         private IoCollection<RankingCategory> _rankingCategories;
+
+        public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
+
         public RankingCategoryItemViewModel SelectedRankingCategory 
         { 
             get => _selectedRankingCategory; 
@@ -52,18 +55,21 @@ namespace ModernSort.ViewModel
         public MeinWindowViewModel(IDeserializer deserializer,ISerializer serializer,IDialogService dialogService)
         {
             _DialogService = dialogService;
-            OpenNewRankingWindow = new ActionCommand(GetOpenNewWindow);
+            OpenNewRankingWindow = new RelayCommand(GetOpenNewRankingWindow);
             _Deserializer = deserializer;
             _Serializer = serializer;
 
             _rankingCategories = new IoCollection<RankingCategory>();
            _rankingCategories.Deserialize(_Deserializer, ProjactIoWorker.UserResourcesDirrectoryPath + @"\RankingCategories.json");
 
-            CloseApplicationCommand = new ApplicationCloseCommand();
-            CollapselicationCommand = new CollapseApplicationCommand();
+            CloseApplicationCommand = new RelayCommand(
+                (a) => 
+                {
+                   Environment.Exit(0);
+                });
         }
 
-        private void GetOpenNewWindow()
+        private void GetOpenNewRankingWindow(object? parametr)
         {
             var addNewRankingCategoryViewModel = new AddNewRankingCategoryViewModel(_Serializer);
 
@@ -78,7 +84,6 @@ namespace ModernSort.ViewModel
         }
 
         public ICommand CloseApplicationCommand { get; }
-        public ICommand CollapselicationCommand { get; }
 
         /// <summary>
         /// Метод преобразует IoCollection в ObservableCollection
@@ -98,5 +103,6 @@ namespace ModernSort.ViewModel
             var addNewRankingCategoryViewModel = new SelectedRankingCategoryViewModel(selectedmember, _DialogService,_Serializer,_Deserializer);
             bool? result = _DialogService.ShowDialog(addNewRankingCategoryViewModel);
         }
+
     }
 }

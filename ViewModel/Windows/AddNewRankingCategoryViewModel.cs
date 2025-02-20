@@ -61,15 +61,16 @@ namespace ModernSort.ViewModel.Windows
         }
         public ICommand CloseDialogCommand {  get; init; }
         public ICommand SelectImageFile { get; init; }
-        public ActionCommand MakeNewRankingCommand { get; init; }
+        public RelayCommand MakeNewRankingCommand { get; init; }
         public AddNewRankingCategoryViewModel()
         {
-            CloseDialogCommand = new ActionCommand(() => CloseRequested?.Invoke(this,new DialogCloseRequestedEventArgs(false)));
-            SelectImageFile = new ActionCommand(() => SelectedImagePath = ProjactIoWorker.FilePickerGetImage());
-            MakeNewRankingCommand = new ActionCommand(
+            CloseDialogCommand = new RelayCommand((p) => CloseRequested?.Invoke(this,new DialogCloseRequestedEventArgs(false)));
+            SelectImageFile = new RelayCommand((p) => SelectedImagePath = ProjactIoWorker.FilePickerGetImage());
+            MakeNewRankingCommand = new RelayCommand(
                 MakeNewRanking,
                 base.CanExecuteByValidation);
             base.PostValidationChange += MakeNewRankingCommand.OnCanExecuteChanged;
+
         }
 
         public AddNewRankingCategoryViewModel(ISerializer serializer) : this()
@@ -77,7 +78,7 @@ namespace ModernSort.ViewModel.Windows
             _serializer = serializer;
         }
 
-        private void MakeNewRanking()
+        private void MakeNewRanking(object? parameter)
         {
             try
             {

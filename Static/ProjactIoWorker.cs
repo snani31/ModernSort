@@ -24,9 +24,9 @@ namespace ModernSort.Static
         internal const string RANKING_CATEGORIES_JSON = "RankingCategories.json";
         internal const string PROJACT_GUIDS_FILE = "ProjactGUIDSFile.txt";
         private static readonly string _currentExecutableFileDirectoryPath;
-        internal static string UserResourcesDirrectoryPath 
+        internal static string UserResourcesDirrectoryPath
         {
-            get 
+            get
             {
                 if (!Directory.Exists(_currentExecutableFileDirectoryPath + $@"\{USER_RESOURCES_DIRECTORY_NAME}"))
                 {
@@ -38,23 +38,27 @@ namespace ModernSort.Static
         static ProjactIoWorker()
         {
             _fileDialog = new OpenFileDialog();
-            _currentExecutableFileDirectoryPath = 
+            _currentExecutableFileDirectoryPath =
                 Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         }
 
-        internal static string FilePickerGetImage()
+        internal static string FilePickerGetImagePathScalar()
         {
             _fileDialog.Title = "Выберите изображение допустимого формата";
-            _fileDialog.Filter = "Изображения | *.jpg";
+            _fileDialog.Filter = "images |*.jpg;*.jpeg;*.png;*.gif;*.tif;*.jfif;";
             _fileDialog.Multiselect = false;
-            if (_fileDialog.ShowDialog() ?? false)
-            {
-                return _fileDialog.FileName;
-            }
-            else 
-            {
-                return String.Empty;
-            }
+
+            var result = (_fileDialog.ShowDialog() ?? false) ? _fileDialog.FileName : String.Empty;
+            return result;
+        }
+        internal static string[] FilePickerGetImagePaths()
+        {
+            _fileDialog.Title = "Выберите изображение допустимого формата";
+            _fileDialog.Filter = "images |*.jpg;*.jpeg;*.png;*.gif;*.tif;*.jfif;";
+            _fileDialog.Multiselect = true;
+
+            var result = (_fileDialog.ShowDialog() ?? false) ? _fileDialog.FileNames : Array.Empty<string>();
+            return result;
         }
         /// <summary>
         /// Метод возвращает значение GUID, если такого не было в указанном файле
@@ -63,46 +67,40 @@ namespace ModernSort.Static
         /// <returns></returns>
         internal static Guid GetUniqGuid(string path)
         {
-            FileStream file;
+            FileStream fileStream;
             var guid = Guid.NewGuid();
             List<string> existingGUIDs = new List<string>();
 
-            using (file = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read))
+            using (fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read))
+            using (var filereader = new StreamReader(fileStream))
             {
 
-                using (var filereader = new StreamReader(file))
+                while (filereader.Peek() >= 0)
                 {
-
-                    while (filereader.Peek() >= 0)
-                    {
-                        existingGUIDs.Add(filereader.ReadLine() ?? String.Empty);
-                    }
-                    filereader.Close();
+                    existingGUIDs.Add(filereader.ReadLine() ?? String.Empty);
                 }
+                filereader.Close();
             }
 
-            using (file = new FileStream(path,FileMode.Append,FileAccess.Write))
-            {
-                using (var fileWriter = new StreamWriter(file))
+
+            using (fileStream = new FileStream(path, FileMode.Append, FileAccess.Write))
+            using (var fileWriter = new StreamWriter(fileStream))
+                switch (existingGUIDs.Any(x => x == guid.ToString()))
                 {
-                    switch (existingGUIDs.Any(x => x == guid.ToString()))
-                    {
-                        case true:
-                            fileWriter.Close();
-                            fileWriter.Dispose();
-                            file.Dispose(); 
-                            return GetUniqGuid(path);
-                            break;
-                        case false:
-                            fileWriter.WriteLine(guid.ToString());
-                            fileWriter.Close();
-                            fileWriter.Dispose();
-                            file.Dispose();
-                            return guid;
-                            break;
-                    }
+                    case true:
+                        fileWriter.Close();
+                        fileWriter.Dispose();
+                        fileStream.Dispose();
+                        return GetUniqGuid(path);
+                    case false:
+                        fileWriter.WriteLine(guid.ToString());
+                        fileWriter.Close();
+                        fileWriter.Dispose();
+                        fileStream.Dispose();
+                        return guid;
                 }
-            }
+
+
         }
 
     }

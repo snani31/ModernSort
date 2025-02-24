@@ -2,7 +2,9 @@
 using ModernSort.Commands;
 using ModernSort.Services.Dialog;
 using ModernSort.Static;
+using ModernSort.View.Pages;
 using ModernSort.ViewModel.Items;
+using ModernSort.ViewModel.Pages;
 using RankingEntityes.IO_Entities.Classes;
 using RankingEntityes.IO_Entities.Interfaces;
 using RankingEntityes.Ranking_Entityes.MediaObjacts;
@@ -34,6 +36,18 @@ namespace ModernSort.ViewModel.Windows
             }
         }
 
+        public MediaObjectItemViewModel SelectedMediaObjectItem
+        {
+            set 
+            {
+                if (value is null) return;
+                MediaObject a = _mediaObjects.First(x => x.ID.ToString() == value.ID);
+                CurrentMediaObject = new SelectedMediaObjectPageViewModel(a, 
+                    SelectedRankingCategory.RankingDirrectoryPath + @"\Media");
+                OnPropertyChenged(nameof(CurrentMediaObject));
+            }
+        }
+
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
 
         public ICommand CreateMediaObjectWindowOpen { get; init; }
@@ -44,6 +58,8 @@ namespace ModernSort.ViewModel.Windows
         private IDeserializer Deserializer { get; init; }
 
         private ISerializer Serializer { get; init; }
+
+        public SelectedMediaObjectPageViewModel CurrentMediaObject {  get; private set; }
 
         public SelectedRankingCategoryViewModel() 
         {
@@ -79,6 +95,7 @@ namespace ModernSort.ViewModel.Windows
             _mediaObjects = new IoCollection<MediaObject>();
 
             _mediaObjects.Deserialize(Deserializer, $@"{ProjactIoWorker.UserResourcesDirrectoryPath}\{SelectedRankingCategory.ID}\MediaObjacts.json");
+
         }
 
         private ObservableCollection<MediaObjectItemViewModel> ParseIoToCollection(IEnumerable<MediaObject> mediaObjects)

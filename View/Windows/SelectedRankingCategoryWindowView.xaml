@@ -3,7 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vms="clr-namespace:ModernSort.ViewModel.Windows"
+        xmlns:vmsWin="clr-namespace:ModernSort.ViewModel.Windows"
+        xmlns:vmsPgs="clr-namespace:ModernSort.ViewModel.Pages"
+        xmlns:viewPgs="clr-namespace:ModernSort.View.Pages"
         xmlns:local="clr-namespace:ModernSort.View.Windows"
         mc:Ignorable="d"
         Title="SelectedRankingCategoryWindowView" 
@@ -16,7 +18,7 @@
         Background="Transparent"
         >
     <Window.DataContext>
-        <vms:SelectedRankingCategoryViewModel/>
+        <vmsWin:SelectedRankingCategoryViewModel/>
     </Window.DataContext>
     <Border
     Background="#f7f9fe" 
@@ -100,12 +102,20 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Border 
-                        x:Name="SelectedObjactView"
+                        x:Name="SelectedObjectView"
                         Grid.Column ="1"
                         ClipToBounds="True"
                         Background="#ccd5f0"
                         CornerRadius="20"
                         Margin="20">
+                        <Grid>
+                            <Grid.Resources>
+                                <DataTemplate DataType="{x:Type vmsPgs:SelectedMediaObjectPageViewModel}">
+                                    <viewPgs:SelectedMediaObjectPage/>
+                                </DataTemplate>
+                            </Grid.Resources>
+                            <ContentControl Content="{Binding CurrentMediaObject}"/>
+                        </Grid>
                     </Border>
                     <Border 
                         x:Name="MediaObjactsArea"
@@ -124,6 +134,7 @@
                             x:Name="MediaObjactsList"
                             ItemContainerStyle="{StaticResource MediaObjactContenerStyle}"
                             ItemsSource="{Binding MediaObjacts}"
+                            SelectedItem="{Binding SelectedMediaObjectItem, Mode=OneWayToSource}"
                             BorderThickness="0"
                             Background="Transparent"
                             Padding="0 10 0 0"

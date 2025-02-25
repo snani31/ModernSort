@@ -119,6 +119,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Border
+                                        x:Name="ItemBrd"
                                         BorderBrush="#f7f9fe"
                                         BorderThickness="5"
                                         ClipToBounds="True"
@@ -142,6 +143,43 @@
                                         Grid.Row="0"
                                         MaxWidth="450"
                                         Text="{Binding Tytle}"/>
+                                    <Button
+                                        Grid.Column="0"
+                                        Command="{Binding DataContext.OpenEditRankingWindow, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                                        CommandParameter="{Binding}"
+                                        ToolTip="Edit Category"
+                                        Background="Transparent"
+                                        >
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border 
+                                                    BorderBrush="Black"
+                                                    Name="brd" 
+                                                    Background="Transparent"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center">
+                                                    <Image
+                                                        x:Name="img"
+                                                        Margin="20"
+                                                        />
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="img" Property="Source" Value="AppResources\Pictures\pencilBlack64px.png"/>
+                                                        <Setter TargetName="brd" Property="BorderThickness" Value="{Binding ElementName=ItemBrd, Path=BorderThickness}"/>
+                                                        <Setter TargetName="brd" Property="Background">
+                                                            <Setter.Value>
+                                                                <SolidColorBrush
+                                                                    Color="Black"
+                                                                    Opacity="0.5"
+                                                                    />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -158,6 +196,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Button
+                        Background="#512f95"
                         Command="{Binding OpenNewRankingWindow}"
                         Content="Make new Ranking"
                         Style="{StaticResource Button}"
@@ -165,12 +204,14 @@
                         Grid.Row="0"
                             />
                     <Button 
+                        Background="#512f95"
                         Content="Settings"
                         Style="{StaticResource Button}"
                         Margin="20"
                         Grid.Row="1"
                             />
                     <Button 
+                        Background="#512f95"
                         Command="{Binding CloseApplication}"
                         Content="Exit"
                         Style="{StaticResource Button}"

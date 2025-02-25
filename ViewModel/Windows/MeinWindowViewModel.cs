@@ -23,6 +23,7 @@ namespace ModernSort.ViewModel
     class MeinWindowViewModel : ViewModelBase, IDialogRequestClose
     {
         public ICommand OpenNewRankingWindow { get; init; }
+        public ICommand OpenEditRankingWindow { get; init; }
         private IDialogService DialogService { get; init; }
         private IDeserializer Deserializer {  get; init; }
         private ISerializer Serializer { get; init; }
@@ -57,6 +58,7 @@ namespace ModernSort.ViewModel
         public MeinWindowViewModel(IDeserializer deserializer,ISerializer serializer,IDialogService dialogService)
         {
             DialogService = dialogService;
+            OpenEditRankingWindow = new RelayCommand(OpenEditRankingCategoryWindow);
             OpenNewRankingWindow = new RelayCommand(GetOpenNewRankingWindow);
             Deserializer = deserializer;
             Serializer = serializer;
@@ -104,5 +106,15 @@ namespace ModernSort.ViewModel
             bool? result = DialogService.ShowDialog(addNewRankingCategoryViewModel);
         }
 
+        private void OpenEditRankingCategoryWindow(object? parameter)
+        {
+            if (parameter is not null and RankingCategoryItemViewModel rankingItem)
+            {
+                RankingCategory selectedCategory = _rankingCategories.First(x => x.ID.ToString() == rankingItem.ID);
+                var addNewRankingCategoryViewModel = new EditRankingWindowViewModel(selectedCategory,Serializer);
+                bool? result = DialogService.ShowDialog(addNewRankingCategoryViewModel);
+            }
+            
+        }
     }
 }

@@ -19,8 +19,15 @@
     <None Remove="AppResources\CollapseWindpwIcon.png" />
     <None Remove="AppResources\Pictures\addPurple.png" />
     <None Remove="AppResources\Pictures\addWhite.png" />
+    <None Remove="AppResources\Pictures\pencilBlack.png" />
+    <None Remove="AppResources\Pictures\pencilBlack128px.png" />
+    <None Remove="AppResources\Pictures\pencilBlack64px.png" />
+    <None Remove="AppResources\Pictures\pencilPurple.png" />
     <None Remove="AppResources\Pictures\redCrossBorder.png" />
     <None Remove="AppResources\Pictures\redCrossFill.png" />
+    <None Remove="AppResources\Pictures\trashCanCloseRed.png" />
+    <None Remove="AppResources\Pictures\trashCanOpenRed.png" />
+    <None Remove="AppResources\Pictures\trashCanOpenWhite.png" />
     <None Remove="AppResources\PowerOffButtonIcon.png" />
   </ItemGroup>
 
@@ -29,8 +36,14 @@
     <Resource Include="AppResources\Fonts\Pribambas.ttf" />
     <Resource Include="AppResources\Pictures\addPurple.png" />
     <Resource Include="AppResources\Pictures\addWhite.png" />
+    <Resource Include="AppResources\Pictures\pencilBlack128px.png" />
+    <Resource Include="AppResources\Pictures\pencilBlack64px.png" />
+    <Resource Include="AppResources\Pictures\pencilPurple.png" />
     <Resource Include="AppResources\Pictures\redCrossBorder.png" />
     <Resource Include="AppResources\Pictures\redCrossFill.png" />
+    <Resource Include="AppResources\Pictures\trashCanCloseRed.png" />
+    <Resource Include="AppResources\Pictures\trashCanOpenRed.png" />
+    <Resource Include="AppResources\Pictures\trashCanOpenWhite.png" />
     <Resource Include="AppResources\PowerOffButtonIcon.png" />
   </ItemGroup>
 

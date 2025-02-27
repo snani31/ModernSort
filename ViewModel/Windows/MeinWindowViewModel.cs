@@ -17,6 +17,7 @@ using ModernSort.Static;
 using System.Windows.Media.Animation;
 using ModernSort.Services.Dialog;
 using RankingEntityes.IO_Entities.Classes;
+using System.IO;
 
 namespace ModernSort.ViewModel
 {
@@ -111,8 +112,15 @@ namespace ModernSort.ViewModel
             if (parameter is not null and RankingCategoryItemViewModel rankingItem)
             {
                 RankingCategory selectedCategory = _rankingCategories.First(x => x.ID.ToString() == rankingItem.ID);
-                var addNewRankingCategoryViewModel = new EditRankingWindowViewModel(selectedCategory,Serializer);
+                var addNewRankingCategoryViewModel = new EditRankingWindowViewModel(selectedCategory,Serializer,Deserializer);
                 bool? result = DialogService.ShowDialog(addNewRankingCategoryViewModel);
+
+                if(result ?? false)
+                {
+                    _rankingCategories.Deserialize(Deserializer, ProjactIoWorker.UserResourcesDirrectoryPath + @"\RankingCategories.json");
+                    OnPropertyChenged(nameof(RankingCategoriesItems));
+                }
+
             }
             
         }

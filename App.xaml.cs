@@ -25,6 +25,8 @@ namespace ModernSort
         private readonly  ISerializer _jsonSerializer;
         private readonly IDialogService _dialogService;
 
+        public event Action<ExitEventArgs> _applicationExit;
+
         App()
         {
             _dialogService = new DialogService(MainWindow);
@@ -38,12 +40,14 @@ namespace ModernSort
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            _applicationExit += OnExit;
             MainWindow = new MainWindow()
             {
                 DataContext = new MeinWindowViewModel(_jsonDeserializer, _jsonSerializer, _dialogService)
             };
             MainWindow.Show();
         }
+
     }
 
 }

@@ -1,6 +1,7 @@
 ﻿using ModernSort.Commands;
 using ModernSort.Services.Dialog;
 using ModernSort.Static;
+using RankingEntityes.IO_Entities.Enums;
 using RankingEntityes.IO_Entities.Interfaces;
 using RankingEntityes.Ranking_Entityes.Ranking_Categories;
 using System;
@@ -113,8 +114,9 @@ namespace ModernSort.ViewModel.Windows
                     RankingIconPath = newRankingIconPath
                 };
                 //Если процесс сериализации новой категории прошел успешно - закрыть текущее окно с параметров true
-                if (newRanking.Serialize(Serializer, ProjactIoWorker.UserResourcesDirrectoryPath 
-                    + @"\RankingCategories.json")) 
+                if (newRanking.Serialize(Serializer,
+                    ProjactIoWorker.UserResourcesDirrectoryPath + @"\RankingCategories.json",
+                    FileMode.Append)) 
                     CloseRequested?.Invoke(this,new DialogCloseRequestedEventArgs(true));
             }
             catch (Exception ex)

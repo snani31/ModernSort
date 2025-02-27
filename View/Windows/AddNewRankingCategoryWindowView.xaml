@@ -206,12 +206,12 @@
                 </ScrollViewer>
             </Border>
             <Button
+                Background="#512f95"
                 Grid.Row="2"
                 Content="Make new Ranking"
                 Margin="20"
                 Style="{StaticResource Button}"
-                Command="{Binding MakeNewRanking}"
-                            />
+                Command="{Binding MakeNewRanking}"/>
         </Grid>
     </Border>
 </Window>

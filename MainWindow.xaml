@@ -131,7 +131,8 @@
                                             VerticalAlignment="Center"
                                             Grid.Column="0" 
                                             Grid.Row="0"
-                                            Source="{Binding RankingIconPath}"/>
+                                            Source="{Binding RankingIconPath,
+                                            Converter={StaticResource ToBitmapConverter}}"/>
                                     </Border>
                                     <TextBlock 
                                         Margin="25"

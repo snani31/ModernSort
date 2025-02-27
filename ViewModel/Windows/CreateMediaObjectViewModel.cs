@@ -2,6 +2,7 @@
 using ModernSort.Services.Dialog;
 using ModernSort.Static;
 using ModernSort.ViewModel.Items;
+using RankingEntityes.IO_Entities.Enums;
 using RankingEntityes.IO_Entities.Interfaces;
 using RankingEntityes.Ranking_Entityes.MediaObjacts;
 using RankingEntityes.Ranking_Entityes.Ranking_Categories;
@@ -144,7 +145,9 @@ namespace ModernSort.ViewModel.Windows
                     Paths = newFilesFinalNames
                 };
                 //Если процесс сериализации нового медиа объекта прошел успешно - закрыть текущее окно с параметром true
-                if (newMediaObjact.Serialize(Serializer, SelectedCategory.RankingDirrectoryPath + @"\MediaObjacts.json"))
+                if (newMediaObjact.Serialize(Serializer,
+                    SelectedCategory.RankingDirrectoryPath + @"\MediaObjacts.json",
+                    FileMode.Append))
                     CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(true));
             }
             catch (Exception ex)

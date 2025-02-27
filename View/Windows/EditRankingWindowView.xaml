@@ -44,7 +44,8 @@
                     </Grid.ColumnDefinitions>
 
                     <Button Grid.Column="2"
-                     ToolTip="Закрыть">
+                     ToolTip="Закрыть"
+                            Command="{Binding CloseDialog}">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="10 20 0 10">
@@ -102,7 +103,8 @@
                         >
                         <Rectangle.Fill>
                             <ImageBrush
-                                ImageSource="{Binding CategoryIconPath, Mode=TwoWay}"
+                                ImageSource="{Binding CategoryIconPath, 
+                                Converter={StaticResource ToBitmapConverter}}"
                                 />
                         </Rectangle.Fill>
                     </Rectangle>
@@ -110,6 +112,7 @@
                     <Button
                         Margin="10"
                         Grid.Column="0"
+                        Command="{Binding EditCategoryImage}"
                         >
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
@@ -165,8 +168,24 @@
                             Foreground="#f7f9fe"
                             FontSize="20"
                             Style="{StaticResource SpanDefoult}"
-                            Text="Here Validation Errors Massages"
-                            />
+                            >
+                            <TextBlock.Text>
+                                <MultiBinding Converter="{StaticResource ValidationStringConverter}">
+                                    <Binding
+                                        ElementName="TytleTbx" 
+                                        Path= "(Validation.Errors)[0].ErrorContent"
+                                        Mode="OneWay"
+                                        />
+                                        <Binding/>
+                                        <Binding
+                                         ElementName="DescryptioonTbx" 
+                                         Path= "(Validation.Errors)[0].ErrorContent"
+                                         Mode="OneWay"
+                                         />
+                                    <Binding/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
                     </Border>
                     
                 </Grid>
@@ -189,6 +208,7 @@
                         </Grid.ColumnDefinitions>
                         <Button
                             Grid.Column="1"
+                            Command="{Binding DeleteCategory}"
                             Margin="10"
                             ToolTip="Delete Category">
                             <Button.Template>
@@ -227,6 +247,7 @@
                             </Button.Template>
                         </Button>
                         <TextBox 
+                            x:Name="TytleTbx"
                             ToolTip="Category Tytle"
                             FontSize="30"
                             Foreground="#6795de"
@@ -240,6 +261,7 @@
                     </Grid>
 
                     <TextBox
+                        x:Name="DescryptioonTbx"
                         ToolTip="Category Descryption"
                         Grid.Row="1"
                         FontSize="30"
@@ -253,8 +275,9 @@
                         />
 
                     <Button
-                        Background="#512f95"
                         Style="{StaticResource Button}"
+                        Command="{Binding EditCategory}"
+                        Background="#512f95"
                         Margin="10"
                         Grid.Row="2"
                         Content="Apply Edit"

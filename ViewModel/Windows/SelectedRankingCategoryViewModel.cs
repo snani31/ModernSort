@@ -5,6 +5,7 @@ using ModernSort.Static;
 using ModernSort.View.Pages;
 using ModernSort.ViewModel.Items;
 using ModernSort.ViewModel.Pages;
+using Newtonsoft.Json.Linq;
 using RankingEntityes.IO_Entities.Classes;
 using RankingEntityes.IO_Entities.Interfaces;
 using RankingEntityes.Ranking_Entityes.MediaObjacts;
@@ -36,21 +37,25 @@ namespace ModernSort.ViewModel.Windows
             }
         }
 
+        private MediaObjectItemViewModel _selectedMediaObjectItem;
         public MediaObjectItemViewModel SelectedMediaObjectItem
         {
+            private get 
+            {
+                return _selectedMediaObjectItem;
+            }
             set 
             {
-                if (value is null) return;
-                MediaObject a = _mediaObjects.First(x => x.ID.ToString() == value.ID);
-                CurrentMediaObject = new SelectedMediaObjectPageViewModel(a, 
-                    SelectedRankingCategory.RankingDirrectoryPath + @"\Media");
-                OnPropertyChenged(nameof(CurrentMediaObject));
+                _selectedMediaObjectItem = value;
+                EditMediaObjectWindowOpen?.OnCanExecuteChanged();
             }
         }
 
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
 
         public ICommand CreateMediaObjectWindowOpen { get; init; }
+        public RelayCommand EditMediaObjectWindowOpen { get; init; }
+        public ICommand OpenMediaObjectPage { get; init; }
         public ICommand CloseDialog { get; init; }
 
         private IDialogService DialogService {  get; init; }
@@ -59,11 +64,28 @@ namespace ModernSort.ViewModel.Windows
 
         private ISerializer Serializer { get; init; }
 
-        public SelectedMediaObjectPageViewModel CurrentMediaObject {  get; private set; }
+        private SelectedMediaObjectPageViewModel _currentMediaObject;
+        public SelectedMediaObjectPageViewModel CurrentMediaObject
+        {
+            get 
+            { 
+                return _currentMediaObject;
+            }
+            private set 
+            {
+                _currentMediaObject = value;
+                OnPropertyChenged(nameof(CurrentMediaObject)); 
+            }
+        }
 
         public SelectedRankingCategoryViewModel() 
         {
-
+            OpenMediaObjectPage = new RelayCommand(OpenMediaObjectPageView);
+            CloseDialog = new RelayCommand(
+                (p) =>
+                {
+                    CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(false));
+                });
         }
 
         public SelectedRankingCategoryViewModel(RankingCategory selectedRankingCategory,
@@ -74,12 +96,6 @@ namespace ModernSort.ViewModel.Windows
             SelectedRankingCategory = selectedRankingCategory;
             DialogService = dialogService;
             CreateMediaObjectViewModel viewModel = new CreateMediaObjectViewModel(Serializer, SelectedRankingCategory);
-
-            CloseDialog = new RelayCommand(
-                (p) =>
-                {
-                    CloseRequested?.Invoke(this,new DialogCloseRequestedEventArgs(false));
-                });
 
             CreateMediaObjectWindowOpen = new RelayCommand(
                 (p) => 
@@ -92,6 +108,29 @@ namespace ModernSort.ViewModel.Windows
                     }
                 });
 
+            EditMediaObjectWindowOpen = new RelayCommand(
+                (p) =>
+                {
+                    MediaObject selectedMediaObj = _mediaObjects.First(x => x.ID.ToString().Equals(SelectedMediaObjectItem.ID));
+                    EditMediaObjectViewModel editMediaObjectViewModel = new EditMediaObjectViewModel(SelectedRankingCategory,selectedMediaObj, Serializer, Deserializer);
+                    if (DialogService.ShowDialog(editMediaObjectViewModel) ?? false)
+                    {
+                        _mediaObjects.Deserialize(Deserializer, $@"{ProjactIoWorker.UserResourcesDirrectoryPath}\{SelectedRankingCategory.ID}\MediaObjacts.json");
+                        OnPropertyChenged(nameof(MediaObjacts));
+                        CurrentMediaObject = null;
+                        OnPropertyChenged(nameof(CurrentMediaObject));
+                    }
+                },
+                () => 
+                {
+                    if (SelectedMediaObjectItem is not null)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                );
+
             _mediaObjects = new IoCollection<MediaObject>();
 
             _mediaObjects.Deserialize(Deserializer, $@"{ProjactIoWorker.UserResourcesDirrectoryPath}\{SelectedRankingCategory.ID}\MediaObjacts.json");
@@ -101,6 +140,17 @@ namespace ModernSort.ViewModel.Windows
         private ObservableCollection<MediaObjectItemViewModel> ParseIoToCollection(IEnumerable<MediaObject> mediaObjects)
         {
             return new ObservableCollection<MediaObjectItemViewModel>(mediaObjects.Select(x => new MediaObjectItemViewModel(x,SelectedRankingCategory.RankingDirrectoryPath + @"\Media")));
+        }
+
+        private void OpenMediaObjectPageView(object? parameter)
+        {
+            if(parameter is not null and MediaObjectItemViewModel MediaObjectItem)
+            {
+                MediaObject mediaObjectSelected = _mediaObjects.First(x => x.ID.ToString() == MediaObjectItem.ID);
+                CurrentMediaObject = new SelectedMediaObjectPageViewModel(mediaObjectSelected,
+                SelectedRankingCategory.RankingDirrectoryPath + @"\Media");
+            }
+
         }
 
     }

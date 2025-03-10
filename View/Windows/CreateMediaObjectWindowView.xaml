@@ -351,6 +351,7 @@
                 Grid.Row="2"
                 Content="Create new MediaObject"
                 Margin="20"
+                Background="#512f95"
                 Style="{StaticResource Button}"
                 Command="{Binding CreateMediaObjectCommand}"
                         />

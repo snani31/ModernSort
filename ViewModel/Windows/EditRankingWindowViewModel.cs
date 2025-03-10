@@ -29,7 +29,7 @@ namespace ModernSort.ViewModel.Windows
             get { return _selectedRankingCategory; }
             init { _selectedRankingCategory = value; }
         }
-
+        private bool ImageWasChange { get; set; }
         private string _categoryDescryption;
 
         [Required(ErrorMessage = "Descryption can not be Empthy")]
@@ -78,7 +78,6 @@ namespace ModernSort.ViewModel.Windows
         public ICommand DeleteCategory { get; init; }
         public ICommand CloseDialog { get; init; }
         public ICommand EditCategoryImage { get; init; }
-        private bool ImageWasChange { get; set; }
 
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
 

@@ -2,7 +2,6 @@
 using ModernSort.Services.Dialog;
 using ModernSort.Static;
 using ModernSort.ViewModel.Items;
-using RankingEntityes.IO_Entities.Enums;
 using RankingEntityes.IO_Entities.Interfaces;
 using RankingEntityes.Ranking_Entityes.MediaObjacts;
 using RankingEntityes.Ranking_Entityes.Ranking_Categories;
@@ -105,7 +104,6 @@ namespace ModernSort.ViewModel.Windows
                             SelectedFiles.Add(new MediaFileSelectedViewModel(filePath,
                 new RelayCommand(RemoveMediafileFromList)));
                         }
-                        Validate(nameof(SelectedFiles), SelectedFiles);
                     }
                 }
                 );

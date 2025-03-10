@@ -49,7 +49,6 @@
 
   <ItemGroup>
     <Folder Include="StaticData\" />
-    <Folder Include="CustomeControls\" />
   </ItemGroup>
 
   <ItemGroup>

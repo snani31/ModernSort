@@ -18,6 +18,7 @@ using System.Windows.Media.Animation;
 using ModernSort.Services.Dialog;
 using RankingEntityes.IO_Entities.Classes;
 using System.IO;
+using System.Reflection.Metadata;
 
 namespace ModernSort.ViewModel
 {
@@ -25,6 +26,7 @@ namespace ModernSort.ViewModel
     {
         public ICommand OpenNewRankingWindow { get; init; }
         public ICommand OpenEditRankingWindow { get; init; }
+        public ICommand OpenSelectedRankingWindow { get; init; }
         private IDialogService DialogService { get; init; }
         private IDeserializer Deserializer {  get; init; }
         private ISerializer Serializer { get; init; }
@@ -61,6 +63,7 @@ namespace ModernSort.ViewModel
             DialogService = dialogService;
             OpenEditRankingWindow = new RelayCommand(OpenEditRankingCategoryWindow);
             OpenNewRankingWindow = new RelayCommand(GetOpenNewRankingWindow);
+            OpenSelectedRankingWindow = new RelayCommand(OpenSelectedRankingCategoryWindow2);
             Deserializer = deserializer;
             Serializer = serializer;
 
@@ -72,6 +75,7 @@ namespace ModernSort.ViewModel
                 {
                    Environment.Exit(0);
                 });
+
         }
 
         private void GetOpenNewRankingWindow(object? parameter)
@@ -105,6 +109,17 @@ namespace ModernSort.ViewModel
             RankingCategory selectedCategory = _rankingCategories.First(x => x.ID.ToString() == SelectedRankingCategory.ID);
             var addNewRankingCategoryViewModel = new SelectedRankingCategoryViewModel(selectedCategory, DialogService,Serializer,Deserializer);
             bool? result = DialogService.ShowDialog(addNewRankingCategoryViewModel);
+        }
+
+        private void OpenSelectedRankingCategoryWindow2(object? parameter)
+        {
+            if (parameter is RankingCategoryItemViewModel selectedRankingItemVM)
+            {
+                RankingCategory selectedCategory = _rankingCategories.First(x => x.ID.ToString().Equals(selectedRankingItemVM.ID));
+                var addNewRankingCategoryViewModel = new SelectedRankingCategoryViewModel(selectedCategory, DialogService, Serializer, Deserializer);
+                bool? result = DialogService.ShowDialog(addNewRankingCategoryViewModel);
+            }
+           
         }
 
         private void OpenEditRankingCategoryWindow(object? parameter)

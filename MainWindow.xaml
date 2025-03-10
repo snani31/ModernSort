@@ -97,7 +97,6 @@
                     ScrollViewer.CanContentScroll="False"
                     HorizontalContentAlignment="Left"
                     BorderThickness="0"
-                    SelectedValue="{Binding SelectedRankingCategory,Mode=OneWayToSource}"
                     ItemsSource="{Binding RankingCategoriesItems}"
                     Background="Transparent"
                     Padding="0 10 20 10"
@@ -105,11 +104,15 @@
                         <ListView.ItemContainerStyle>
                             <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource RankingListItemStyle}">
                                 <Setter Property="ToolTip" Value="{Binding Descryption}"/>
+                                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                             </Style>
                         </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Grid>
+                                <Grid
+                                    Background="Transparent"
+                                    >
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="150"/>
                                     </Grid.RowDefinitions>
@@ -177,10 +180,21 @@
                                                             </Setter.Value>
                                                         </Setter>
                                                     </Trigger>
+
                                                 </ControlTemplate.Triggers>
                                             </ControlTemplate>
                                         </Button.Template>
                                     </Button>
+
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseDown">
+                                            <i:InvokeCommandAction 
+                                                Command="{Binding DataContext.OpenSelectedRankingWindow, 
+                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                                                CommandParameter="{Binding}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

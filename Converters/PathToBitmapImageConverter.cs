@@ -33,8 +33,9 @@ namespace ModernSort.Converters
             }
             else
             {
-                string ConvertProblemMessage = fileNotFound ? "not found": "incorrect format or null";
-                throw new FileNotFoundException(message: $"File {nameof(imagePath)} was {ConvertProblemMessage}");
+                return "#653bbb";
+                //string ConvertProblemMessage = fileNotFound ? "not found": "incorrect format or null";
+                //throw new FileNotFoundException(message: $"File {nameof(imagePath)} was {ConvertProblemMessage}");
             }
         }
 

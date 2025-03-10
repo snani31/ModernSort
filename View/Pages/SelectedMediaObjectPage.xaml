@@ -18,8 +18,6 @@
             </Grid.RowDefinitions>
             <Rectangle
                      Grid.Row="0"
-                    StrokeThickness="5"
-                    Stroke="#653bbb"
                     Margin="10"
                     RadiusX="20"
                     RadiusY="20"
@@ -27,7 +25,8 @@
                 <Rectangle.Fill>
                     <ImageBrush
                 Stretch="Fill"
-                ImageSource="{Binding ElementName=MediaFilesList, Path=SelectedItem}"/>
+                ImageSource="{Binding ElementName=MediaFilesList, Path=SelectedItem, 
+                        Converter={StaticResource ToBitmapConverter}}"/>
                 </Rectangle.Fill>
             </Rectangle>
             <Border
@@ -50,8 +49,7 @@
                         Grid.Column="1"
                         >
                         <ListView
-                            
-                            SelectedIndex="{Binding SelectedPathIndex}"
+                            SelectedIndex="{Binding Path=SelectedPathIndex}"
                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
                        HorizontalContentAlignment="Stretch"
@@ -117,7 +115,7 @@
                                         <Rectangle.Fill>
                                             <ImageBrush
                                                 Stretch="Fill"
-                                                ImageSource="{Binding}"/>
+                                                ImageSource="{Binding Path=., Converter={StaticResource ToBitmapConverter}}"/>
                                         </Rectangle.Fill>
                                     </Rectangle>
                                     <DataTemplate.Triggers>

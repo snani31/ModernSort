@@ -22,7 +22,15 @@ namespace ModernSort.Static
         /// Константа содержит имя файла, хранящего состояние всех категорий ранжира проекта в формате json
         /// </summary>
         internal const string RANKING_CATEGORIES_JSON = "RankingCategories.json";
+        /// <summary>
+        /// Константа содержит имя файла, хранящего значения всех ранее присвоенных сущностям значений GUID
+        /// </summary>
         internal const string PROJACT_GUIDS_FILE = "ProjactGUIDSFile.txt";
+        /// <summary>
+        /// Константа содержит имя Json файла, состояние всех существующих медиа-объектов выбранной кагерории
+        /// </summary>
+        internal const string MEDIA_OBJECTS_JSON = "MediaObjacts.json";
+
         private static readonly string _currentExecutableFileDirectoryPath;
         internal static string UserResourcesDirrectoryPath
         {

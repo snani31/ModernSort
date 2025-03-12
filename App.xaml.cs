@@ -1,17 +1,13 @@
 ﻿using ModernSort.Services.Dialog;
-using ModernSort.Static;
-using ModernSort.Stores;
 using ModernSort.View.Windows;
 using ModernSort.ViewModel;
 using ModernSort.ViewModel.Windows;
 using RankingEntityes.IO_Entities.Classes;
 using RankingEntityes.IO_Entities.Interfaces;
-using System.Configuration;
-using System.Data;
 using System.IO;
 using System.Windows;
-using System.Windows.Input;
-using System.Windows.Navigation;
+using ModernSort.Stores.Catalog;
+using ModernSort.Services.Operations;
 
 namespace ModernSort
 {
@@ -24,8 +20,9 @@ namespace ModernSort
         private readonly IDeserializer _jsonDeserializer;
         private readonly  ISerializer _jsonSerializer;
         private readonly IDialogService _dialogService;
+        private readonly CatalogStore _catalogStore;
+        private readonly OperationService _operationService ;
 
-        public event Action<ExitEventArgs> _applicationExit;
 
         App()
         {
@@ -37,14 +34,28 @@ namespace ModernSort
             _dialogService.Register<EditMediaObjectViewModel, EditMediaObjectWindowView>();
             _jsonDeserializer = new JsonDeserializer();
             _jsonSerializer = new JsonSerializer();
+            
+
+            string applicationExecutableFile = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+            _catalogStore = new CatalogStore()
+            {
+                rankingCategoriesFileName = "RankingCategories.json",
+                coreResourcesCatalogPath = applicationExecutableFile + "\\UserResources",
+                GUIDsFileName = "ProjactGUIDSFile.txt",
+                mediaFilesCatalogName = "Media",
+                mediaObjectsFileName = "MediaObjacts.json",
+                rankingCategoryIconNameNoExtention = "Ranking_Icon"
+            };
+
+            _operationService = new OperationService(_jsonSerializer,_jsonDeserializer,_catalogStore);
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _applicationExit += OnExit;
             MainWindow = new MainWindow()
             {
-                DataContext = new MeinWindowViewModel(_jsonDeserializer, _jsonSerializer, _dialogService)
+                DataContext = new MeinWindowViewModel(_operationService,_catalogStore, _jsonDeserializer, _jsonSerializer, _dialogService)
             };
             MainWindow.Show();
         }

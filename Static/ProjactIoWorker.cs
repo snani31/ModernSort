@@ -71,15 +71,15 @@ namespace ModernSort.Static
         /// <summary>
         /// Метод возвращает значение GUID, если такого не было в указанном файле
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="GUIDsSaveFilePath"></param>
         /// <returns></returns>
-        internal static Guid GetUniqGuid(string path)
+        internal static Guid GetUniqGuid(string GUIDsSaveFilePath)
         {
             FileStream fileStream;
             var guid = Guid.NewGuid();
             List<string> existingGUIDs = new List<string>();
 
-            using (fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read))
+            using (fileStream = new FileStream(GUIDsSaveFilePath, FileMode.OpenOrCreate, FileAccess.Read))
             using (var filereader = new StreamReader(fileStream))
             {
 
@@ -91,7 +91,7 @@ namespace ModernSort.Static
             }
 
 
-            using (fileStream = new FileStream(path, FileMode.Append, FileAccess.Write))
+            using (fileStream = new FileStream(GUIDsSaveFilePath, FileMode.Append, FileAccess.Write))
             using (var fileWriter = new StreamWriter(fileStream))
                 switch (existingGUIDs.Any(x => x == guid.ToString()))
                 {
@@ -99,7 +99,7 @@ namespace ModernSort.Static
                         fileWriter.Close();
                         fileWriter.Dispose();
                         fileStream.Dispose();
-                        return GetUniqGuid(path);
+                        return GetUniqGuid(GUIDsSaveFilePath);
                     case false:
                         fileWriter.WriteLine(guid.ToString());
                         fileWriter.Close();

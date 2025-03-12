@@ -19,6 +19,8 @@ using ModernSort.Services.Dialog;
 using RankingEntityes.IO_Entities.Classes;
 using System.IO;
 using System.Reflection.Metadata;
+using ModernSort.Stores.Catalog;
+using ModernSort.Services.Operations;
 
 namespace ModernSort.ViewModel
 {
@@ -27,29 +29,17 @@ namespace ModernSort.ViewModel
         public ICommand OpenNewRankingWindow { get; init; }
         public ICommand OpenEditRankingWindow { get; init; }
         public ICommand OpenSelectedRankingWindow { get; init; }
+        public ICommand CloseApplication { get; }
         private IDialogService DialogService { get; init; }
+        private OperationService OperationService { get; init; }
+        private CatalogStore CatalogStore { get; init; }
         private IDeserializer Deserializer {  get; init; }
         private ISerializer Serializer { get; init; }
 
-        private RankingCategoryItemViewModel _selectedRankingCategory;
         private IoCollection<RankingCategory> _rankingCategories;
 
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
 
-        public ICommand CloseApplication { get; }
-
-        public RankingCategoryItemViewModel SelectedRankingCategory 
-        { 
-            get => _selectedRankingCategory; 
-            set
-            {
-                if (value is not null)
-                {
-                    _selectedRankingCategory = value;
-                    OpenSelectedRankingCategoryWindow();
-                }
-            }
-        }
         public ObservableCollection<RankingCategoryItemViewModel> RankingCategoriesItems
         {
             get
@@ -58,17 +48,20 @@ namespace ModernSort.ViewModel
             } 
         }
 
-        public MeinWindowViewModel(IDeserializer deserializer,ISerializer serializer,IDialogService dialogService)
+        public MeinWindowViewModel(OperationService operationService, CatalogStore catalogService , IDeserializer deserializer,ISerializer serializer,IDialogService dialogService)
         {
             DialogService = dialogService;
+            CatalogStore = catalogService;
+            OperationService = operationService;
+
             OpenEditRankingWindow = new RelayCommand(OpenEditRankingCategoryWindow);
             OpenNewRankingWindow = new RelayCommand(GetOpenNewRankingWindow);
-            OpenSelectedRankingWindow = new RelayCommand(OpenSelectedRankingCategoryWindow2);
+            OpenSelectedRankingWindow = new RelayCommand(OpenSelectedRankingCategoryWindow);
             Deserializer = deserializer;
             Serializer = serializer;
 
             _rankingCategories = new IoCollection<RankingCategory>();
-           _rankingCategories.Deserialize(Deserializer, ProjactIoWorker.UserResourcesDirrectoryPath + @"\RankingCategories.json");
+            _rankingCategories.Deserialize(Deserializer,CatalogStore.RankingCategoriesFilePath);
 
             CloseApplication = new RelayCommand(
                 (a) => 
@@ -80,7 +73,7 @@ namespace ModernSort.ViewModel
 
         private void GetOpenNewRankingWindow(object? parameter)
         {
-            var addNewRankingCategoryViewModel = new AddNewRankingCategoryViewModel(Serializer);
+            var addNewRankingCategoryViewModel = new AddNewRankingCategoryViewModel(OperationService, CatalogStore,Serializer);
 
             bool? result = DialogService.ShowDialog(addNewRankingCategoryViewModel);
 
@@ -101,23 +94,18 @@ namespace ModernSort.ViewModel
         {
             return new ObservableCollection<RankingCategoryItemViewModel>(list.Select(x => new RankingCategoryItemViewModel(x)));
         }
+
         /// <summary>
         /// Используется для открытия окна с заданной выбранной категорией ранжира
         /// </summary>
-        private void OpenSelectedRankingCategoryWindow()
-        {
-            RankingCategory selectedCategory = _rankingCategories.First(x => x.ID.ToString() == SelectedRankingCategory.ID);
-            var addNewRankingCategoryViewModel = new SelectedRankingCategoryViewModel(selectedCategory, DialogService,Serializer,Deserializer);
-            bool? result = DialogService.ShowDialog(addNewRankingCategoryViewModel);
-        }
-
-        private void OpenSelectedRankingCategoryWindow2(object? parameter)
+        private void OpenSelectedRankingCategoryWindow(object? parameter)
         {
             if (parameter is RankingCategoryItemViewModel selectedRankingItemVM)
             {
                 RankingCategory selectedCategory = _rankingCategories.First(x => x.ID.ToString().Equals(selectedRankingItemVM.ID));
+                CatalogStore.SelectRankingCategory(selectedCategory);
                 var addNewRankingCategoryViewModel = new SelectedRankingCategoryViewModel(selectedCategory, DialogService, Serializer, Deserializer);
-                bool? result = DialogService.ShowDialog(addNewRankingCategoryViewModel);
+                DialogService.ShowDialog(addNewRankingCategoryViewModel);
             }
            
         }
@@ -127,10 +115,11 @@ namespace ModernSort.ViewModel
             if (parameter is not null and RankingCategoryItemViewModel rankingItem)
             {
                 RankingCategory selectedCategory = _rankingCategories.First(x => x.ID.ToString() == rankingItem.ID);
-                var addNewRankingCategoryViewModel = new EditRankingWindowViewModel(selectedCategory,Serializer,Deserializer);
-                bool? result = DialogService.ShowDialog(addNewRankingCategoryViewModel);
+                CatalogStore.SelectRankingCategory(selectedCategory);
+                var addNewRankingCategoryViewModel = new EditRankingWindowViewModel(OperationService,CatalogStore);
+                bool? ExistingRankingCategoriesListWasChanged = DialogService.ShowDialog(addNewRankingCategoryViewModel);
 
-                if(result ?? false)
+                if(ExistingRankingCategoriesListWasChanged ?? false)
                 {
                     _rankingCategories.Deserialize(Deserializer, ProjactIoWorker.UserResourcesDirrectoryPath + @"\RankingCategories.json");
                     OnPropertyChenged(nameof(RankingCategoriesItems));

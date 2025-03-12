@@ -1,5 +1,7 @@
 ﻿using ModernSort.Commands;
+using ModernSort.Stores.Catalog;
 using ModernSort.Services.Dialog;
+using ModernSort.Services.Operations;
 using ModernSort.Static;
 using RankingEntityes.IO_Entities.Interfaces;
 using RankingEntityes.Ranking_Entityes.Ranking_Categories;
@@ -17,6 +19,9 @@ namespace ModernSort.ViewModel.Windows
 {
     internal class AddNewRankingCategoryViewModel: ViewModelValidateble, IDialogRequestClose
     {
+        private CatalogStore CatalogStore {  get; init; }
+        private OperationService OperationService { get; init; }
+
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
         private ISerializer Serializer {  get; init; }
         private string _selectedRankingIconPath;
@@ -82,47 +87,26 @@ namespace ModernSort.ViewModel.Windows
 
         }
 
-        public AddNewRankingCategoryViewModel(ISerializer serializer) : this()
+        public AddNewRankingCategoryViewModel(OperationService operationService,CatalogStore rankingCatalogStore,ISerializer serializer) : this()
         {
+            CatalogStore = rankingCatalogStore;
             Serializer = serializer;
+            OperationService = operationService;
         }
 
         private void MakeNewRankingMethod(object? parameter)
         {
-            try
+            IOperation operation = new CreateRankingCategoryOperation(NewRankingTytle,
+                NewRankingDescryption,
+                SelectedRankingIconPath);
+
+            bool AddCategoryWasSucsessfullyComplete = OperationService.InvokeOperation(operation);
+
+            if (AddCategoryWasSucsessfullyComplete)
             {
-                Guid id = ProjactIoWorker.GetUniqGuid(ProjactIoWorker.UserResourcesDirrectoryPath 
-                    + @$"\{ProjactIoWorker.PROJACT_GUIDS_FILE}");
-
-                string newRankingDirrectoryPath = ProjactIoWorker.UserResourcesDirrectoryPath 
-                    + @$"\{id.ToString()}";
-
-                string newRankingIconPath = newRankingDirrectoryPath
-                    + @$"\{ProjactIoWorker.RANKING_CATEGORY_ICON_TYTLE}{Path.GetExtension(SelectedRankingIconPath)}";
-
-                Directory.CreateDirectory(newRankingDirrectoryPath);
-                File.Copy(SelectedRankingIconPath, newRankingIconPath);
-                Directory.CreateDirectory(newRankingDirrectoryPath + @"\Media");
-                File.Create(newRankingDirrectoryPath + @"\MediaObjacts.json");
-                RankingCategory newRanking = new RankingCategory()
-                {
-                    Description = NewRankingDescryption,
-                    Tytle = NewRankingTytle,
-                    ID = id,
-                    RankingDirrectoryPath = newRankingDirrectoryPath,
-                    RankingIconPath = newRankingIconPath
-                };
-                //Если процесс сериализации новой категории прошел успешно - закрыть текущее окно с параметров true
-                if (newRanking.Serialize(Serializer,
-                    ProjactIoWorker.UserResourcesDirrectoryPath + @"\RankingCategories.json",
-                    FileMode.Append)) 
-                    CloseRequested?.Invoke(this,new DialogCloseRequestedEventArgs(true));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                CatalogStore.DropRankingSelection();
+                CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(true));
             }
         }
-
     }
 }

@@ -1,35 +1,18 @@
 ﻿using ModernSort.Commands;
+using ModernSort.Stores.Catalog;
 using ModernSort.Services.Dialog;
+using ModernSort.Services.Operations;
 using ModernSort.Static;
-using RankingEntityes.IO_Entities.Interfaces;
-using RankingEntityes.Ranking_Entityes.Ranking_Categories;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 
 namespace ModernSort.ViewModel.Windows
 {
     internal class EditRankingWindowViewModel : ViewModelValidateble, IDialogRequestClose
     {
-		private ISerializer Serializer {  get; init; }
-        private IDeserializer Deserializer { get; init; }
-
-        private RankingCategory _selectedRankingCategory;
-
-        private RankingCategory SelectedRankingCategory
-        {
-            get { return _selectedRankingCategory; }
-            init { _selectedRankingCategory = value; }
-        }
-        private bool ImageWasChange { get; set; }
+        private OperationService OperationService {  get; init; }
+        private CatalogStore CatalogStore { get; init; }
+        private bool IconWasChange { get; set; }
         private string _categoryDescryption;
 
         [Required(ErrorMessage = "Descryption can not be Empthy")]
@@ -70,7 +53,7 @@ namespace ModernSort.ViewModel.Windows
                 if (value is null || value == String.Empty) return;
                 _categoryIconPath = value;
                 OnPropertyChenged(nameof(CategoryIconPath));
-                ImageWasChange = (value.Equals(SelectedRankingCategory.RankingIconPath)) ? false: true;
+                IconWasChange = (value.Equals(CatalogStore.SelectedRankingCategory.RankingIconPath)) ? false: true;
             }
         }
 
@@ -103,71 +86,41 @@ namespace ModernSort.ViewModel.Windows
             DeleteCategory = new RelayCommand(DeleteCategoryMethod);
         }
 
-        public EditRankingWindowViewModel(RankingCategory rankingCategory,
-            ISerializer serializer, IDeserializer deserializer)
-            : this() 
+        public EditRankingWindowViewModel(OperationService operationService, CatalogStore catalogStore)
+            : this()
         {
-            SelectedRankingCategory = rankingCategory;
-            Serializer = serializer;
-            Deserializer = deserializer;
+            OperationService = operationService;
+            CatalogStore = catalogStore;
 
-            CategoryTytle = SelectedRankingCategory.Tytle;
-            CategoryDescryption = SelectedRankingCategory.Description;
-            CategoryIconPath = SelectedRankingCategory.RankingIconPath;
+            CategoryTytle = CatalogStore.SelectedRankingCategory.Tytle;
+            CategoryDescryption = CatalogStore.SelectedRankingCategory.Description;
+            CategoryIconPath = CatalogStore.SelectedRankingCategory.RankingIconPath;
         }
 
         private void DeleteCategoryMethod(object? parameter)
         {
+            IOperation deleteCategoryOperation = new DeleteRankingCategoryOperation();
+            bool RemoveRankingWasSuccsesfullyCompleted = OperationService.InvokeOperation(deleteCategoryOperation);
 
-            string JsonfilePath = ProjactIoWorker.UserResourcesDirrectoryPath
-                + "\\" + ProjactIoWorker.RANKING_CATEGORIES_JSON;
-            string selectedRankingDirectoryPath = SelectedRankingCategory.RankingDirrectoryPath;
-
-            var existingRankings = new IoCollection<RankingCategory>();
-            existingRankings.Deserialize(Deserializer, JsonfilePath);
-
-            existingRankings = new IoCollection<RankingCategory>
-                (existingRankings.Where(x => !x.ID.Equals(SelectedRankingCategory.ID)));
-
-            if (existingRankings.Serialize(Serializer, JsonfilePath,
-                mode: FileMode.OpenOrCreate))
+            if (RemoveRankingWasSuccsesfullyCompleted)
             {
-                Directory.Delete(selectedRankingDirectoryPath, true);
-                CloseRequested?.Invoke(this,new DialogCloseRequestedEventArgs(true));
+                CatalogStore.DropRankingSelection();
+                CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(true));
             }
-
         }
 
         private void EditCategoryMethod(object? parameter)
         {
+            IOperation operation = new UpdateRankingCategoryOperation(tytle:CategoryTytle,
+                description:CategoryDescryption,
+                newImageFileBasePath: CategoryIconPath, 
+                iconWasChanged: IconWasChange);
 
-            string JsonfilePath = ProjactIoWorker.UserResourcesDirrectoryPath
-                + "\\" + ProjactIoWorker.RANKING_CATEGORIES_JSON;
-            string selectedRankingDirectoryPath = SelectedRankingCategory.RankingDirrectoryPath;
+            bool UpdateRankingWasSuccesfullyCompleted = OperationService.InvokeOperation(operation);
 
-            var existingRankings = new IoCollection<RankingCategory>();
-            existingRankings.Deserialize(Deserializer, JsonfilePath);
-
-            int indexOfSelectedRanking = existingRankings.Select( (member,index) => (member, index))
-                .First(x => x.member.ID.Equals(SelectedRankingCategory.ID)).index;
-
-            existingRankings[indexOfSelectedRanking] = new RankingCategory()
+            if (UpdateRankingWasSuccesfullyCompleted)
             {
-                ID = SelectedRankingCategory.ID,
-                Description = CategoryDescryption,
-                RankingDirrectoryPath = SelectedRankingCategory.RankingDirrectoryPath,
-                Tytle = CategoryTytle,
-                RankingIconPath = SelectedRankingCategory.RankingIconPath
-            };
-
-            if(ImageWasChange)
-                File.Copy(CategoryIconPath, SelectedRankingCategory.RankingIconPath, overwrite: true);
-
-
-
-            if (existingRankings.Serialize(Serializer, JsonfilePath,
-                mode: FileMode.OpenOrCreate))
-            {
+                CatalogStore.DropRankingSelection();
                 CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(true));
             }
         }

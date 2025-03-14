@@ -21,6 +21,7 @@ using System.IO;
 using System.Reflection.Metadata;
 using ModernSort.Stores.Catalog;
 using ModernSort.Services.Operations;
+using ModernSort.Services;
 
 namespace ModernSort.ViewModel
 {
@@ -32,6 +33,7 @@ namespace ModernSort.ViewModel
         public ICommand CloseApplication { get; }
         private IDialogService DialogService { get; init; }
         private OperationService OperationService { get; init; }
+        private OutputContentService ContentService { get; init; }
         private CatalogStore CatalogStore { get; init; }
         private IDeserializer Deserializer {  get; init; }
         private ISerializer Serializer { get; init; }
@@ -48,11 +50,12 @@ namespace ModernSort.ViewModel
             } 
         }
 
-        public MeinWindowViewModel(OperationService operationService, CatalogStore catalogService , IDeserializer deserializer,ISerializer serializer,IDialogService dialogService)
+        public MeinWindowViewModel(OutputContentService outputContentService,OperationService operationService, CatalogStore catalogService , IDeserializer deserializer,ISerializer serializer,IDialogService dialogService)
         {
             DialogService = dialogService;
             CatalogStore = catalogService;
             OperationService = operationService;
+            ContentService = outputContentService;
 
             OpenEditRankingWindow = new RelayCommand(OpenEditRankingCategoryWindow);
             OpenNewRankingWindow = new RelayCommand(GetOpenNewRankingWindow);
@@ -60,8 +63,7 @@ namespace ModernSort.ViewModel
             Deserializer = deserializer;
             Serializer = serializer;
 
-            _rankingCategories = new IoCollection<RankingCategory>();
-            _rankingCategories.Deserialize(Deserializer,CatalogStore.RankingCategoriesFilePath);
+            _rankingCategories = ContentService.GetUnloadedRankingCategories();
 
             CloseApplication = new RelayCommand(
                 (a) => 
@@ -73,13 +75,13 @@ namespace ModernSort.ViewModel
 
         private void GetOpenNewRankingWindow(object? parameter)
         {
-            var addNewRankingCategoryViewModel = new AddNewRankingCategoryViewModel(OperationService, CatalogStore,Serializer);
+            var addNewRankingCategoryViewModel = new AddNewRankingCategoryViewModel(OperationService,ContentService);
 
             bool? result = DialogService.ShowDialog(addNewRankingCategoryViewModel);
 
             if (result == true) // если добавление новой категории прошло успешно
             {
-                _rankingCategories.Deserialize(Deserializer, ProjactIoWorker.UserResourcesDirrectoryPath + @"\RankingCategories.json");
+                _rankingCategories = ContentService.GetUnloadedRankingCategories();
                 OnPropertyChenged(nameof(RankingCategoriesItems));
             }
             
@@ -103,8 +105,10 @@ namespace ModernSort.ViewModel
             if (parameter is RankingCategoryItemViewModel selectedRankingItemVM)
             {
                 RankingCategory selectedCategory = _rankingCategories.First(x => x.ID.ToString().Equals(selectedRankingItemVM.ID));
-                CatalogStore.SelectRankingCategory(selectedCategory);
-                var addNewRankingCategoryViewModel = new SelectedRankingCategoryViewModel(selectedCategory, DialogService, Serializer, Deserializer);
+
+                ContentService.SelectRankingCategory(selectedCategory);
+
+                var addNewRankingCategoryViewModel = new SelectedRankingCategoryViewModel(ContentService,CatalogStore,OperationService,selectedCategory, DialogService, Serializer, Deserializer);
                 DialogService.ShowDialog(addNewRankingCategoryViewModel);
             }
            
@@ -115,13 +119,15 @@ namespace ModernSort.ViewModel
             if (parameter is not null and RankingCategoryItemViewModel rankingItem)
             {
                 RankingCategory selectedCategory = _rankingCategories.First(x => x.ID.ToString() == rankingItem.ID);
-                CatalogStore.SelectRankingCategory(selectedCategory);
-                var addNewRankingCategoryViewModel = new EditRankingWindowViewModel(OperationService,CatalogStore);
+
+                ContentService.SelectRankingCategory(selectedCategory);
+
+                var addNewRankingCategoryViewModel = new EditRankingWindowViewModel(OperationService,ContentService);
                 bool? ExistingRankingCategoriesListWasChanged = DialogService.ShowDialog(addNewRankingCategoryViewModel);
 
                 if(ExistingRankingCategoriesListWasChanged ?? false)
                 {
-                    _rankingCategories.Deserialize(Deserializer, ProjactIoWorker.UserResourcesDirrectoryPath + @"\RankingCategories.json");
+                    _rankingCategories = ContentService.GetUnloadedRankingCategories();
                     OnPropertyChenged(nameof(RankingCategoriesItems));
                 }
 

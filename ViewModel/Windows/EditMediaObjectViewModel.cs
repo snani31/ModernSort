@@ -1,6 +1,9 @@
 ﻿using ModernSort.Commands;
 using ModernSort.Enums;
+using ModernSort.Services;
 using ModernSort.Services.Dialog;
+using ModernSort.Services.Operations;
+using ModernSort.Services.Operatios;
 using ModernSort.Static;
 using ModernSort.ViewModel.Items;
 using RankingEntityes.IO_Entities.Interfaces;
@@ -32,18 +35,10 @@ namespace ModernSort.ViewModel.Windows
                 OnPropertyChenged(nameof(PagePresenter));
             }
         }
-        private ISerializer Serializer { get; init; }
-        private IDeserializer Deserializer { get; init; }
-
         private List<string> BeforeEditFilePaths { get; init; }
 
-        private RankingCategory _selectedRankingCategory;
-
-        private RankingCategory SelectedRankingCategory
-        {
-            get { return _selectedRankingCategory; }
-            init { _selectedRankingCategory = value; }
-        }
+        public OperationService OperationService { get; }
+        public OutputContentService ContentService { get; }
 
         private MediaObject _selectedMediaObject;
 
@@ -99,12 +94,6 @@ namespace ModernSort.ViewModel.Windows
         public ICommand SelectMultimediaFiles { get; init; }
         public ICommand RemoveFileFromList {  get; init; }
         public RelayCommand EditMediaObject { get; init; }
-        private string SelectedCategoryMediaFilesDirectoryPath { 
-            get 
-            {
-                return SelectedRankingCategory.RankingDirrectoryPath + "\\" + "Media";
-            } 
-        }
 
         public EditMediaObjectViewModel()
         {
@@ -114,7 +103,7 @@ namespace ModernSort.ViewModel.Windows
                     CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(false));
                 });
 
-            DeleteMediaObjact = new RelayCommand(DeleteMediaObjactMethod);
+            DeleteMediaObjact = new RelayCommand(DeleteMediaObjactMethodRefactoring);
 
             SelectMultimediaFiles = new RelayCommand(
                (p) =>
@@ -137,18 +126,16 @@ namespace ModernSort.ViewModel.Windows
 
         }
 
-        internal EditMediaObjectViewModel(RankingCategory rankingCategory, MediaObject mediaObject, ISerializer serializer, IDeserializer deserializer) : this()
+        internal EditMediaObjectViewModel(OperationService operationService,OutputContentService contentService) : this()
         {
-            Serializer = serializer;
-            Deserializer = deserializer;
-            SelectedMediaObject = mediaObject;
-            SelectedRankingCategory = rankingCategory;
+            OperationService = operationService;
+            ContentService = contentService;
 
-            MediaObjectTytle = SelectedMediaObject.Tytle;
-            MediaObjectDescryption = SelectedMediaObject.Description;
+            MediaObjectTytle = contentService.SelectedRankingCategory.Tytle;
+            MediaObjectDescryption = contentService.SelectedRankingCategory.Description;
             PagePresenter = FunktionPageEnum.FilesPresent;
 
-            BeforeEditFilePaths = SelectedMediaObject.Paths.Select(x => @$"{SelectedRankingCategory.RankingDirrectoryPath}\Media\{x}").ToList();
+            BeforeEditFilePaths = new List<string>(ContentService.MediaObjectContentService.GetFilesFullPathsOfSelectedMediaObject());
             SelectedFilePaths = new ObservableCollection<string>(BeforeEditFilePaths);
 
             SelectedFilePaths.CollectionChanged += (object? sender, NotifyCollectionChangedEventArgs e) =>
@@ -158,30 +145,19 @@ namespace ModernSort.ViewModel.Windows
 
         }
 
-        private void DeleteMediaObjactMethod(object? parameter)
+        private void DeleteMediaObjactMethodRefactoring(object? parameter)
         {
-            string jsonFilePath = SelectedRankingCategory.RankingDirrectoryPath + "\\"
-                + ProjactIoWorker.MEDIA_OBJECTS_JSON;
+            IOperation operation = new RamoveMediaObjectOperation(BeforeEditFilePaths,ContentService.MediaObjectContentService.SelectedMediaObject.ID);
 
+            bool MediaObjectRemoveWasSuccsesfullyCompleted = OperationService.InvokeOperation<MediaObject>(operation);
 
-            var existingMediaObjects = new IoCollection<MediaObject>();
-            existingMediaObjects.Deserialize(Deserializer, jsonFilePath);
-
-            existingMediaObjects = new IoCollection<MediaObject>
-                (existingMediaObjects.Where(x => !x.ID.Equals(SelectedMediaObject.ID)));
-
-            if (existingMediaObjects.Serialize(Serializer, jsonFilePath,
-                mode: FileMode.OpenOrCreate))
+            if (MediaObjectRemoveWasSuccsesfullyCompleted)
             {
-                foreach (var filePath in BeforeEditFilePaths)
-                {
-                    File.Delete(filePath);
-                }
+                ContentService.MediaObjectContentService.DropSelectionOfMEdiaObject();
                 CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(true));
             }
-            Validate(nameof(SelectedFilePaths), SelectedFilePaths);
-        }
 
+        }
         private void RemoveFileFromListMethod(object? parameter)
         {
             if (parameter is string mediafile and not null)
@@ -192,88 +168,20 @@ namespace ModernSort.ViewModel.Windows
 
         private void EditMediaObjact(object? parameter)
         {
-            try
+            IOperation operation = new UpdateMediaObjectOperation(tytle:MediaObjectTytle,
+                description: MediaObjectDescryption,
+                ContentService.MediaObjectContentService.SelectedMediaObject.ID,
+                BeforeEditFilePaths,
+                SelectedFilePaths);
+
+            bool MediaObjectUpdateWasSuccsesfullyCompleted = OperationService.InvokeOperation<MediaObject>(operation);
+
+            if (MediaObjectUpdateWasSuccsesfullyCompleted)
             {
-
-                #region existingFilesWork
-                List<string> existingFileNames = new List<string>(
-                            Directory.GetFiles(SelectedCategoryMediaFilesDirectoryPath)
-                            .Select(x => Path.GetFileNameWithoutExtension(x)));
-
-                List<string> newFilesFinalNames = new List<string>();
-
-                CopyFilesToDirrectory(new Queue<string>(SelectedFilePaths),
-                  existingFileNames, ref newFilesFinalNames);
-                #endregion
-
-
-                #region ExistingMediaObjectsWork
-                var existingMediaObjects = new IoCollection<MediaObject>();
-                existingMediaObjects.Deserialize(Deserializer,
-                    SelectedRankingCategory.RankingDirrectoryPath + @"\MediaObjacts.json");
-
-                int indexOfSelectedMediaObject = existingMediaObjects.Select((member, index) => (member, index))
-                    .First(x => x.member.ID.Equals(SelectedMediaObject.ID)).index;
-
-                existingMediaObjects[indexOfSelectedMediaObject] = new MediaObject()
-                {
-                    ID = SelectedMediaObject.ID,
-                    Description = MediaObjectDescryption,
-                    Tytle = MediaObjectTytle,
-                    Paths = newFilesFinalNames
-                }; 
-                #endregion
-
-
-
-                if (existingMediaObjects.Serialize(Serializer,
-                    SelectedRankingCategory.RankingDirrectoryPath + @"\MediaObjacts.json",
-                    mode: FileMode.OpenOrCreate))
-                {
-                    foreach (var filePath in BeforeEditFilePaths)
-                    {
-                        File.Delete(filePath);
-                    }
-                    CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(true));
-                }
-
+                ContentService.MediaObjectContentService.DropSelectionOfMEdiaObject();
+                CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(true));
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            /// Метод позволяет проверять наличие файлов с тем же именем, что и следующий файл на копирование из очереди
-            /// , чтобы избежать конфликта имён файлов внутри конечного каталога
-            void CopyFilesToDirrectory(Queue<string> copiedFiles, List<string> existingFileNames,
-                ref List<string> newFilesFinalNames)
-            {
-                if (copiedFiles.Count < 1) return;
-                string currentFullFilePath = copiedFiles.Dequeue();
-
-                var fileName = new
-                {
-                    FileExtention = Path.GetExtension(currentFullFilePath),
-                    FileName = Path.GetFileNameWithoutExtension(currentFullFilePath),
-                };
-                /*
-                 цикл работает до тех пор, пока в указанной директории существует файл с таким же именем, как 
-                следующий в очереди
-                 */
-                string name = fileName.FileName;
-                while (existingFileNames.Any(x => x == name))
-                {
-                    name = Path.GetRandomFileName();
-                }
-
-                File.Copy(currentFullFilePath,
-                        SelectedCategoryMediaFilesDirectoryPath + @$"\{name}{fileName.FileExtention}");
-                existingFileNames.Add(name);
-                newFilesFinalNames.Add(name + fileName.FileExtention);
-
-                CopyFilesToDirrectory(copiedFiles, existingFileNames, ref newFilesFinalNames);
-            }
-
         }
+
     }
 }

@@ -1,6 +1,8 @@
 ﻿using ModernSort.Commands;
 using ModernSort.Services.Dialog;
+using ModernSort.Services.Operations;
 using ModernSort.Static;
+using ModernSort.Stores.Catalog;
 using ModernSort.ViewModel.Items;
 using RankingEntityes.IO_Entities.Interfaces;
 using RankingEntityes.Ranking_Entityes.MediaObjacts;
@@ -23,6 +25,8 @@ namespace ModernSort.ViewModel.Windows
 {
     class CreateMediaObjectViewModel : ViewModelValidateble, IDialogRequestClose
     {
+        private OperationService OperationService { get; init; }
+
         private ObservableCollection<MediaFileSelectedViewModel> _selectedFiles;
         [MinLength(1, ErrorMessage = "You need to select just 1 file at least")]
         public ObservableCollection<MediaFileSelectedViewModel> SelectedFiles
@@ -73,15 +77,6 @@ namespace ModernSort.ViewModel.Windows
         public ICommand SelectMultimediaFiles { get; }
         public RelayCommand CreateMediaObjectCommand { get; }
 
-        private ISerializer Serializer { get; init; }
-        private RankingCategory SelectedCategory { get; init; }
-        private string SelectedCategoryMediaFilesDirectoryPath { 
-            get 
-            {
-                return SelectedCategory.RankingDirrectoryPath + @"\Media";
-            }
-        }
-
         public CreateMediaObjectViewModel()
         {
             SelectedFiles = new ObservableCollection<MediaFileSelectedViewModel>();
@@ -109,80 +104,29 @@ namespace ModernSort.ViewModel.Windows
                 );
 
             CreateMediaObjectCommand = new RelayCommand(
-                CreateMediaObjact,
+                CreateMediaObjactMethod,
                 base.CanExecuteByValidation);
             base.PostValidationChange += CreateMediaObjectCommand.OnCanExecuteChanged;
         }
 
-        public CreateMediaObjectViewModel(ISerializer serializer, RankingCategory selectedRankingCategory) : this()
+        public CreateMediaObjectViewModel(OperationService operationService) 
+            : this()
         {
-            Serializer = serializer;
-            SelectedCategory = selectedRankingCategory;
+            OperationService = operationService;
         }
 
-        private void CreateMediaObjact(object? parameter)
+        private void CreateMediaObjactMethod(object? parameter)
         {
-            try
+            IEnumerable<string> selectedFileNames = SelectedFiles.Select(x => x.MediaImagePath);
+            IOperation createMediaObjectOperation = new CreateMediaObjectOperation(selectedFileNames,Tytle,Descriptyon); 
+
+            bool MediaObjectCreationWasSuccesfullyCompleted = 
+                OperationService.InvokeOperation<MediaObject>(createMediaObjectOperation);
+
+            if (MediaObjectCreationWasSuccesfullyCompleted)
             {
-                Guid id = ProjactIoWorker.GetUniqGuid(ProjactIoWorker.UserResourcesDirrectoryPath
-                    + @$"\{ProjactIoWorker.PROJACT_GUIDS_FILE}");
-
-                List<string> existingFileNames = new List<string>(
-                    Directory.GetFiles(SelectedCategoryMediaFilesDirectoryPath)
-                    .Select(x => Path.GetFileNameWithoutExtension(x)));
-                List<string> newFilesFinalNames = new List<string>();
-
-                CopyFilesToDirrectory(new Queue<MediaFileSelectedViewModel>(SelectedFiles),
-                   existingFileNames,ref newFilesFinalNames);
-
-                MediaObject newMediaObjact = new MediaObject()
-                {
-                    Description = this.Descriptyon,
-                    Tytle = this.Tytle,
-                    ID = id,
-                    Paths = newFilesFinalNames
-                };
-                //Если процесс сериализации нового медиа объекта прошел успешно - закрыть текущее окно с параметром true
-                if (newMediaObjact.Serialize(Serializer,
-                    SelectedCategory.RankingDirrectoryPath + @"\MediaObjacts.json",
-                    FileMode.Append))
-                    CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(true));
+                CloseRequested?.Invoke(this,new DialogCloseRequestedEventArgs(true));
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            /// Метод позволяет проверять наличие файлов с тем же именем, что и следующий файл на копирование из очереди
-            /// , чтобы избежать конфликта имён файлов внутри конечного каталога
-            void CopyFilesToDirrectory(Queue<MediaFileSelectedViewModel> copiedFiles,List<string> existingFileNames,
-                ref List<string> newFilesFinalNames)
-            {
-                if (copiedFiles.Count <1) return;
-                string currentFullFilePath = copiedFiles.Dequeue().MediaImagePath;
-
-                var fileName = new
-                    {  FileExtention = Path.GetExtension(currentFullFilePath),
-                    FileName = Path.GetFileNameWithoutExtension(currentFullFilePath),
-                };
-                /*
-                 цикл работает до тех пор, пока в указанной директории существует файл с таким же именем, как 
-                следующий в очереди
-                 */
-                string name = fileName.FileName;
-                while (existingFileNames.Any(x => x == name))
-                {
-                    name = Path.GetRandomFileName();
-                }
-
-                File.Copy(currentFullFilePath,
-                        SelectedCategoryMediaFilesDirectoryPath + @$"\{name}{fileName.FileExtention}");
-                existingFileNames.Add(name);
-                newFilesFinalNames.Add(name + fileName.FileExtention);
-
-                CopyFilesToDirrectory(copiedFiles,existingFileNames,ref newFilesFinalNames);
-            }
-
         }
 
         private void RemoveMediafileFromList(object? parameter)

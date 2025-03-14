@@ -5,13 +5,15 @@ using ModernSort.Services.Operations;
 using ModernSort.Static;
 using System.ComponentModel.DataAnnotations;
 using System.Windows.Input;
+using RankingEntityes.Ranking_Entityes.Ranking_Categories;
+using ModernSort.Services;
 
 namespace ModernSort.ViewModel.Windows
 {
     internal class EditRankingWindowViewModel : ViewModelValidateble, IDialogRequestClose
     {
         private OperationService OperationService {  get; init; }
-        private CatalogStore CatalogStore { get; init; }
+        private OutputContentService ContentService { get; init; }
         private bool IconWasChange { get; set; }
         private string _categoryDescryption;
 
@@ -44,7 +46,6 @@ namespace ModernSort.ViewModel.Windows
         }
 
         private string _categoryIconPath;
-
         public string CategoryIconPath
         {
             get { return _categoryIconPath; }
@@ -53,7 +54,7 @@ namespace ModernSort.ViewModel.Windows
                 if (value is null || value == String.Empty) return;
                 _categoryIconPath = value;
                 OnPropertyChenged(nameof(CategoryIconPath));
-                IconWasChange = (value.Equals(CatalogStore.SelectedRankingCategory.RankingIconPath)) ? false: true;
+                IconWasChange = (value.Equals(ContentService.SelectedRankingCategory.RankingIconPath)) ? false: true;
             }
         }
 
@@ -86,25 +87,24 @@ namespace ModernSort.ViewModel.Windows
             DeleteCategory = new RelayCommand(DeleteCategoryMethod);
         }
 
-        public EditRankingWindowViewModel(OperationService operationService, CatalogStore catalogStore)
+        public EditRankingWindowViewModel(OperationService operationService, OutputContentService contentService)
             : this()
         {
+            ContentService = contentService;
             OperationService = operationService;
-            CatalogStore = catalogStore;
 
-            CategoryTytle = CatalogStore.SelectedRankingCategory.Tytle;
-            CategoryDescryption = CatalogStore.SelectedRankingCategory.Description;
-            CategoryIconPath = CatalogStore.SelectedRankingCategory.RankingIconPath;
+            CategoryTytle = contentService.SelectedRankingCategory.Tytle;
+            CategoryDescryption = contentService.SelectedRankingCategory.Description;
+            CategoryIconPath = contentService.SelectedRankingCategory.RankingIconPath;
         }
 
         private void DeleteCategoryMethod(object? parameter)
         {
-            IOperation deleteCategoryOperation = new DeleteRankingCategoryOperation();
-            bool RemoveRankingWasSuccsesfullyCompleted = OperationService.InvokeOperation(deleteCategoryOperation);
+            IOperation deleteCategoryOperation = new RemoveRankingCategoryOperation(ContentService.SelectedRankingCategory.ID);
+            bool RemoveRankingWasSuccsesfullyCompleted = OperationService.InvokeOperation<RankingCategory>(deleteCategoryOperation);
 
             if (RemoveRankingWasSuccsesfullyCompleted)
             {
-                CatalogStore.DropRankingSelection();
                 CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(true));
             }
         }
@@ -114,13 +114,13 @@ namespace ModernSort.ViewModel.Windows
             IOperation operation = new UpdateRankingCategoryOperation(tytle:CategoryTytle,
                 description:CategoryDescryption,
                 newImageFileBasePath: CategoryIconPath, 
-                iconWasChanged: IconWasChange);
+                iconWasChanged: IconWasChange,
+                updatebeleRankingCategory: ContentService.SelectedRankingCategory);
 
-            bool UpdateRankingWasSuccesfullyCompleted = OperationService.InvokeOperation(operation);
+            bool UpdateRankingWasSuccesfullyCompleted = OperationService.InvokeOperation<RankingCategory>(operation);
 
             if (UpdateRankingWasSuccesfullyCompleted)
             {
-                CatalogStore.DropRankingSelection();
                 CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(true));
             }
         }

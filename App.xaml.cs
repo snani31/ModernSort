@@ -8,6 +8,7 @@ using System.IO;
 using System.Windows;
 using ModernSort.Stores.Catalog;
 using ModernSort.Services.Operations;
+using ModernSort.Services;
 
 namespace ModernSort
 {
@@ -22,6 +23,7 @@ namespace ModernSort
         private readonly IDialogService _dialogService;
         private readonly CatalogStore _catalogStore;
         private readonly OperationService _operationService ;
+        private readonly OutputContentService _outputContentService;
 
 
         App()
@@ -49,13 +51,14 @@ namespace ModernSort
             };
 
             _operationService = new OperationService(_jsonSerializer,_jsonDeserializer,_catalogStore);
+            _outputContentService = new OutputContentService(_catalogStore, _jsonDeserializer);
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             MainWindow = new MainWindow()
             {
-                DataContext = new MeinWindowViewModel(_operationService,_catalogStore, _jsonDeserializer, _jsonSerializer, _dialogService)
+                DataContext = new MeinWindowViewModel(_outputContentService,_operationService, _catalogStore, _jsonDeserializer, _jsonSerializer, _dialogService)
             };
             MainWindow.Show();
         }

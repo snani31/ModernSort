@@ -14,16 +14,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ModernSort.Services;
 
 namespace ModernSort.ViewModel.Windows
 {
     internal class AddNewRankingCategoryViewModel: ViewModelValidateble, IDialogRequestClose
     {
-        private CatalogStore CatalogStore {  get; init; }
         private OperationService OperationService { get; init; }
+        private OutputContentService ContentService { get; init; }
 
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
-        private ISerializer Serializer {  get; init; }
         private string _selectedRankingIconPath;
         [Required(ErrorMessage = "You must select image")]
         public string SelectedRankingIconPath 
@@ -87,11 +87,10 @@ namespace ModernSort.ViewModel.Windows
 
         }
 
-        public AddNewRankingCategoryViewModel(OperationService operationService,CatalogStore rankingCatalogStore,ISerializer serializer) : this()
+        public AddNewRankingCategoryViewModel(OperationService operationService,OutputContentService contentService) : this()
         {
-            CatalogStore = rankingCatalogStore;
-            Serializer = serializer;
             OperationService = operationService;
+            ContentService = contentService;
         }
 
         private void MakeNewRankingMethod(object? parameter)
@@ -100,11 +99,10 @@ namespace ModernSort.ViewModel.Windows
                 NewRankingDescryption,
                 SelectedRankingIconPath);
 
-            bool AddCategoryWasSucsessfullyComplete = OperationService.InvokeOperation(operation);
+            bool AddCategoryWasSucsessfullyComplete = OperationService.InvokeOperation<RankingCategory>(operation);
 
             if (AddCategoryWasSucsessfullyComplete)
             {
-                CatalogStore.DropRankingSelection();
                 CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(true));
             }
         }

@@ -1,7 +1,10 @@
 ﻿using Microsoft.Xaml.Behaviors.Core;
 using ModernSort.Commands;
+using ModernSort.Services;
 using ModernSort.Services.Dialog;
+using ModernSort.Services.Operations;
 using ModernSort.Static;
+using ModernSort.Stores.Catalog;
 using ModernSort.View.Pages;
 using ModernSort.ViewModel.Items;
 using ModernSort.ViewModel.Pages;
@@ -37,26 +40,15 @@ namespace ModernSort.ViewModel.Windows
             }
         }
 
-        private MediaObjectItemViewModel _selectedMediaObjectItem;
-        public MediaObjectItemViewModel SelectedMediaObjectItem
-        {
-            private get 
-            {
-                return _selectedMediaObjectItem;
-            }
-            set 
-            {
-                _selectedMediaObjectItem = value;
-                EditMediaObjectWindowOpen?.OnCanExecuteChanged();
-            }
-        }
-
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
 
         public ICommand CreateMediaObjectWindowOpen { get; init; }
         public RelayCommand EditMediaObjectWindowOpen { get; init; }
         public ICommand OpenMediaObjectPage { get; init; }
         public ICommand CloseDialog { get; init; }
+        public OutputContentService ContentService { get; }
+        private CatalogStore CatalogStore {  get; init; }
+        private OperationService OperationService { get; init; }
 
         private IDialogService DialogService {  get; init; }
 
@@ -64,46 +56,50 @@ namespace ModernSort.ViewModel.Windows
 
         private ISerializer Serializer { get; init; }
 
-        private SelectedMediaObjectPageViewModel _currentMediaObject;
-        public SelectedMediaObjectPageViewModel CurrentMediaObject
+        private SelectedMediaObjectPageViewModel? _currentMediaObjectPagePresenter;
+        public SelectedMediaObjectPageViewModel? CurrentMediaObjectPagePresenter
         {
             get 
             { 
-                return _currentMediaObject;
+                return _currentMediaObjectPagePresenter;
             }
             private set 
             {
-                _currentMediaObject = value;
-                OnPropertyChenged(nameof(CurrentMediaObject)); 
+                _currentMediaObjectPagePresenter = value;
+                OnPropertyChenged(nameof(CurrentMediaObjectPagePresenter)); 
             }
         }
 
         public SelectedRankingCategoryViewModel() 
         {
             OpenMediaObjectPage = new RelayCommand(OpenMediaObjectPageView);
-            CloseDialog = new RelayCommand(
-                (p) =>
-                {
-                    CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(false));
-                });
+
         }
 
-        public SelectedRankingCategoryViewModel(RankingCategory selectedRankingCategory,
+        public SelectedRankingCategoryViewModel(OutputContentService contentService,CatalogStore catalogStore,OperationService operationService,RankingCategory selectedRankingCategory,
             IDialogService dialogService, ISerializer serializer, IDeserializer deserializer): this()
         {
             Deserializer = deserializer;
             Serializer = serializer;
             SelectedRankingCategory = selectedRankingCategory;
             DialogService = dialogService;
-            CreateMediaObjectViewModel viewModel = new CreateMediaObjectViewModel(Serializer, SelectedRankingCategory);
+            OperationService = operationService;
+            ContentService = contentService;
+            CatalogStore = catalogStore;
+
+            ContentService.MediaObjectContentService.OnMediaObjectSelectedChange += (object? parameter) =>
+            {
+                EditMediaObjectWindowOpen?.OnCanExecuteChanged();
+            };
 
             CreateMediaObjectWindowOpen = new RelayCommand(
                 (p) => 
                 {
+                    var viewModel = new CreateMediaObjectViewModel(OperationService);
 
                     if (DialogService.ShowDialog(viewModel) ?? false)
                     {
-                        _mediaObjects.Deserialize(Deserializer, $@"{ProjactIoWorker.UserResourcesDirrectoryPath}\{SelectedRankingCategory.ID}\MediaObjacts.json");
+                        _mediaObjects = ContentService.MediaObjectContentService.GetUnloadedMediaObjects();
                         OnPropertyChenged(nameof(MediaObjacts));
                     }
                 });
@@ -111,19 +107,18 @@ namespace ModernSort.ViewModel.Windows
             EditMediaObjectWindowOpen = new RelayCommand(
                 (p) =>
                 {
-                    MediaObject selectedMediaObj = _mediaObjects.First(x => x.ID.ToString().Equals(SelectedMediaObjectItem.ID));
-                    EditMediaObjectViewModel editMediaObjectViewModel = new EditMediaObjectViewModel(SelectedRankingCategory,selectedMediaObj, Serializer, Deserializer);
+                    EditMediaObjectViewModel editMediaObjectViewModel = new EditMediaObjectViewModel(OperationService,ContentService);
                     if (DialogService.ShowDialog(editMediaObjectViewModel) ?? false)
                     {
-                        _mediaObjects.Deserialize(Deserializer, $@"{ProjactIoWorker.UserResourcesDirrectoryPath}\{SelectedRankingCategory.ID}\MediaObjacts.json");
+                        _mediaObjects = ContentService.MediaObjectContentService.GetUnloadedMediaObjects();
                         OnPropertyChenged(nameof(MediaObjacts));
-                        CurrentMediaObject = null;
-                        OnPropertyChenged(nameof(CurrentMediaObject));
+                        CurrentMediaObjectPagePresenter = null;
+                        OnPropertyChenged(nameof(CurrentMediaObjectPagePresenter));
                     }
                 },
                 () => 
                 {
-                    if (SelectedMediaObjectItem is not null)
+                    if (ContentService.MediaObjectContentService.SelectedMediaObject is not null)
                     {
                         return true;
                     }
@@ -131,9 +126,15 @@ namespace ModernSort.ViewModel.Windows
                 }
                 );
 
-            _mediaObjects = new IoCollection<MediaObject>();
+            CloseDialog = new RelayCommand(
+                (p) =>
+                {
+                    ContentService.DropSelectionOfRankingCategory();
+                    CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(false));
+                });
 
-            _mediaObjects.Deserialize(Deserializer, $@"{ProjactIoWorker.UserResourcesDirrectoryPath}\{SelectedRankingCategory.ID}\MediaObjacts.json");
+            _mediaObjects = new IoCollection<MediaObject>();
+            _mediaObjects = ContentService.MediaObjectContentService.GetUnloadedMediaObjects();
 
         }
 
@@ -146,9 +147,9 @@ namespace ModernSort.ViewModel.Windows
         {
             if(parameter is not null and MediaObjectItemViewModel MediaObjectItem)
             {
-                MediaObject mediaObjectSelected = _mediaObjects.First(x => x.ID.ToString() == MediaObjectItem.ID);
-                CurrentMediaObject = new SelectedMediaObjectPageViewModel(mediaObjectSelected,
-                SelectedRankingCategory.RankingDirrectoryPath + @"\Media");
+                ContentService.MediaObjectContentService.SelectMediaObject(MediaObjectItem.MediaObject);
+                CurrentMediaObjectPagePresenter = new SelectedMediaObjectPageViewModel(ContentService);
+
             }
 
         }

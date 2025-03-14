@@ -115,7 +115,7 @@
                                     <viewPgs:SelectedMediaObjectPage/>
                                 </DataTemplate>
                             </Grid.Resources>
-                            <ContentControl Content="{Binding CurrentMediaObject}"/>
+                            <ContentControl Content="{Binding CurrentMediaObjectPagePresenter}"/>
                         </Grid>
                     </Border>
                     <Border 

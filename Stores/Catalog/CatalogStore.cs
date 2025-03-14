@@ -1,4 +1,5 @@
 ﻿using RankingEntityes.Ranking_Entityes.Ranking_Categories;
+using ModernSort.Services;
 
 namespace ModernSort.Stores.Catalog
 {
@@ -42,34 +43,64 @@ namespace ModernSort.Stores.Catalog
 
         }
 
+        private string _mediaObjectsFilePath;
         public string MediaObjectsFilePath
         {
             get
             {
-                return $@"{RankingCatalogPath}\{mediaObjectsFileName}";
+                return _mediaObjectsFilePath;
+            }
+
+            private set
+            {
+                _mediaObjectsFilePath = value;
             }
 
         }
+
+        private string _rankingCategoryIconPath;
+
+        public string RankingCategoryIconPath
+        {
+            get { return _rankingCategoryIconPath; }
+            private set { _rankingCategoryIconPath = value; }
+        }
+
+
         #endregion
 
         #region CatalogPaths
+
+        private string _mediaFilesCatalogPath;
+
         public string MediaFilesCatalogPath
         {
-            get
-            {
-                return $@"{RankingCatalogPath}\{mediaFilesCatalogName}";
+            get 
+            { 
+                return _mediaFilesCatalogPath;
             }
 
+            private set 
+            { 
+                _mediaFilesCatalogPath = value;
+            }
         }
+
+        private string _rankingCatalogPath;
 
         public string RankingCatalogPath
         {
             get
-            {
-                return $@"{coreResourcesCatalogPath}\{SelectedRankingCategory?.ID.ToString()}";
+            { 
+                return _rankingCatalogPath; 
             }
 
-        } 
+            private set
+            {
+                _rankingCatalogPath = value;
+            }
+        }
+
         #endregion
 
         public CatalogStore()
@@ -77,13 +108,17 @@ namespace ModernSort.Stores.Catalog
 
         }
 
-        public void SelectRankingCategory(RankingCategory rankingCategorySelected)
-        {
-            SelectedRankingCategory = rankingCategorySelected;
-        }
-         public void DropRankingSelection()
+        public void DropRankingSelection()
         {
             SelectedRankingCategory = null;
+        }
+
+        public void CalibrateRankingCategory(RankingCategory rankingCategorySelected)
+        {
+            RankingCatalogPath = rankingCategorySelected.RankingDirrectoryPath;
+            MediaObjectsFilePath = $@"{RankingCatalogPath}\{mediaObjectsFileName}";
+            MediaFilesCatalogPath = $@"{RankingCatalogPath}\{mediaFilesCatalogName}";
+            RankingCategoryIconPath = rankingCategorySelected.RankingIconPath;
         }
 
     }

@@ -1,5 +1,7 @@
 ﻿using RankingEntityes.IO_Entities.Interfaces;
 using ModernSort.Stores.Catalog;
+using RankingEntityes.Ranking_Entityes;
+using RankingEntityes.Ranking_Entityes.Ranking_Categories;
 
 namespace ModernSort.Services.Operations
 {
@@ -18,24 +20,29 @@ namespace ModernSort.Services.Operations
             CatalogStore = catalogStore;
         }
 
-        public bool InvokeOperation(IOperation operation)
+        public bool InvokeOperation<T>(IOperation operation)
+            where T : IoEntity
         {
             if (operation is CreateOperation createOperation)
             {
-                createOperation.Create(Serializer, CatalogStore);
-                return createOperation.OperationResult;
+                createOperation.SetCatalogData(CatalogStore);
+                createOperation.Create(Serializer);
             }
-            else if (operation is RemoveOperation deleteOperation)
+            else if (operation is RemoveOperation<T> deleteOperation)
             {
-                deleteOperation.Remove(Serializer,Deserializer, CatalogStore);
-                return deleteOperation.OperationResult;
+                deleteOperation.SetCatalogData(CatalogStore);
+                deleteOperation.GetExistingElements(Deserializer);
+                deleteOperation.Remove();
+                deleteOperation.UploadChangedElements(Serializer);
             }
-            else if (operation is UpdateOperation updateOperation)
+            else if (operation is UpdateOperation<T> updateOperation)
             {
-                updateOperation.Update(Serializer, Deserializer, CatalogStore);
-                return updateOperation.OperationResult;
+                updateOperation.SetCatalogData(CatalogStore);
+                updateOperation.GetExistingElements(Deserializer);
+                updateOperation.Update();
+                updateOperation.UploadChangedElements(Serializer);
             }
-            return false;
+            return operation.OperationResult;
         }
     }
 }

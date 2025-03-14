@@ -5,56 +5,67 @@ using System.IO;
 
 namespace ModernSort.Services.Operations
 {
-    internal class UpdateRankingCategoryOperation : UpdateOperation
+    internal class UpdateRankingCategoryOperation : UpdateOperation<RankingCategory>
     {
-        private FileMode OperationFileMode { get; set; } = FileMode.OpenOrCreate;
+        #region ViewModel Data
         private string Tytle { get; init; }
         private string Description { get; init; }
         private string NewImageFileBasePath { get; init; }
         private bool IconWasChanged { get; init; }
+        private string ExistingRankingIconPath { get; set; }
+        private Guid SelectedRankingGUID { get; set; }
+        #endregion
 
-        public UpdateRankingCategoryOperation(string tytle, string description, string newImageFileBasePath, bool iconWasChanged)
-        {
-            Tytle = tytle;
-            Description = description;
-            NewImageFileBasePath = newImageFileBasePath;
-            IconWasChanged = iconWasChanged;
-        }
+        #region CatalogStore Data
 
-        public override void Update(ISerializer serializer, IDeserializer deserializer, CatalogStore catalogStore)
+        private string SelectedRankingCatalogPath {  get; set; }
+
+        #endregion
+
+        public UpdateRankingCategoryOperation(string tytle, string description, string newImageFileBasePath, 
+            bool iconWasChanged, RankingCategory updatebeleRankingCategory)
         {
             OperationResult = false;
 
-            var selectedRankingCategoryID = catalogStore.SelectedRankingCategory.ID;
+            Tytle = tytle;
+            Description = description;
+            NewImageFileBasePath = newImageFileBasePath;
 
+            IconWasChanged = iconWasChanged;
 
-            var existingRankings = new IoCollection<RankingCategory>();
-            existingRankings.Deserialize(deserializer, catalogStore.RankingCategoriesFilePath);
+            SelectedRankingGUID = updatebeleRankingCategory.ID;
+            ExistingRankingIconPath = updatebeleRankingCategory.RankingIconPath;
+        }
 
-            int indexOfSelectedRanking = existingRankings.Select((member, index) => (member, index))
-                .First(x => x.member.ID.Equals(selectedRankingCategoryID)).index;
+        public override void Update()
+        {
 
+            int indexOfSelectedRanking = EntityesCollection.Select((member, index) => (member, index))
+                .First(x => x.member.ID.Equals(SelectedRankingGUID)).index;
 
-            string newIconInCatalogPath = catalogStore.SelectedRankingCategory.RankingIconPath;
+            string newIconInCatalogPath = ExistingRankingIconPath;
             if (IconWasChanged)
             {
-                File.Delete(catalogStore.SelectedRankingCategory.RankingIconPath);
-                newIconInCatalogPath = Path.ChangeExtension(catalogStore.SelectedRankingCategory.RankingIconPath, Path.GetExtension(NewImageFileBasePath));
+                File.Delete(ExistingRankingIconPath);
+                newIconInCatalogPath = Path.ChangeExtension(ExistingRankingIconPath, Path.GetExtension(NewImageFileBasePath));
                 File.Copy(NewImageFileBasePath, newIconInCatalogPath, overwrite: true);
             }
 
-            existingRankings[indexOfSelectedRanking] = new RankingCategory()
+            EntityesCollection[indexOfSelectedRanking] = new RankingCategory()
             {
-                ID = selectedRankingCategoryID,
+                ID = SelectedRankingGUID,
                 Description = Description,
-                RankingDirrectoryPath = catalogStore.RankingCatalogPath,
+                RankingDirrectoryPath = SelectedRankingCatalogPath,
                 Tytle = Tytle,
                 RankingIconPath = newIconInCatalogPath
             };
 
-            OperationResult = existingRankings.Serialize(serializer,
-                catalogStore.RankingCategoriesFilePath,
-                mode: OperationFileMode);
+        }
+
+        public override void SetCatalogData(CatalogStore catalogStore)
+        {
+            base.FilePath = catalogStore.RankingCategoriesFilePath;
+            SelectedRankingCatalogPath = catalogStore.RankingCatalogPath;
         }
     }
 }

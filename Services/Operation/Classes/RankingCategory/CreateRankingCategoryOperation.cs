@@ -8,38 +8,46 @@ namespace ModernSort.Services.Operations
 {
     internal class CreateRankingCategoryOperation : CreateOperation
     {
-        private FileMode OperationFileModemode { get; set; } = FileMode.Append;
-
+        #region VModel Data
         public string Tytle { get; set; }
 
         public string Descryption { get; set; }
 
         public string SelectedIconPath { get; set; }
+        #endregion
+
+        #region Catalog Data
+
+        private string GUIDsFilePath { get; set; }
+        private string CoreResourcesCatalogPath { get; set; }
+        private string RankingCategoryIconNameNoExtention { get; set; }
+        private string MediaObjectsFileName { get; set; }
+        private string MediaFilesCatalogName { get; set; }
+
+        #endregion
 
         public CreateRankingCategoryOperation(string tytle, string descryption, string selectedIconPath)
         {
+            OperationResult = false;
             Tytle = tytle;
             Descryption = descryption;
             SelectedIconPath = selectedIconPath;
         }
 
-        public override void Create(ISerializer serializer, CatalogStore catalogStore)
+        public override void Create(ISerializer serializer)
         {
-            OperationResult = false;
+            Guid id = ProjactIoWorker.GetUniqGuid(GUIDsFilePath);
 
-
-            Guid id = ProjactIoWorker.GetUniqGuid(catalogStore.GUIDsFilePath);
-
-            string newRankingDirrectoryPath = catalogStore.coreResourcesCatalogPath
+            string newRankingDirrectoryPath = CoreResourcesCatalogPath
                 + @$"\{id.ToString()}";
 
             string newRankingIconPath = newRankingDirrectoryPath
-                + @$"\{catalogStore.rankingCategoryIconNameNoExtention}{Path.GetExtension(SelectedIconPath)}";
+                + @$"\{RankingCategoryIconNameNoExtention}{Path.GetExtension(SelectedIconPath)}";
 
             Directory.CreateDirectory(newRankingDirrectoryPath);
             File.Copy(SelectedIconPath, newRankingIconPath);
-            Directory.CreateDirectory(newRankingDirrectoryPath + $@"\{catalogStore.mediaFilesCatalogName}");
-            File.Create(newRankingDirrectoryPath + $@"\{catalogStore.mediaObjectsFileName}");
+            Directory.CreateDirectory(newRankingDirrectoryPath + $@"\{MediaFilesCatalogName}");
+            File.Create(newRankingDirrectoryPath + $@"\{MediaObjectsFileName}");
 
             RankingCategory newRanking = new RankingCategory()
             {
@@ -50,10 +58,20 @@ namespace ModernSort.Services.Operations
                 RankingIconPath = newRankingIconPath
             };
 
-
             OperationResult = newRanking.Serialize(serializer,
-                catalogStore.RankingCategoriesFilePath,
-                OperationFileModemode);
+                base.FilePath,
+                OperationFileMode);
+        }
+
+        public override void SetCatalogData(CatalogStore catalogStore)
+        {
+            base.FilePath = catalogStore.RankingCategoriesFilePath;
+            MediaFilesCatalogName = catalogStore.mediaFilesCatalogName;
+            MediaObjectsFileName = catalogStore.mediaObjectsFileName;
+            RankingCategoryIconNameNoExtention = catalogStore.rankingCategoryIconNameNoExtention;
+            CoreResourcesCatalogPath = catalogStore.coreResourcesCatalogPath;
+            GUIDsFilePath = catalogStore.GUIDsFilePath;
+
         }
     }
 }

@@ -44,11 +44,14 @@ namespace ModernSort.Services.Operations
             string newRankingIconPath = newRankingDirrectoryPath
                 + @$"\{RankingCategoryIconNameNoExtention}{Path.GetExtension(SelectedIconPath)}";
 
+
+
             Directory.CreateDirectory(newRankingDirrectoryPath);
             File.Copy(SelectedIconPath, newRankingIconPath);
             Directory.CreateDirectory(newRankingDirrectoryPath + $@"\{MediaFilesCatalogName}");
-            File.Create(newRankingDirrectoryPath + $@"\{MediaObjectsFileName}");
+            using(File.Create(newRankingDirrectoryPath + $@"\{MediaObjectsFileName}")) { }
 
+            
             RankingCategory newRanking = new RankingCategory()
             {
                 Description = Descryption,

@@ -108,8 +108,8 @@ namespace ModernSort.ViewModel
 
                 ContentService.SelectRankingCategory(selectedCategory);
 
-                var addNewRankingCategoryViewModel = new SelectedRankingCategoryViewModel(ContentService,CatalogStore,OperationService,selectedCategory, DialogService, Serializer, Deserializer);
-                DialogService.ShowDialog(addNewRankingCategoryViewModel);
+                var selectedRankingCategoryViewModel = new SelectedRankingCategoryViewModel(ContentService,CatalogStore,OperationService,selectedCategory, DialogService, Serializer, Deserializer);
+                DialogService.ShowDialog(selectedRankingCategoryViewModel);
             }
            
         }

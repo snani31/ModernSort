@@ -22,6 +22,8 @@ namespace ModernSort.Services.Operations
         private string CoreResourcesCatalogPath { get; set; }
         private string RankingCategoryIconNameNoExtention { get; set; }
         private string MediaObjectsFileName { get; set; }
+
+        private string FiltersCriterionsFileName {  get; set; }
         private string MediaFilesCatalogName { get; set; }
 
         #endregion
@@ -44,14 +46,12 @@ namespace ModernSort.Services.Operations
             string newRankingIconPath = newRankingDirrectoryPath
                 + @$"\{RankingCategoryIconNameNoExtention}{Path.GetExtension(SelectedIconPath)}";
 
-
-
             Directory.CreateDirectory(newRankingDirrectoryPath);
             File.Copy(SelectedIconPath, newRankingIconPath);
             Directory.CreateDirectory(newRankingDirrectoryPath + $@"\{MediaFilesCatalogName}");
-            using(File.Create(newRankingDirrectoryPath + $@"\{MediaObjectsFileName}")) { }
+            File.Create(newRankingDirrectoryPath + $@"\{MediaObjectsFileName}").Dispose();
+            File.Create(newRankingDirrectoryPath + $@"\{FiltersCriterionsFileName}").Dispose();
 
-            
             RankingCategory newRanking = new RankingCategory()
             {
                 Description = Descryption,
@@ -69,6 +69,7 @@ namespace ModernSort.Services.Operations
         public override void SetCatalogData(CatalogStore catalogStore)
         {
             base.FilePath = catalogStore.RankingCategoriesFilePath;
+            FiltersCriterionsFileName = catalogStore.filtersCriterionFileName;
             MediaFilesCatalogName = catalogStore.mediaFilesCatalogName;
             MediaObjectsFileName = catalogStore.mediaObjectsFileName;
             RankingCategoryIconNameNoExtention = catalogStore.rankingCategoryIconNameNoExtention;

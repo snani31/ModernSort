@@ -9,6 +9,8 @@ namespace ModernSort.Stores.Catalog
 
         #region FileNames
 
+        internal required string filtersCriterionFileName;
+
         internal required string mediaObjectsFileName;
 
         internal required string rankingCategoriesFileName;
@@ -54,6 +56,21 @@ namespace ModernSort.Stores.Catalog
             private set
             {
                 _mediaObjectsFilePath = value;
+            }
+
+        }
+
+        private string _filterCriterionFilePath;
+        public string FilterCriterionFilePath
+        {
+            get
+            {
+                return _filterCriterionFilePath;
+            }
+
+            private set
+            {
+                _filterCriterionFilePath = value;
             }
 
         }
@@ -118,6 +135,7 @@ namespace ModernSort.Stores.Catalog
             RankingCatalogPath = rankingCategorySelected.RankingDirrectoryPath;
             MediaObjectsFilePath = $@"{RankingCatalogPath}\{mediaObjectsFileName}";
             MediaFilesCatalogPath = $@"{RankingCatalogPath}\{mediaFilesCatalogName}";
+            FilterCriterionFilePath = $@"{RankingCatalogPath}\{filtersCriterionFileName}";
             RankingCategoryIconPath = rankingCategorySelected.RankingIconPath;
         }
 

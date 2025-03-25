@@ -19,10 +19,15 @@ namespace ModernSort.Services.Operations
             Deserializer = deserializer;
             CatalogStore = catalogStore;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T">Выберите IoEntity объект, над которым будет произведена операция</typeparam>
+        /// <param name="operation"></param>
+        /// <returns></returns>
         public bool InvokeOperation<T>(IOperation operation)
             where T : IoEntity
-        {
+        { 
             if (operation is CreateOperation createOperation)
             {
                 createOperation.SetCatalogData(CatalogStore);

@@ -23,6 +23,8 @@
     <None Remove="AppResources\Pictures\pencilBlack128px.png" />
     <None Remove="AppResources\Pictures\pencilBlack64px.png" />
     <None Remove="AppResources\Pictures\pencilPurple.png" />
+    <None Remove="AppResources\Pictures\PentagonBorderRedCross.png" />
+    <None Remove="AppResources\Pictures\PentagonWhiteCross.png" />
     <None Remove="AppResources\Pictures\redCrossBorder.png" />
     <None Remove="AppResources\Pictures\redCrossFill.png" />
     <None Remove="AppResources\Pictures\trashCanCloseRed.png" />
@@ -39,6 +41,8 @@
     <Resource Include="AppResources\Pictures\pencilBlack128px.png" />
     <Resource Include="AppResources\Pictures\pencilBlack64px.png" />
     <Resource Include="AppResources\Pictures\pencilPurple.png" />
+    <Resource Include="AppResources\Pictures\PentagonBorderRedCross.png" />
+    <Resource Include="AppResources\Pictures\PentagonWhiteCross.png" />
     <Resource Include="AppResources\Pictures\redCrossBorder.png" />
     <Resource Include="AppResources\Pictures\redCrossFill.png" />
     <Resource Include="AppResources\Pictures\trashCanCloseRed.png" />

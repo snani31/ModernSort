@@ -34,6 +34,7 @@ namespace ModernSort
             _dialogService.Register<CreateMediaObjectViewModel, CreateMediaObjectWindowView>();
             _dialogService.Register<EditRankingWindowViewModel, EditRankingWindowView>();
             _dialogService.Register<EditMediaObjectViewModel, EditMediaObjectWindowView>();
+            _dialogService.Register<CreateFilterCriterionViewModel, CreateFilterCriterionWindowView>();
             _jsonDeserializer = new JsonDeserializer();
             _jsonSerializer = new JsonSerializer();
             
@@ -42,6 +43,7 @@ namespace ModernSort
 
             _catalogStore = new CatalogStore()
             {
+                filtersCriterionFileName = "FiltersCriterions.json",
                 rankingCategoriesFileName = "RankingCategories.json",
                 coreResourcesCatalogPath = applicationExecutableFile + "\\UserResources",
                 GUIDsFileName = "ProjactGUIDSFile.txt",
@@ -61,6 +63,7 @@ namespace ModernSort
                 DataContext = new MeinWindowViewModel(_outputContentService,_operationService, _catalogStore, _jsonDeserializer, _jsonSerializer, _dialogService)
             };
             MainWindow.Show();
+
         }
 
     }

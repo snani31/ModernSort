@@ -9,6 +9,7 @@ using ModernSort.View.Pages;
 using ModernSort.ViewModel.Items;
 using ModernSort.ViewModel.Pages;
 using Newtonsoft.Json.Linq;
+using RankingEntityes.Filters;
 using RankingEntityes.IO_Entities.Classes;
 using RankingEntityes.IO_Entities.Interfaces;
 using RankingEntityes.Ranking_Entityes.MediaObjacts;
@@ -43,6 +44,7 @@ namespace ModernSort.ViewModel.Windows
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
 
         public ICommand CreateMediaObjectWindowOpen { get; init; }
+        public ICommand CreateFilterCriterionWindowOpen { get; init; }
         public RelayCommand EditMediaObjectWindowOpen { get; init; }
         public ICommand OpenMediaObjectPage { get; init; }
         public ICommand CloseDialog { get; init; }
@@ -102,6 +104,13 @@ namespace ModernSort.ViewModel.Windows
                         _mediaObjects = ContentService.MediaObjectContentService.GetUnloadedMediaObjects();
                         OnPropertyChenged(nameof(MediaObjacts));
                     }
+                });
+
+            CreateFilterCriterionWindowOpen = new RelayCommand(
+                (p) =>
+                {
+                    var viewModel = new CreateFilterCriterionViewModel(OperationService);
+                    DialogService.ShowDialog(viewModel);
                 });
 
             EditMediaObjectWindowOpen = new RelayCommand(

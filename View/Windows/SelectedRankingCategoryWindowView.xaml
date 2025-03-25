@@ -264,6 +264,14 @@
                              Command="{Binding EditMediaObjectWindowOpen}"
                              Content="Edit MediaObject"
                             />
+                        <Button
+                             Background="#512f95"
+                             Style="{StaticResource Button}"
+                             Margin="15"
+                             Width="300"
+                             Command="{Binding CreateFilterCriterionWindowOpen}"
+                             Content="CreateFilterCriterion"
+                            />
                     </StackPanel>
                 </Border>
             </Grid>

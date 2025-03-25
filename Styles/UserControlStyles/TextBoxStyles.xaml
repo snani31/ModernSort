@@ -56,4 +56,64 @@
             </Setter>
         </Style.Setters>
     </Style>
+
+    <Style 
+    BasedOn="{StaticResource {x:Type TextBox}}"
+    TargetType="TextBox"
+    x:Key="UnderlineTextBoxStyle">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox" x:Name="ctrtmp">
+                        <Border 
+                            x:Name="brd" 
+                            Background ="{TemplateBinding Background}"
+                            Width="{TemplateBinding Width}"
+                            MinHeight="{TemplateBinding Height}"
+                            BorderThickness="0 0 0 2"
+                            BorderBrush="#7d4c94"
+                            VerticalAlignment="Bottom"
+                                >
+                            <Grid>
+                                <Rectangle StrokeThickness="1"/>
+                                <ScrollViewer 
+                            x:Name="PART_ContentHost" 
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Margin="10,0,10,0"
+                            Foreground="#CFCFCF"/>
+                                <TextBlock 
+                                    TextAlignment="{TemplateBinding TextAlignment}"
+                                    MaxWidth="{TemplateBinding Width}"
+                                    x:Name="hint"
+                                    Text="{TemplateBinding Text}"
+                                    TextWrapping="Wrap"
+                                    IsHitTestVisible="False"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Left"
+                                    FontSize="{TemplateBinding FontSize}"
+                                    Margin="15,0,0,0"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    Visibility="Collapsed"
+                                   >
+                                </TextBlock>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border 
+                        BorderBrush="#7d4c94" 
+                        BorderThickness="0 0 0 2"
+                        >
+                            <AdornedElementPlaceholder/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
 </ResourceDictionary>

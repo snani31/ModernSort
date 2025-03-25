@@ -4,7 +4,7 @@
     <Style 
        TargetType="ListViewItem"
        x:Key="RankingListItemStyle">
-        <Setter Property="TextBlock.Foreground"
+        <Setter Property="TextBlock.Foreground" 
                 Value="#7d4c94"/>
         <Setter Property="Background"
             Value="Transparent"/>
@@ -63,7 +63,7 @@
                                 Value="#653bbb"/>
                             <Setter Property="BorderBrush"
                                 Value="#492a87"/>
-                            <Setter Property="TextBlock.Foreground" 
+                            <Setter Property="TextBlock.Foreground"
                                     Value="AliceBlue"/>
                         </Trigger>
                         <Trigger Property="IsEnabled"

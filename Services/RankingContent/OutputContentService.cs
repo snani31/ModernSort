@@ -1,4 +1,5 @@
-﻿using ModernSort.Stores.Catalog;
+﻿using ModernSort.Services.RankingContent;
+using ModernSort.Stores.Catalog;
 using ModernSort.ViewModel.Pages;
 using RankingEntityes.IO_Entities.Interfaces;
 using RankingEntityes.Ranking_Entityes.MediaObjacts;
@@ -30,12 +31,37 @@ namespace ModernSort.Services
             } 
         }
 
+        private FilterCriterionsContentService _filterCriterionContentService;
+        public FilterCriterionsContentService FilterCriterionContentService
+        {
+            get
+            {
+                return (SelectedRankingCategory is null) ? throw new Exception() : _filterCriterionContentService;
+            }
+            init
+            {
+                _filterCriterionContentService = value;
+            }
+        }
+
+
         public OutputContentService(CatalogStore catalogStore,IDeserializer deserializer)
         {
             CatalogStore = catalogStore;
             Deserializer = deserializer;
             MediaObjectContentService = new MediaObjectContentService(Deserializer,CatalogStore);
+            FilterCriterionContentService = new FilterCriterionsContentService(Deserializer, CatalogStore);
         }
+
+        public OutputContentService(CatalogStore catalogStore, IDeserializer deserializer, 
+            FilterCriterionsContentService filterCriterionsContentService, MediaObjectContentService mediaObjectContentService)
+        {
+            CatalogStore = catalogStore;
+            Deserializer = deserializer;
+            FilterCriterionContentService = filterCriterionsContentService;
+            MediaObjectContentService = mediaObjectContentService;
+        }
+
 
         public void SelectRankingCategory(RankingCategory rankingCategory)
         {
@@ -45,6 +71,7 @@ namespace ModernSort.Services
 
         public void DropSelectionOfRankingCategory()
         {
+            FilterCriterionContentService.DropSelectionOfFilterCriterion();
             MediaObjectContentService.DropSelectionOfMEdiaObject();
             SelectedRankingCategory = null;
         }

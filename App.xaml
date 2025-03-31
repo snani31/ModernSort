@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="Styles/UserControlStyles/TextBlockStyles.xaml"/>
                 <ResourceDictionary Source="Styles/UserControlStyles/MediaObjactListContanerStyle.xaml"/>
                 <ResourceDictionary Source="Converters/ConvertersDictionary.xaml"/>
+                <ResourceDictionary Source="Styles/UserControlStyles/CheckBoxStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

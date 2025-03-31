@@ -1,5 +1,6 @@
 ﻿using ModernSort.Static;
 using ModernSort.Stores.Catalog;
+using RankingEntityes.Filters;
 using RankingEntityes.IO_Entities.Interfaces;
 using RankingEntityes.Ranking_Entityes.MediaObjacts;
 using System.IO;
@@ -16,18 +17,19 @@ namespace ModernSort.Services.Operations
 
         #region VModel Data
         private IEnumerable<string> MediaObjectSelectedFiles { get; init; }
-
+        private IEnumerable<Filter> SelectedMatchFilters { get; init; }
         private string Tytle { get; init; }
 
-        private string Description { get; init; } 
+        private string Description { get; init; }
         #endregion
 
-        public CreateMediaObjectOperation(IEnumerable<string> mediaObjectSelectedFiles, string tytle, string descryption)
+        public CreateMediaObjectOperation(IEnumerable<string> mediaObjectSelectedFiles, string tytle, string descryption, IEnumerable<Filter> selectedMatchFilters)
         {
             base.OperationResult = false;
             MediaObjectSelectedFiles = mediaObjectSelectedFiles;
             Tytle = tytle;
             Description = descryption;
+            SelectedMatchFilters = selectedMatchFilters;
         }
 
         public override void Create(ISerializer serializer)
@@ -44,12 +46,13 @@ namespace ModernSort.Services.Operations
             CopyFilesToDirrectory(new Queue<string>(MediaObjectSelectedFiles),
                existingFileNames, ref newFilesFinalNames);
 
-            MediaObject newMediaObjact = new MediaObject()
+            RankingEntityes.Ranking_Entityes.MediaObjacts.MediaObject newMediaObjact = new RankingEntityes.Ranking_Entityes.MediaObjacts.MediaObject()
             {
                 Description = this.Description,
                 Tytle = this.Tytle,
                 ID = id,
-                Paths = newFilesFinalNames
+                Paths = newFilesFinalNames,
+                MatchFilters = SelectedMatchFilters
             };
 
             base.OperationResult = newMediaObjact.Serialize(serializer,

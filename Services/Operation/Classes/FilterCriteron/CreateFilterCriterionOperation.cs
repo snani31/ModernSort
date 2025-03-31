@@ -16,32 +16,25 @@ namespace ModernSort.Services.Operation.Classes.FilterCriteron
     class CreateFilterCriterionOperation : CreateOperation
     {
         private string GUIDsFilePath { get ; set; }
-        private IFilterCriterion NewFilterCriterion { get; init; }
-        private string Tytle { get; init; }
-        private string Description { get; init; }
+        private FilterCriterion NewFilterCriterion { get; init; }
 
-        public CreateFilterCriterionOperation(IFilterCriterion newFilterCriterion,
-            string tytle,string description)
+        public CreateFilterCriterionOperation(FilterCriterion newFilterCriterion)
         {
             NewFilterCriterion = newFilterCriterion;
-            Tytle = tytle;
-            Description = description;
         }
 
         public override void Create(ISerializer serializer)
         {
-            var conditionFilterCriterion = NewFilterCriterion as ConditionFilterCriterion;
 
-            conditionFilterCriterion.Description = Description;
-            conditionFilterCriterion.Tytle = Tytle;
-            conditionFilterCriterion.ID = ProjactIoWorker.GetUniqGuid(GUIDsFilePath);
+            NewFilterCriterion.ID = ProjactIoWorker.GetUniqGuid(GUIDsFilePath);
 
-            foreach (ConditionFilter filterCriterion in conditionFilterCriterion.Filters)
+            foreach (ConditionFilter filterCriterion in NewFilterCriterion.Filters)
             {
                 filterCriterion.ID = ProjactIoWorker.GetUniqGuid(GUIDsFilePath);
             }
 
-            OperationResult = conditionFilterCriterion.Serialize(serializer,
+            
+            OperationResult = NewFilterCriterion.Serialize(serializer,
                 base.FilePath,
                 OperationFileMode);
         }

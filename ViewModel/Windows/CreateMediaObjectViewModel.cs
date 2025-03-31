@@ -1,10 +1,14 @@
 ﻿using ModernSort.Commands;
+using ModernSort.Services;
 using ModernSort.Services.Dialog;
 using ModernSort.Services.Operations;
 using ModernSort.Static;
 using ModernSort.Stores.Catalog;
 using ModernSort.ViewModel.Items;
+using RankingEntityes.Filters;
+using RankingEntityes.IO_Entities.Classes;
 using RankingEntityes.IO_Entities.Interfaces;
+using RankingEntityes.Json.Converters;
 using RankingEntityes.Ranking_Entityes.MediaObjacts;
 using RankingEntityes.Ranking_Entityes.Ranking_Categories;
 using System;
@@ -25,7 +29,29 @@ namespace ModernSort.ViewModel.Windows
 {
     class CreateMediaObjectViewModel : ViewModelValidateble, IDialogRequestClose
     {
+
+        private OutputContentService ContentService  { get; init; }
         private OperationService OperationService { get; init; }
+
+        private ObservableCollection<Filter> _selectedFilters;
+        public ObservableCollection<Filter> SelectedMaychFilters
+        {
+            get { return _selectedFilters; }
+            private set
+            {
+                _selectedFilters = value;
+            }
+        }
+
+        private ObservableCollection<FilterCriterion> _existingFilterCriterions;
+        public ObservableCollection<FilterCriterion> ExistingFilterCriterions
+        {
+            get { return _existingFilterCriterions; }
+            private set
+            {
+                _existingFilterCriterions = value;
+            }
+        }
 
         private ObservableCollection<MediaFileSelectedViewModel> _selectedFiles;
         [MinLength(1, ErrorMessage = "You need to select just 1 file at least")]
@@ -73,12 +99,19 @@ namespace ModernSort.ViewModel.Windows
 
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
 
+        public ICommand AddFilterCommand  { get; }
+        public ICommand RemoveFilterCommand { get; }
         public ICommand CloseDialogCommand { get; }
         public ICommand SelectMultimediaFiles { get; }
         public RelayCommand CreateMediaObjectCommand { get; }
 
         public CreateMediaObjectViewModel()
         {
+            AddFilterCommand = new RelayCommand(AddToSelectedFilters);
+            RemoveFilterCommand = new RelayCommand(RemoveFromSelectedFilters);
+
+            SelectedMaychFilters = new ObservableCollection<Filter>();
+
             SelectedFiles = new ObservableCollection<MediaFileSelectedViewModel>();
             SelectedFiles.CollectionChanged += (object? sender, NotifyCollectionChangedEventArgs e) =>
             {
@@ -109,19 +142,23 @@ namespace ModernSort.ViewModel.Windows
             base.PostValidationChange += CreateMediaObjectCommand.OnCanExecuteChanged;
         }
 
-        public CreateMediaObjectViewModel(OperationService operationService) 
+        public CreateMediaObjectViewModel(OperationService operationService, OutputContentService contentService) 
             : this()
         {
             OperationService = operationService;
+
+            ContentService = contentService;
+
+            ExistingFilterCriterions = new ObservableCollection<FilterCriterion>(ContentService.FilterCriterionContentService.GetUnloadedFilterCriterions());
         }
 
         private void CreateMediaObjactMethod(object? parameter)
         {
             IEnumerable<string> selectedFileNames = SelectedFiles.Select(x => x.MediaImagePath);
-            IOperation createMediaObjectOperation = new CreateMediaObjectOperation(selectedFileNames,Tytle,Descriptyon); 
+            IOperation createMediaObjectOperation = new CreateMediaObjectOperation(selectedFileNames,Tytle,Descriptyon,SelectedMaychFilters); 
 
-            bool MediaObjectCreationWasSuccesfullyCompleted = 
-                OperationService.InvokeOperation<MediaObject>(createMediaObjectOperation);
+            bool MediaObjectCreationWasSuccesfullyCompleted =
+                OperationService.InvokeOperation<RankingEntityes.Ranking_Entityes.MediaObjacts.MediaObject>(createMediaObjectOperation);
 
             if (MediaObjectCreationWasSuccesfullyCompleted)
             {
@@ -134,6 +171,23 @@ namespace ModernSort.ViewModel.Windows
             if (parameter is MediaFileSelectedViewModel mediafile and not null)
             {
                 SelectedFiles.Remove(mediafile);
+            }
+        }
+
+
+        private void AddToSelectedFilters(object? parameter)
+        {
+            if (parameter is Filter filter)
+            {
+                SelectedMaychFilters.Add(filter);
+            }
+        }
+
+        private void RemoveFromSelectedFilters(object? parameter)
+        {
+            if (parameter is Filter filter)
+            {
+                SelectedMaychFilters.Remove(filter);
             }
         }
     }

@@ -42,6 +42,7 @@ namespace ModernSort.ViewModel.Windows
 
         public ICommand RemoveFilterFromList { get; init; }
         public ICommand CreateFilter {  get; init; }
+        public ICommand CloseDialogCommand { get; init; }
 
 
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
@@ -83,6 +84,8 @@ namespace ModernSort.ViewModel.Windows
 
         private CreateFilterCriterionViewModel()
         {
+            CloseDialogCommand = new RelayCommand(
+    (p) => CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(false)));
             CreatedFilters = new ObservableCollection<Filter>();
             CreatedFilters.CollectionChanged += (object? sender, NotifyCollectionChangedEventArgs e) =>
             {
@@ -95,14 +98,7 @@ namespace ModernSort.ViewModel.Windows
                 base.CanExecuteByValidation);
             base.PostValidationChange += CreateFilterCriterionCommand.OnCanExecuteChanged;
 
-            CreateFilter = new RelayCommand( 
-                (p)
-                => 
-                {
-                    uint newFilterStartNumber = 0;
-                    string newFilterBaseTytle = $"New Filter {++newFilterStartNumber}";
-                    CreatedFilters.Add(CreateFilterCommandMethod(newFilterBaseTytle));
-                });
+            CreateFilter = new RelayCommand(NewFilterCreateClosure());
         }
 
         public CreateFilterCriterionViewModel(OperationService operationService): this()
@@ -114,8 +110,10 @@ namespace ModernSort.ViewModel.Windows
         {
             ConditionFilterCriterion newConditionFilterCriterion = new ConditionFilterCriterion();
             newConditionFilterCriterion.Filters = CreatedFilters;
+            newConditionFilterCriterion.Tytle = Tytle;
+            newConditionFilterCriterion.Description = Descriptyon;
 
-            IOperation createFilterCriterionOperation = new CreateFilterCriterionOperation(newConditionFilterCriterion, Tytle, Descriptyon);
+            IOperation createFilterCriterionOperation = new CreateFilterCriterionOperation(newConditionFilterCriterion);
 
             bool filterCriterionWasSuccesfullyCompleted =
                 OperationService.InvokeOperation<ConditionFilterCriterion>(createFilterCriterionOperation);
@@ -124,6 +122,16 @@ namespace ModernSort.ViewModel.Windows
             {
                 CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(true));
             }
+        }
+
+        private Action<object?> NewFilterCreateClosure()
+        {
+            uint newFilterStartNumber = 0;
+            return (object? p) =>
+            {
+                string newFilterBaseTytle = $"New Filter {++newFilterStartNumber}";
+                CreatedFilters.Add(CreateFilterCommandMethod(newFilterBaseTytle));
+            };
         }
 
         private Filter CreateFilterCommandMethod(string newFilterBaseTytle)

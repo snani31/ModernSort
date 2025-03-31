@@ -9,6 +9,9 @@ using System.Windows;
 using ModernSort.Stores.Catalog;
 using ModernSort.Services.Operations;
 using ModernSort.Services;
+using ModernSort.Services.RankingContent;
+using RankingEntityes.Filters;
+using RankingEntityes.Json.Converters;
 
 namespace ModernSort
 {
@@ -35,6 +38,7 @@ namespace ModernSort
             _dialogService.Register<EditRankingWindowViewModel, EditRankingWindowView>();
             _dialogService.Register<EditMediaObjectViewModel, EditMediaObjectWindowView>();
             _dialogService.Register<CreateFilterCriterionViewModel, CreateFilterCriterionWindowView>();
+
             _jsonDeserializer = new JsonDeserializer();
             _jsonSerializer = new JsonSerializer();
             
@@ -52,8 +56,20 @@ namespace ModernSort
                 rankingCategoryIconNameNoExtention = "Ranking_Icon"
             };
 
+            var jsonFilterConverter = new FiltersConverterJson();
+            jsonFilterConverter.Register<ConditionFilter>(nameof(ConditionFilter));
+
+            var filterCriterionsConverterJson = new FilterCriterionsConverterJson(jsonFilterConverter);
+            filterCriterionsConverterJson.Register<ConditionFilterCriterion>(nameof(ConditionFilterCriterion));
+
+            IDeserializer jsonDeserializerWithFilterConvertation = new JsonDeserializer(jsonFilterConverter);
+            IDeserializer jsonDeserializerWithFilterCriterionConverter = new JsonDeserializer(filterCriterionsConverterJson);
+
+            var filterCriterionsContentService = new FilterCriterionsContentService(jsonDeserializerWithFilterCriterionConverter, _catalogStore);
+            var mediaObjectsContentService = new MediaObjectContentService(jsonDeserializerWithFilterConvertation, _catalogStore);
+
             _operationService = new OperationService(_jsonSerializer,_jsonDeserializer,_catalogStore);
-            _outputContentService = new OutputContentService(_catalogStore, _jsonDeserializer);
+            _outputContentService = new OutputContentService(_catalogStore, _jsonDeserializer, filterCriterionsContentService,mediaObjectsContentService);
         }
 
         protected override void OnStartup(StartupEventArgs e)

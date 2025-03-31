@@ -31,7 +31,7 @@ namespace ModernSort.ViewModel.Windows
 
         public RankingCategory SelectedRankingCategory { get => _selectedRankingCategory;init => _selectedRankingCategory = value; }
 
-        private IoCollection<MediaObject> _mediaObjects;
+        private IoCollection<RankingEntityes.Ranking_Entityes.MediaObjacts.MediaObject> _mediaObjects;
 
         public ObservableCollection<MediaObjectItemViewModel> MediaObjacts
         {
@@ -97,7 +97,7 @@ namespace ModernSort.ViewModel.Windows
             CreateMediaObjectWindowOpen = new RelayCommand(
                 (p) => 
                 {
-                    var viewModel = new CreateMediaObjectViewModel(OperationService);
+                    var viewModel = new CreateMediaObjectViewModel(OperationService,ContentService);
 
                     if (DialogService.ShowDialog(viewModel) ?? false)
                     {
@@ -142,12 +142,12 @@ namespace ModernSort.ViewModel.Windows
                     CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(false));
                 });
 
-            _mediaObjects = new IoCollection<MediaObject>();
+            _mediaObjects = new IoCollection<RankingEntityes.Ranking_Entityes.MediaObjacts.MediaObject>();
             _mediaObjects = ContentService.MediaObjectContentService.GetUnloadedMediaObjects();
 
         }
 
-        private ObservableCollection<MediaObjectItemViewModel> ParseIoToCollection(IEnumerable<MediaObject> mediaObjects)
+        private ObservableCollection<MediaObjectItemViewModel> ParseIoToCollection(IEnumerable<RankingEntityes.Ranking_Entityes.MediaObjacts.MediaObject> mediaObjects)
         {
             return new ObservableCollection<MediaObjectItemViewModel>(mediaObjects.Select(x => new MediaObjectItemViewModel(x,SelectedRankingCategory.RankingDirrectoryPath + @"\Media")));
         }

@@ -44,7 +44,7 @@
 
                         <Button Grid.Column="2"
                         ToolTip="Закрыть"
-                        Command="{Binding CloseDialog}">
+                        Command="{Binding CloseDialogCommand}">
                             <Button.Template>
                                 <ControlTemplate TargetType="{x:Type Button}">
                                     <Border BorderThickness="0" Margin="0" x:Name="brd" Background="Transparent" CornerRadius="10 20 0 10">

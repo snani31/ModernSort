@@ -103,7 +103,7 @@ namespace ModernSort.ViewModel.Windows
                     CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(false));
                 });
 
-            DeleteMediaObjact = new RelayCommand(DeleteMediaObjactMethodRefactoring);
+            DeleteMediaObjact = new RelayCommand(DeleteMediaObjactMethod);
 
             SelectMultimediaFiles = new RelayCommand(
                (p) =>
@@ -131,8 +131,8 @@ namespace ModernSort.ViewModel.Windows
             OperationService = operationService;
             ContentService = contentService;
 
-            MediaObjectTytle = contentService.SelectedRankingCategory.Tytle;
-            MediaObjectDescryption = contentService.SelectedRankingCategory.Description;
+            MediaObjectTytle = contentService.MediaObjectContentService.SelectedMediaObject.Tytle;
+            MediaObjectDescryption = contentService.MediaObjectContentService.SelectedMediaObject.Description;
             PagePresenter = FunktionPageEnum.FilesPresent;
 
             BeforeEditFilePaths = new List<string>(ContentService.MediaObjectContentService.GetFilesFullPathsOfSelectedMediaObject());
@@ -145,7 +145,7 @@ namespace ModernSort.ViewModel.Windows
 
         }
 
-        private void DeleteMediaObjactMethodRefactoring(object? parameter)
+        private void DeleteMediaObjactMethod(object? parameter)
         {
             IOperation operation = new RamoveMediaObjectOperation(BeforeEditFilePaths,ContentService.MediaObjectContentService.SelectedMediaObject.ID);
 

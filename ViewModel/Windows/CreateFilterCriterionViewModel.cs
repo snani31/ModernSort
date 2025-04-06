@@ -136,7 +136,9 @@ namespace ModernSort.ViewModel.Windows
 
         private Filter CreateFilterCommandMethod(string newFilterBaseTytle)
         {
-            ConditionFilter newFilter = new ConditionFilter() { ConditionTytle = newFilterBaseTytle };
+            ConditionFilter newFilter = new ConditionFilter() {
+                ID = Guid.NewGuid(),
+                ConditionTytle = newFilterBaseTytle };
             return newFilter;
         }
 

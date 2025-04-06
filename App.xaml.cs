@@ -68,7 +68,7 @@ namespace ModernSort
             var filterCriterionsContentService = new FilterCriterionsContentService(jsonDeserializerWithFilterCriterionConverter, _catalogStore);
             var mediaObjectsContentService = new MediaObjectContentService(jsonDeserializerWithFilterConvertation, _catalogStore);
 
-            _operationService = new OperationService(_jsonSerializer,_jsonDeserializer,_catalogStore);
+            _operationService = new OperationService(_jsonSerializer, jsonDeserializerWithFilterConvertation, _catalogStore);
             _outputContentService = new OutputContentService(_catalogStore, _jsonDeserializer, filterCriterionsContentService,mediaObjectsContentService);
         }
 

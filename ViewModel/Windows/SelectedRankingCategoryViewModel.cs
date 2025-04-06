@@ -5,8 +5,10 @@ using ModernSort.Services.Dialog;
 using ModernSort.Services.Operations;
 using ModernSort.Static;
 using ModernSort.Stores.Catalog;
+using ModernSort.Stores.Navigation;
 using ModernSort.View.Pages;
 using ModernSort.ViewModel.Items;
+using ModernSort.ViewModel.Items.FiltrationItems;
 using ModernSort.ViewModel.Pages;
 using Newtonsoft.Json.Linq;
 using RankingEntityes.Filters;
@@ -27,22 +29,34 @@ namespace ModernSort.ViewModel.Windows
 {
     internal class SelectedRankingCategoryViewModel : ViewModelBase, IDialogRequestClose
     {
-        private RankingCategory _selectedRankingCategory;
-
-        public RankingCategory SelectedRankingCategory { get => _selectedRankingCategory;init => _selectedRankingCategory = value; }
-
-        private IoCollection<RankingEntityes.Ranking_Entityes.MediaObjacts.MediaObject> _mediaObjects;
-
-        public ObservableCollection<MediaObjectItemViewModel> MediaObjacts
+        private NavigationStore NavigationStore {  get; init; }
+        public ViewModelBase? CurrentPage
         {
             get
             {
-                return ParseIoToCollection(_mediaObjects);
+                return NavigationStore.CurrentViewModel;
+            }
+        }
+
+        private ObservableCollection<MediaObjectItemViewModel> _mediaObjacts;
+        public ObservableCollection<MediaObjectItemViewModel> MediaObjacts
+        {
+            set
+            {
+                _mediaObjacts = value;
+                OnPropertyChenged(nameof(MediaObjacts));
+            }
+            get
+            {
+                return _mediaObjacts;
             }
         }
 
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
 
+
+        public ICommand SetMediaObjectPageValue { get; init; }
+        public ICommand SetFiltrationPageValue { get; init; }
         public ICommand CreateMediaObjectWindowOpen { get; init; }
         public ICommand CreateFilterCriterionWindowOpen { get; init; }
         public RelayCommand EditMediaObjectWindowOpen { get; init; }
@@ -54,9 +68,8 @@ namespace ModernSort.ViewModel.Windows
 
         private IDialogService DialogService {  get; init; }
 
-        private IDeserializer Deserializer { get; init; }
-
-        private ISerializer Serializer { get; init; }
+        private FiltrationPageViewModel? CurrentFiltrationPageViewModel { get; set; }
+        private SelectedMediaObjectPageViewModel? CurrentMediaObjectPageViewModel {  get; set; }
 
         private SelectedMediaObjectPageViewModel? _currentMediaObjectPagePresenter;
         public SelectedMediaObjectPageViewModel? CurrentMediaObjectPagePresenter
@@ -74,16 +87,29 @@ namespace ModernSort.ViewModel.Windows
 
         public SelectedRankingCategoryViewModel() 
         {
+            
             OpenMediaObjectPage = new RelayCommand(OpenMediaObjectPageView);
+
+            NavigationStore = new NavigationStore();
+            NavigationStore.CurrentViewModelChanged += () => {OnPropertyChenged(nameof(CurrentPage));};
+
+            SetMediaObjectPageValue = new RelayCommand(
+                (p) => 
+                {
+                    NavigationStore.CurrentViewModel = CurrentMediaObjectPageViewModel;
+                });
+
+            SetFiltrationPageValue = new RelayCommand(
+                (p) =>
+                {
+                    NavigationStore.CurrentViewModel = CurrentFiltrationPageViewModel;
+                });
 
         }
 
         public SelectedRankingCategoryViewModel(OutputContentService contentService,CatalogStore catalogStore,OperationService operationService,RankingCategory selectedRankingCategory,
             IDialogService dialogService, ISerializer serializer, IDeserializer deserializer): this()
         {
-            Deserializer = deserializer;
-            Serializer = serializer;
-            SelectedRankingCategory = selectedRankingCategory;
             DialogService = dialogService;
             OperationService = operationService;
             ContentService = contentService;
@@ -101,8 +127,8 @@ namespace ModernSort.ViewModel.Windows
 
                     if (DialogService.ShowDialog(viewModel) ?? false)
                     {
-                        _mediaObjects = ContentService.MediaObjectContentService.GetUnloadedMediaObjects();
-                        OnPropertyChenged(nameof(MediaObjacts));
+                        InitStartEntities();
+                        //ParseIoToCollection();
                     }
                 });
 
@@ -110,7 +136,10 @@ namespace ModernSort.ViewModel.Windows
                 (p) =>
                 {
                     var viewModel = new CreateFilterCriterionViewModel(OperationService);
-                    DialogService.ShowDialog(viewModel);
+                    if (DialogService.ShowDialog(viewModel) ?? false)
+                    {
+                        InitStartEntities();
+                    }
                 });
 
             EditMediaObjectWindowOpen = new RelayCommand(
@@ -119,10 +148,7 @@ namespace ModernSort.ViewModel.Windows
                     EditMediaObjectViewModel editMediaObjectViewModel = new EditMediaObjectViewModel(OperationService,ContentService);
                     if (DialogService.ShowDialog(editMediaObjectViewModel) ?? false)
                     {
-                        _mediaObjects = ContentService.MediaObjectContentService.GetUnloadedMediaObjects();
-                        OnPropertyChenged(nameof(MediaObjacts));
-                        CurrentMediaObjectPagePresenter = null;
-                        OnPropertyChenged(nameof(CurrentMediaObjectPagePresenter));
+                        InitStartEntities();
                     }
                 },
                 () => 
@@ -142,23 +168,42 @@ namespace ModernSort.ViewModel.Windows
                     CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(false));
                 });
 
-            _mediaObjects = new IoCollection<RankingEntityes.Ranking_Entityes.MediaObjacts.MediaObject>();
-            _mediaObjects = ContentService.MediaObjectContentService.GetUnloadedMediaObjects();
-
+            InitStartEntities();
         }
 
-        private ObservableCollection<MediaObjectItemViewModel> ParseIoToCollection(IEnumerable<RankingEntityes.Ranking_Entityes.MediaObjacts.MediaObject> mediaObjects)
+        private void InitStartEntities()
         {
-            return new ObservableCollection<MediaObjectItemViewModel>(mediaObjects.Select(x => new MediaObjectItemViewModel(x,SelectedRankingCategory.RankingDirrectoryPath + @"\Media")));
+            MediaObjacts = new ObservableCollection<MediaObjectItemViewModel>(
+                ContentService.MediaObjectContentService
+                .GetUnloadedMediaObjects()
+                .Select(x => new MediaObjectItemViewModel(x, CatalogStore.MediaFilesCatalogPath)));
+
+            CurrentMediaObjectPageViewModel = new SelectedMediaObjectPageViewModel(ContentService);
+            NavigationStore.CurrentViewModel = CurrentMediaObjectPageViewModel;
+
+            CurrentFiltrationPageViewModel = new FiltrationPageViewModel(MediaObjacts, ContentService);
+            CurrentFiltrationPageViewModel.SetFilterableCollectionValue +=
+                (d) =>
+                {
+                    var a = d.Select(x => new MediaObjectItemViewModel(x, CatalogStore.MediaFilesCatalogPath));
+                    MediaObjacts = new ObservableCollection<MediaObjectItemViewModel>(a);
+                };
         }
 
         private void OpenMediaObjectPageView(object? parameter)
         {
-            if(parameter is not null and MediaObjectItemViewModel MediaObjectItem)
+            if( parameter is not null and MediaObjectItemViewModel mediaObjectItem)
             {
-                ContentService.MediaObjectContentService.SelectMediaObject(MediaObjectItem.MediaObject);
-                CurrentMediaObjectPagePresenter = new SelectedMediaObjectPageViewModel(ContentService);
+                ContentService.MediaObjectContentService.SelectMediaObject(mediaObjectItem.MediaObject);
 
+                if (CurrentPage is SelectedMediaObjectPageViewModel)
+                {
+                    NavigationStore.CurrentViewModel = new SelectedMediaObjectPageViewModel(ContentService);
+                }
+                else
+                {
+                    CurrentMediaObjectPageViewModel = new SelectedMediaObjectPageViewModel(ContentService);
+                }
             }
 
         }

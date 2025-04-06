@@ -2,6 +2,7 @@
 using ModernSort.Stores.Catalog;
 using RankingEntityes.Ranking_Entityes;
 using RankingEntityes.Ranking_Entityes.Ranking_Categories;
+using RankingEntityes.Ranking_Entityes.MediaObjacts;
 
 namespace ModernSort.Services.Operations
 {
@@ -27,7 +28,7 @@ namespace ModernSort.Services.Operations
         /// <returns></returns>
         public bool InvokeOperation<T>(IOperation operation)
             where T : IoEntity
-        { 
+        {
             if (operation is CreateOperation createOperation)
             {
                 createOperation.SetCatalogData(CatalogStore);

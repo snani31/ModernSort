@@ -87,15 +87,52 @@
             </Border>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="120"/>
+                    <RowDefinition Height="75"/>
                     <RowDefinition/>
                     <RowDefinition Height="120"/>
                 </Grid.RowDefinitions>
-                <Border
-                    x:Name="FilterCriteriesArea"
-                    Grid.Row="0"
-                    Background="#6795de"  
-                    /> 
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border
+                        Grid.Column="0"
+                        Background="#6795de"  
+                        >
+                        <TextBox
+                            Style="{StaticResource TuskDataTextBoxStyle}"
+                            Margin="20 10 150 10"
+                            />
+                    </Border>
+
+                    <Border
+                        Margin="20 0 0 0"
+                        CornerRadius="20 0 0 0"
+                         Grid.Column="1"
+                         Background="Red"  
+                        >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button
+                                Command="{Binding SetMediaObjectPageValue}"
+                                Grid.Column="0"
+                                Content="медиа объекты"/>
+                            <Button
+                                Command="{Binding SetFiltrationPageValue}"
+                                Grid.Column="1"
+                                Content="Фильтры"/>
+
+                        </Grid>
+                    </Border>
+
+                </Grid>
+                
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -113,8 +150,11 @@
                                 <DataTemplate DataType="{x:Type vmsPgs:SelectedMediaObjectPageViewModel}">
                                     <viewPgs:SelectedMediaObjectPage/>
                                 </DataTemplate>
+                                <DataTemplate DataType="{x:Type vmsPgs:FiltrationPageViewModel}">
+                                    <viewPgs:FiltrationPage/>
+                                </DataTemplate>
                             </Grid.Resources>
-                            <ContentControl Content="{Binding CurrentMediaObjectPagePresenter}"/>
+                            <ContentControl Content="{Binding CurrentPage}"/>
                         </Grid>
                     </Border>
                     <Border 

@@ -6,6 +6,7 @@
         xmlns:vmsWin="clr-namespace:ModernSort.ViewModel.Windows"
         xmlns:vmsPgs="clr-namespace:ModernSort.ViewModel.Pages"
         xmlns:viewPgs="clr-namespace:ModernSort.View.Pages"
+        xmlns:customUI="clr-namespace:ModernSort.CustomeControls"
         xmlns:local="clr-namespace:ModernSort.View.Windows"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
@@ -109,9 +110,8 @@
 
                     <Border
                         Margin="20 0 0 0"
-                        CornerRadius="20 0 0 0"
                          Grid.Column="1"
-                         Background="Red"  
+                         Background="#ccd5f0"  
                         >
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -119,15 +119,64 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
 
-                            <Button
-                                Command="{Binding SetMediaObjectPageValue}"
-                                Grid.Column="0"
-                                Content="медиа объекты"/>
-                            <Button
-                                Command="{Binding SetFiltrationPageValue}"
-                                Grid.Column="1"
-                                Content="Фильтры"/>
 
+                            <customUI:MenuRadiobutton
+                                Command="{Binding SetMediaObjectPageValue}" 
+                                Grid.Column="0" 
+                                Style="{StaticResource MenuRadiobuttonStyle}"
+                                    >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image
+                                        Margin="10"
+                                        Grid.Column="0"
+                                        HorizontalAlignment="Left"
+                                        Source="\AppResources\Pictures\galleryWhite.png"/>
+
+                                    <TextBlock 
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Grid.Column="1"
+                                        Text="Medias" 
+                                        Margin="0 0 40 10"
+                                        Style="{StaticResource SpanDefoult}"
+                                        FontSize="40"
+                                        FontWeight="DemiBold"
+                                        />
+                                </Grid>
+                            </customUI:MenuRadiobutton>
+
+                            <customUI:MenuRadiobutton
+                                        Command="{Binding SetFiltrationPageValue}" 
+                                        Grid.Column="1" 
+                                        Style="{StaticResource MenuRadiobuttonStyle}"
+                                            >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image
+                                        Margin="10"
+                                        Grid.Column="0"
+                                        HorizontalAlignment="Left"
+                                        Source="\AppResources\Pictures\filterWhite.png"/>
+
+                                    <TextBlock 
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Grid.Column="1"
+                                        Text="Filters"
+                                        Margin="0 0 40 10"
+                                        Style="{StaticResource SpanDefoult}"
+                                        FontSize="40"
+                                        FontWeight="DemiBold"
+                                        />
+                                </Grid>
+                            </customUI:MenuRadiobutton>
                         </Grid>
                     </Border>
 
@@ -143,8 +192,8 @@
                         Grid.Column ="1"
                         ClipToBounds="True"
                         Background="#ccd5f0"
-                        CornerRadius="20"
-                        Margin="20">
+                        CornerRadius="0 0 20 20"
+                        Margin="20 0 0 20">
                         <Grid>
                             <Grid.Resources>
                                 <DataTemplate DataType="{x:Type vmsPgs:SelectedMediaObjectPageViewModel}">

@@ -30,8 +30,8 @@
                 </Rectangle.Fill>
             </Rectangle>
             <Border
-                CornerRadius="15 15 0 0"
-                Background="Azure"
+                CornerRadius="15 15 20 20"
+                Background="White"
                 Grid.Row="1">
                 <Grid
                     >
@@ -40,11 +40,51 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="100"/>
                     </Grid.ColumnDefinitions>
+                    
                     <Button
                         Content="Лево"
                         Grid.Column="0"
                         Command="{Binding ScrollPresenterLeft}"
-                        />
+                        ToolTip="Left scroll"
+                        >
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border
+                                    x:Name="brd"
+                                    CornerRadius="0 0 0 20"
+                                    Background="White"
+                                    >
+                                    <Image
+                                        x:Name="img"
+                                        Margin="10"
+                                        Source="\AppResources\Pictures\leftArrowPurple.png"
+                                        />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" 
+                                            Value="true">
+                                        <Setter 
+                                                TargetName="img" 
+                                                Property="Source"
+                                                Value="\AppResources\Pictures\leftArrowWhite.png"/>
+                                        <Setter 
+                                                TargetName="img" 
+                                                Property="Margin"
+                                                Value="20"/>
+                                        <Setter
+                                            TargetName="brd" 
+                                            Property="Background"
+                                            Value="#512f95"/>
+                                        <Setter
+                                            TargetName="brd" 
+                                            Property="BorderThickness"
+                                            Value="0"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    
                     <Border
                         Grid.Column="1"
                         >
@@ -139,10 +179,48 @@
                         </ListView>
                     </Border>
                     <Button
-                        Content="Право"
+                        Content="Лево"
                         Grid.Column="2"
                         Command="{Binding ScrollPresenterRight}"
-                        />
+                        ToolTip="Left scroll"
+                        >
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border
+                                    x:Name="brd"
+                                    CornerRadius="0 0 20 0"
+                                    Background="White"
+                                    >
+                                    <Image
+                                        x:Name="img"
+                                        Margin="10"
+                                        Source="\AppResources\Pictures\rightArrowPurple.png"
+                                        />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" 
+                                             Value="true">
+                                        <Setter 
+                                            TargetName="img" 
+                                            Property="Source"
+                                            Value="\AppResources\Pictures\rightArrowWhite.png"/>
+                                        <Setter 
+                                            TargetName="img" 
+                                            Property="Margin"
+                                            Value="20"/>
+                                        <Setter
+                                            TargetName="brd" 
+                                            Property="Background"
+                                            Value="#512f95"/>
+                                        <Setter
+                                            TargetName="brd" 
+                                            Property="BorderThickness"
+                                            Value="0"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
                 </Grid>
             </Border>
         </Grid>

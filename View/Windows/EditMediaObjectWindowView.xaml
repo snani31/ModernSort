@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:customUI="clr-namespace:ModernSort.CustomeControls"
         xmlns:local="clr-namespace:ModernSort.View.Windows"
         xmlns:enums="clr-namespace:ModernSort.Enums"
         mc:Ignorable="d"
@@ -102,7 +103,8 @@ ClipToBounds="True"
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
-                                <ColumnDefinition Width="75 "/>
+                                <ColumnDefinition 
+                                    Width="75 "/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
@@ -297,11 +299,49 @@ ClipToBounds="True"
                                 </Grid>
                             </Border>
 
-                            <Button Grid.Column="1"
-                                Grid.Row="0"/>
+                            <Border
+                                Background="#ccd5f0"
+                                Grid.Column="1"
+                                Grid.RowSpan="2"
+                                >
+                                
+                            </Border>
 
-                            <Button Grid.Column="1"
-                                Grid.Row="1"/>
+                            <customUI:MenuRadiobutton
+                                Command="{Binding SetMediaObjectPageValue}" 
+                                Grid.Column="1"
+                                Grid.Row="0"
+                                Style="{StaticResource MenuRadiobuttonLeftDirectionStyle}"
+                                >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Image
+                                        Margin="10"
+                                        Grid.Row="0"
+                                        HorizontalAlignment="Center"
+                                        Source="\AppResources\Pictures\galleryWhite.png"/>
+                                </Grid>
+                            </customUI:MenuRadiobutton>
+
+                            <customUI:MenuRadiobutton
+                                Command="{Binding SetMediaObjectPageValue}" 
+                                Grid.Column="1"
+                                Grid.Row="1"
+                                Style="{StaticResource MenuRadiobuttonLeftDirectionStyle}"
+                                >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Image
+                                        Margin="15"
+                                        Grid.Row="0"
+                                        HorizontalAlignment="Center"
+                                        Source="\AppResources\Pictures\filterWhite.png"/>
+                                </Grid>
+                            </customUI:MenuRadiobutton>
 
                         </Grid>
 

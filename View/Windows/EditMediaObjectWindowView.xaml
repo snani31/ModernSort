@@ -273,18 +273,153 @@ ClipToBounds="True"
                                         <DataTemplate
                                             x:Key="Filters">
                                             <Border
-                                            Background="Blue"
+                                            DataContext="{Binding DataContext,
+                                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                                            Background="Transparent"
                                             >
-                                                <TextBlock
-                                                    VerticalAlignment="Center"
-                                                    HorizontalAlignment="Center"
-                                                    FontSize="30"
-                                                    Foreground="Red"
-                                                    Style="{StaticResource SpanDefoult}"
-                                                    Text="Filters cooming soon"
-                                                    />
+
+                                                <ListView
+                                                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                                                    x:Name="FiltersCriterionsList"
+                                                    ScrollViewer.CanContentScroll="False"
+                                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                                    HorizontalContentAlignment="Stretch"
+                                                    ItemContainerStyle="{StaticResource MediaObjactContenerStyle}"
+                                                    ItemsSource="{Binding FilterCriterions}"
+                                                    BorderThickness="0"
+                                                    Background="Transparent"
+                                                    Padding="0 10 0 0"
+                                                    >
+                                                    <ListView.ItemTemplate>
+
+                                                        <DataTemplate>
+
+                                                            <Border
+                                                                MinHeight="350"
+                                                                Background="#ccd5f0"
+                                                                CornerRadius="40"
+                                                                Margin="20"
+                                                                >
+                                                                <StackPanel
+                                                                    Orientation="Vertical"
+                                                                    >
+                                                                    <Border 
+                                                                        MinHeight="75"
+                                                                        Background="#512f95"
+                                                                        CornerRadius="10">
+                                                                        <TextBlock
+                                                                            x:Name="FilterCriterionTytleTextBlock"
+                                                                            TextWrapping="Wrap"
+                                                                            Foreground="#f7f9fe"
+                                                                            FontSize="25"
+                                                                            Style="{StaticResource SpanDefoult}"
+                                                                            TextAlignment="Center"
+                                                                            VerticalAlignment="Center"
+                                                                            HorizontalAlignment="Center"
+                                                                            Text="{Binding Tytle}"
+                                                                            />
+                                                                    </Border>
+
+                                                                    <ListView
+                                                                        MinHeight="300"
+                                                                        ScrollViewer.CanContentScroll="False"
+                                                                        HorizontalContentAlignment="Stretch"
+                                                                        BorderThickness="0"
+                                                                        ItemsSource="{Binding FilterItems}"
+                                                                        Background="Transparent"
+                                                                        Padding="0 10 20 10"
+                                                                        ItemContainerStyle="{StaticResource RankingListItemStyle}"
+                                                                          >
+                                                                        <ListView.ItemTemplate>
+                                                                            <DataTemplate>
+                                                                                <Grid
+                                                                                    HorizontalAlignment="Stretch"
+                                                                                    >
+                                                                                    <Grid.RowDefinitions>
+                                                                                        <RowDefinition Height="50"/>
+                                                                                    </Grid.RowDefinitions>
+                                                                                    <Grid.ColumnDefinitions>
+                                                                                        <ColumnDefinition Width="*"/>
+                                                                                        <ColumnDefinition Width="50"/>
+                                                                                    </Grid.ColumnDefinitions>
+
+                                                                                    <TextBlock
+                                                                                        HorizontalAlignment="Left"
+                                                                                        
+                                                                                        Foreground="{Binding 
+                                                                                        Path=Foreground, 
+                                                                                        RelativeSource={RelativeSource AncestorType=ListViewItem,Mode=FindAncestor}}"
+                            
+                                                                                        Grid.Row="0"
+                                                                                        Grid.Column="0"
+                                                                                        x:Name="TytleTbx"
+                                                                                        FontSize="20"
+                                                                                        TextWrapping="Wrap"
+                                                                                        Background="Transparent"
+                                                                                        Text="{Binding ConditionTytle}"
+                                                                                        Width="150"
+                                                                                        Height="50"
+                                                                                        Margin="30 0 0 0"
+                                                                                        />
+                                                                                    <Viewbox
+                                                                                        Grid.Row="0"
+                                                                                        Grid.Column="1"
+                                                                                        Width="50"
+                                                                                        Height="50"
+                                                                                        HorizontalAlignment="Right"
+                                                                                        >
+                                                                                        <CheckBox
+                                                                                            IsChecked="{Binding IsFilterSelected, Mode=TwoWay}"
+                                                                                            BorderBrush="#512f95"
+                                                                                            Background="White"
+                                                                                            Style="{StaticResource CheckBoxRoundenStyle}"
+                                                                                             >
+                                                                                            <i:Interaction.Triggers>
+                                                                                                <i:EventTrigger EventName="Checked">
+                                                                                                    <i:InvokeCommandAction
+                                                                                                        Command="{Binding DataContext.AddFilterToSelection, RelativeSource={RelativeSource AncestorLevel=2,AncestorType=ListView,Mode=FindAncestor}}"
+                                                                                                        CommandParameter="{Binding}"/>
+                                                                                                </i:EventTrigger>
+                                                                                                <i:EventTrigger EventName="Unchecked">
+                                                                                                    <i:InvokeCommandAction
+                                                                                                        Command="{Binding DataContext.RemoveFilterFromSelection, RelativeSource={RelativeSource AncestorLevel=2,AncestorType=ListView,Mode=FindAncestor}}"
+                                                                                                        CommandParameter="{Binding}"/>
+                                                                                                </i:EventTrigger>
+                                                                                            </i:Interaction.Triggers>
+                                                                                        </CheckBox>
+                                                                                    </Viewbox>
+
+                                                                                </Grid>
+                                                                            </DataTemplate>
+                                                                        </ListView.ItemTemplate>
+                                                                        <ListView.Resources>
+                                                                            <Style TargetType="ScrollBar" BasedOn="{StaticResource WhiteScrollBarStyle}"/>
+                                                                        </ListView.Resources>
+                                                                    </ListView>
+
+                                                                </StackPanel>
+                                                            </Border>
+
+                                                        </DataTemplate>
+                                                    </ListView.ItemTemplate>
+                                                    <ListView.Resources>
+                                                        <Style TargetType="ScrollBar" BasedOn="{StaticResource WhiteScrollBarStyle}"/>
+                                                    </ListView.Resources>
+                                                    <ListView.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel 
+                                                                Orientation="Vertical"
+                                                                VerticalAlignment="Top"
+                                                                HorizontalAlignment="Stretch"
+                                                                />
+                                                        </ItemsPanelTemplate>
+                                                    </ListView.ItemsPanel>
+                                                </ListView>
+
                                             </Border>
                                         </DataTemplate>
+                                        
                                         <l:EditMediaObjectFunctionTemplateSelector
                                             x:Key="FunctionSelector"
                                             FilesTemplate="{StaticResource Files}"
@@ -308,7 +443,7 @@ ClipToBounds="True"
                             </Border>
 
                             <customUI:MenuRadiobutton
-                                Command="{Binding SetMediaObjectPageValue}" 
+                                Command="{Binding ShowMediaFilesPage}" 
                                 Grid.Column="1"
                                 Grid.Row="0"
                                 Style="{StaticResource MenuRadiobuttonLeftDirectionStyle}"
@@ -326,7 +461,7 @@ ClipToBounds="True"
                             </customUI:MenuRadiobutton>
 
                             <customUI:MenuRadiobutton
-                                Command="{Binding SetMediaObjectPageValue}" 
+                                Command="{Binding ShowFiltersPage}" 
                                 Grid.Column="1"
                                 Grid.Row="1"
                                 Style="{StaticResource MenuRadiobuttonLeftDirectionStyle}"

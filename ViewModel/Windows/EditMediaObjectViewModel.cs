@@ -6,6 +6,8 @@ using ModernSort.Services.Operations;
 using ModernSort.Services.Operatios;
 using ModernSort.Static;
 using ModernSort.ViewModel.Items;
+using ModernSort.ViewModel.Items.FiltrationItems;
+using RankingEntityes.Filters;
 using RankingEntityes.IO_Entities.Interfaces;
 using RankingEntityes.Ranking_Entityes.MediaObjacts;
 using RankingEntityes.Ranking_Entityes.Ranking_Categories;
@@ -36,6 +38,8 @@ namespace ModernSort.ViewModel.Windows
             }
         }
         private List<string> BeforeEditFilePaths { get; init; }
+
+        private List<Filter> SelectedFilters { get; init; }
 
         public OperationService OperationService { get; }
         public OutputContentService ContentService { get; }
@@ -88,12 +92,18 @@ namespace ModernSort.ViewModel.Windows
             }
         }
 
+        public ObservableCollection<FilterCriterionItemViewModel> FilterCriterions { get; init; }
+
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
         public ICommand CloseDialog { get; init; }
         public ICommand DeleteMediaObjact { get; init; }
         public ICommand SelectMultimediaFiles { get; init; }
         public ICommand RemoveFileFromList {  get; init; }
         public RelayCommand EditMediaObject { get; init; }
+        public ICommand ShowMediaFilesPage { get; init; }
+        public ICommand ShowFiltersPage { get; init; }
+        public ICommand RemoveFilterFromSelection { get; init; }
+        public ICommand AddFilterToSelection { get; init; }
 
         public EditMediaObjectViewModel()
         {
@@ -101,6 +111,22 @@ namespace ModernSort.ViewModel.Windows
                 (p) =>
                 {
                     CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(false));
+                });
+
+            ShowFiltersPage = new RelayCommand(
+                (p) =>
+                {
+                    PagePresenter = FunktionPageEnum.FiltersPresent;
+                });
+
+            RemoveFilterFromSelection = new RelayCommand(RemoveFilterFromSelectionCommandMethod);
+
+            AddFilterToSelection = new RelayCommand(AddFilterToSelectionCommandMethod);
+
+            ShowMediaFilesPage = new RelayCommand(
+                (p) =>   
+                {
+                    PagePresenter = FunktionPageEnum.FilesPresent;
                 });
 
             DeleteMediaObjact = new RelayCommand(DeleteMediaObjactMethod);
@@ -143,6 +169,20 @@ namespace ModernSort.ViewModel.Windows
                 Validate(nameof(SelectedFilePaths), SelectedFilePaths);
             };
 
+
+            var allExistingFilterCriterionsItemsVM = ContentService.FilterCriterionContentService
+                .GetUnloadedFilterCriterions()
+                .Select(x => new FilterCriterionItemViewModel(x));
+
+            FilterCriterions = new ObservableCollection<FilterCriterionItemViewModel>(allExistingFilterCriterionsItemsVM);
+
+            foreach (var filterItemTmp in FilterCriterions.SelectMany(filterItem => filterItem.FilterItems).ToArray())
+            {
+                filterItemTmp.SelectFilterIfContains(ContentService.MediaObjectContentService.SelectedMediaObject.MatchFilters);
+            }
+
+            SelectedFilters = new List<Filter>(ContentService.MediaObjectContentService.SelectedMediaObject.MatchFilters);
+
         }
 
         private void DeleteMediaObjactMethod(object? parameter)
@@ -172,7 +212,8 @@ namespace ModernSort.ViewModel.Windows
                 description: MediaObjectDescryption,
                 ContentService.MediaObjectContentService.SelectedMediaObject.ID,
                 BeforeEditFilePaths,
-                SelectedFilePaths);
+                SelectedFilePaths,
+                SelectedFilters);
 
             bool MediaObjectUpdateWasSuccsesfullyCompleted = OperationService.InvokeOperation<MediaObject>(operation);
 
@@ -183,5 +224,20 @@ namespace ModernSort.ViewModel.Windows
             }
         }
 
+        private void AddFilterToSelectionCommandMethod(object? parameter)
+        {
+            if (parameter is ConditionFilterItemViewModel filterItem)
+            {
+                SelectedFilters.Add(filterItem.Filter);
+            }
+        }
+
+        private void RemoveFilterFromSelectionCommandMethod(object? parameter)
+        {
+            if (parameter is ConditionFilterItemViewModel filterItem)
+            {
+                SelectedFilters.Remove(filterItem.Filter);
+            }
+        }
     }
 }

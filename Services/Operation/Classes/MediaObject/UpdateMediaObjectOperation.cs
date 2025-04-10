@@ -1,6 +1,7 @@
 ﻿using ModernSort.Services.Dialog;
 using ModernSort.Services.Operations;
 using ModernSort.Stores.Catalog;
+using RankingEntityes.Filters;
 using RankingEntityes.IO_Entities.Classes;
 using RankingEntityes.Ranking_Entityes.MediaObjacts;
 using RankingEntityes.Ranking_Entityes.Ranking_Categories;
@@ -22,20 +23,23 @@ namespace ModernSort.Services.Operations
         private string Description { get; init; }
         private IEnumerable<string> BeforeEditFilePaths { get; init; }
         public IEnumerable<string> SelectedFilesPaths { get; }
+        public IEnumerable<Filter> SelectedFilters { get; }
         #endregion
 
         #region Catalog Data
-        private string SelectedCategoryMediaFilesDirectoryPath { get; set; } 
+        private string SelectedCategoryMediaFilesDirectoryPath { get; set; }
         #endregion
 
         public UpdateMediaObjectOperation(string tytle, string description, Guid selectedMediaObjectGuid,
-            IEnumerable<string> beforeEditFilePaths, IEnumerable<string> selectedFilesPaths)
+            IEnumerable<string> beforeEditFilePaths, IEnumerable<string> selectedFilesPaths, 
+            IEnumerable<Filter> selectedFilters)
         {
             this.Tytle = tytle;
             this.Description = description;
             this.BeforeEditFilePaths = beforeEditFilePaths;
             SelectedFilesPaths = selectedFilesPaths;
             SelectedMediaObjectGuid = selectedMediaObjectGuid;
+            SelectedFilters = selectedFilters;
         }
 
         public override void Update()
@@ -61,7 +65,8 @@ namespace ModernSort.Services.Operations
                 ID = SelectedMediaObjectGuid,
                 Description = this.Description,
                 Tytle = this.Tytle,
-                Paths = newFilesFinalNames
+                Paths = newFilesFinalNames,
+                MatchFilters = SelectedFilters
             };
             #endregion
             foreach (var filePath in BeforeEditFilePaths)

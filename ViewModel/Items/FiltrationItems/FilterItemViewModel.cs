@@ -25,5 +25,13 @@ namespace ModernSort.ViewModel.Items.FiltrationItems
                 OnPropertyChenged(nameof(IsFilterSelected));
             } 
         }
+
+        public void SelectFilterIfContains(IEnumerable<IFilter> filters)
+        {
+            if (filters.Contains(Filter))
+            {
+                IsFilterSelected = true;
+            }
+        }
     }
 }

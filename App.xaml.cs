@@ -12,6 +12,8 @@ using ModernSort.Services;
 using ModernSort.Services.RankingContent;
 using RankingEntityes.Filters;
 using RankingEntityes.Json.Converters;
+using RankingEntityes.Ranking_Entityes.MediaObjacts;
+using RankingEntityes.Ranking_Entityes.Ranking_Categories;
 
 namespace ModernSort
 {
@@ -38,6 +40,7 @@ namespace ModernSort
             _dialogService.Register<EditRankingWindowViewModel, EditRankingWindowView>();
             _dialogService.Register<EditMediaObjectViewModel, EditMediaObjectWindowView>();
             _dialogService.Register<CreateFilterCriterionViewModel, CreateFilterCriterionWindowView>();
+            _dialogService.Register<EditFilterCriterionViewModel, EditFilterCriterionWindowView>();
 
             _jsonDeserializer = new JsonDeserializer();
             _jsonSerializer = new JsonSerializer();
@@ -68,7 +71,12 @@ namespace ModernSort
             var filterCriterionsContentService = new FilterCriterionsContentService(jsonDeserializerWithFilterCriterionConverter, _catalogStore);
             var mediaObjectsContentService = new MediaObjectContentService(jsonDeserializerWithFilterConvertation, _catalogStore);
 
-            _operationService = new OperationService(_jsonSerializer, jsonDeserializerWithFilterConvertation, _catalogStore);
+            _operationService = new OperationService(_jsonSerializer,_catalogStore);
+            _operationService.RegistrateDeserializer(typeof(MediaObject), jsonDeserializerWithFilterConvertation);
+            _operationService.RegistrateDeserializer(typeof(FilterCriterion), jsonDeserializerWithFilterCriterionConverter);
+            _operationService.RegistrateDeserializer(typeof(RankingCategory), _jsonDeserializer);
+
+
             _outputContentService = new OutputContentService(_catalogStore, _jsonDeserializer, filterCriterionsContentService,mediaObjectsContentService);
         }
 

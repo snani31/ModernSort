@@ -17,10 +17,14 @@
 
   <ItemGroup>
     <None Remove="AppResources\CollapseWindpwIcon.png" />
+    <None Remove="AppResources\Pictures\addPlusPurple.png" />
+    <None Remove="AppResources\Pictures\addPlusWhiteNoBorder.png" />
     <None Remove="AppResources\Pictures\addPurple.png" />
     <None Remove="AppResources\Pictures\addWhite.png" />
     <None Remove="AppResources\Pictures\filterWhite.png" />
     <None Remove="AppResources\Pictures\galleryWhite.png" />
+    <None Remove="AppResources\Pictures\gearWhite.png" />
+    <None Remove="AppResources\Pictures\gearWhiteBordered.png" />
     <None Remove="AppResources\Pictures\leftArrowPurple.png" />
     <None Remove="AppResources\Pictures\leftArrowWhite.png" />
     <None Remove="AppResources\Pictures\pencilBlack.png" />
@@ -46,10 +50,14 @@
   <ItemGroup>
     <Resource Include="AppResources\CollapseWindpwIcon.png" />
     <Resource Include="AppResources\Fonts\Pribambas.ttf" />
+    <Resource Include="AppResources\Pictures\addPlusPurple.png" />
+    <Resource Include="AppResources\Pictures\addPlusWhiteNoBorder.png" />
     <Resource Include="AppResources\Pictures\addPurple.png" />
     <Resource Include="AppResources\Pictures\addWhite.png" />
     <Resource Include="AppResources\Pictures\filterWhite.png" />
     <Resource Include="AppResources\Pictures\galleryWhite.png" />
+    <Resource Include="AppResources\Pictures\gearWhite.png" />
+    <Resource Include="AppResources\Pictures\gearWhiteBordered.png" />
     <Resource Include="AppResources\Pictures\leftArrowPurple.png" />
     <Resource Include="AppResources\Pictures\leftArrowWhite.png" />
     <Resource Include="AppResources\Pictures\pencilBlack128px.png" />

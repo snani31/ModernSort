@@ -3,26 +3,11 @@ using ModernSort.Services;
 using ModernSort.Services.Dialog;
 using ModernSort.Services.Operations;
 using ModernSort.Static;
-using ModernSort.Stores.Catalog;
 using ModernSort.ViewModel.Items;
 using RankingEntityes.Filters;
-using RankingEntityes.IO_Entities.Classes;
-using RankingEntityes.IO_Entities.Interfaces;
-using RankingEntityes.Json.Converters;
-using RankingEntityes.Ranking_Entityes.MediaObjacts;
-using RankingEntityes.Ranking_Entityes.Ranking_Categories;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace ModernSort.ViewModel.Windows
@@ -34,7 +19,7 @@ namespace ModernSort.ViewModel.Windows
         private OperationService OperationService { get; init; }
 
         private ObservableCollection<Filter> _selectedFilters;
-        public ObservableCollection<Filter> SelectedMaychFilters
+        public ObservableCollection<Filter> SelectedMatchFilters
         {
             get { return _selectedFilters; }
             private set
@@ -110,7 +95,7 @@ namespace ModernSort.ViewModel.Windows
             AddFilterCommand = new RelayCommand(AddToSelectedFilters);
             RemoveFilterCommand = new RelayCommand(RemoveFromSelectedFilters);
 
-            SelectedMaychFilters = new ObservableCollection<Filter>();
+            SelectedMatchFilters = new ObservableCollection<Filter>();
 
             SelectedFiles = new ObservableCollection<MediaFileSelectedViewModel>();
             SelectedFiles.CollectionChanged += (object? sender, NotifyCollectionChangedEventArgs e) =>
@@ -155,7 +140,7 @@ namespace ModernSort.ViewModel.Windows
         private void CreateMediaObjactMethod(object? parameter)
         {
             IEnumerable<string> selectedFileNames = SelectedFiles.Select(x => x.MediaImagePath);
-            IOperation createMediaObjectOperation = new CreateMediaObjectOperation(selectedFileNames,Tytle,Descriptyon,SelectedMaychFilters); 
+            IOperation createMediaObjectOperation = new CreateMediaObjectOperation(selectedFileNames,Tytle,Descriptyon,SelectedMatchFilters); 
 
             bool MediaObjectCreationWasSuccesfullyCompleted =
                 OperationService.InvokeOperation<RankingEntityes.Ranking_Entityes.MediaObjacts.MediaObject>(createMediaObjectOperation);
@@ -179,7 +164,7 @@ namespace ModernSort.ViewModel.Windows
         {
             if (parameter is Filter filter)
             {
-                SelectedMaychFilters.Add(filter);
+                SelectedMatchFilters.Add(filter);
             }
         }
 
@@ -187,7 +172,7 @@ namespace ModernSort.ViewModel.Windows
         {
             if (parameter is Filter filter)
             {
-                SelectedMaychFilters.Remove(filter);
+                SelectedMatchFilters.Remove(filter);
             }
         }
     }

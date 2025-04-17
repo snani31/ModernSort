@@ -24,7 +24,7 @@ namespace ModernSort.Services.Operations
             EntityesCollection.Deserialize(deserializer, FilePath);
         }
 
-        public void UploadChangedElements(ISerializer serializer)
+        public virtual void UploadChangedElements(ISerializer serializer)
         {
             OperationResult = EntityesCollection.Serialize(serializer,
                 FilePath,

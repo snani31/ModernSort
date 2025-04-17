@@ -9,7 +9,7 @@ namespace ModernSort.ViewModel.Items.FiltrationItems
 {
     internal class FilterCriterionItemViewModel
     {
-        private FilterCriterion FilterCriterion { get; init; }
+        public FilterCriterion FilterCriterion { get; init; }
 
         public string Tytle 
         {
@@ -39,9 +39,6 @@ namespace ModernSort.ViewModel.Items.FiltrationItems
                 FilterItems = new List<IFilterViewModel>(a);
 
             }
-
-            
-            
         }
     }
 }

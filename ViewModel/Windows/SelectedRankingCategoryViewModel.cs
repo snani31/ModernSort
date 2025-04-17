@@ -1,28 +1,15 @@
-﻿using Microsoft.Xaml.Behaviors.Core;
-using ModernSort.Commands;
+﻿using ModernSort.Commands;
 using ModernSort.Services;
 using ModernSort.Services.Dialog;
 using ModernSort.Services.Operations;
-using ModernSort.Static;
 using ModernSort.Stores.Catalog;
 using ModernSort.Stores.Navigation;
-using ModernSort.View.Pages;
 using ModernSort.ViewModel.Items;
-using ModernSort.ViewModel.Items.FiltrationItems;
 using ModernSort.ViewModel.Pages;
-using Newtonsoft.Json.Linq;
 using RankingEntityes.Filters;
-using RankingEntityes.IO_Entities.Classes;
 using RankingEntityes.IO_Entities.Interfaces;
-using RankingEntityes.Ranking_Entityes.MediaObjacts;
 using RankingEntityes.Ranking_Entityes.Ranking_Categories;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace ModernSort.ViewModel.Windows
@@ -128,7 +115,6 @@ namespace ModernSort.ViewModel.Windows
                     if (DialogService.ShowDialog(viewModel) ?? false)
                     {
                         InitStartEntities();
-                        //ParseIoToCollection();
                     }
                 });
 
@@ -188,6 +174,7 @@ namespace ModernSort.ViewModel.Windows
                     var a = d.Select(x => new MediaObjectItemViewModel(x, CatalogStore.MediaFilesCatalogPath));
                     MediaObjacts = new ObservableCollection<MediaObjectItemViewModel>(a);
                 };
+            CurrentFiltrationPageViewModel.OnEditButtonPressed += OpenEditFilterCriterionPage;
         }
 
         private void OpenMediaObjectPageView(object? parameter)
@@ -206,6 +193,18 @@ namespace ModernSort.ViewModel.Windows
                 }
             }
 
+        }
+
+        private void OpenEditFilterCriterionPage(FilterCriterion filterCriterion)
+        {
+            ContentService.FilterCriterionContentService.SelectFilterCriterion(filterCriterion);
+            var editFilterCriterionViewModel = new EditFilterCriterionViewModel(OperationService,ContentService);
+
+            if (DialogService.ShowDialog(editFilterCriterionViewModel) ?? false)
+            {
+                InitStartEntities();
+            }
+            ContentService.FilterCriterionContentService.DropSelectionOfFilterCriterion();
         }
 
     }

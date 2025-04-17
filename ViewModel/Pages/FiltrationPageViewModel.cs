@@ -20,6 +20,8 @@ namespace ModernSort.ViewModel.Pages
         public event Action<ObservableCollection<MediaObject>> SetFilterableCollectionValue;
         public List<IFilter> SelectedFilters { get; set; }
 
+        public event Action<FilterCriterion> OnEditButtonPressed;
+
         private FiltrationService<MediaObject> FiltrationService { get; set; }
 
         public ObservableCollection<MediaObjectItemViewModel> FilterableMediaObjects {  get; private set; }
@@ -29,12 +31,20 @@ namespace ModernSort.ViewModel.Pages
         public ICommand RefreshFilterSelectionList { get; init; }
         public ICommand RemoveFilterFromSelectionList { get; init; }
 
+        public ICommand OpenEditWindow { get; init; }
+
         public FiltrationPageViewModel()
         {
             SelectedFilters = new List<IFilter>();
             AddFilterSelectionList = new RelayCommand(AddFilterSelectionListCommandMethod);
             RemoveFilterFromSelectionList = new RelayCommand(RemoveFilterFromSelectionListCommandMethod);
             RefreshFilterSelectionList = new RelayCommand(RefreshFiltersInSelectionListCommandMethod);
+            OpenEditWindow = new RelayCommand(
+                (p) =>
+                {
+                    if (p is FilterCriterionItemViewModel filterCriterionItem)
+                    OnEditButtonPressed?.Invoke(filterCriterionItem.FilterCriterion);
+                });
         }
 
         public FiltrationPageViewModel(ObservableCollection<MediaObjectItemViewModel> filterableMediaObjects,

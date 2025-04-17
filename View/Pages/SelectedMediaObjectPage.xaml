@@ -89,6 +89,7 @@
                         Grid.Column="1"
                         >
                         <ListView
+                            BorderThickness="0"
                             SelectedIndex="{Binding Path=SelectedPathIndex}"
                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                        ScrollViewer.VerticalScrollBarVisibility="Disabled"

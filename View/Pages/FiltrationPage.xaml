@@ -48,17 +48,53 @@
                         MinHeight="75"
                         Background="#512f95"
                         CornerRadius="10">
-                                    <TextBlock
-                            TextWrapping="Wrap"
-                            Foreground="#f7f9fe"
-                            FontSize="25"
-                            Style="{StaticResource SpanDefoult}"
-                            TextAlignment="Center"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"
-                            x:Name="FilterCriterionTytleTextBlock"
-                            Text="{Binding Tytle}"
-                            />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            TextWrapping="Wrap"
+                                            Foreground="#f7f9fe"
+                                            FontSize="25"
+                                            Style="{StaticResource SpanDefoult}"
+                                            TextAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Center"
+                                            x:Name="FilterCriterionTytleTextBlock"
+                                            Text="{Binding Tytle}"
+                                            />
+                                        <Button
+                                            Grid.Column="1"
+                                            Command="{Binding DataContext.OpenEditWindow, RelativeSource={RelativeSource AncestorType= ListView,Mode=FindAncestor}}"
+                                            CommandParameter="{Binding}"
+                                            ToolTip="Edit filter criterionn"
+                                            Margin="25">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border
+                                                        x:Name="brd"
+                                                        Background="Transparent"
+                                                        >
+                                                        <Image
+                                                        x:Name="img"
+                                                        Source="\AppResources\Pictures\gearWhiteBordered.png"
+                                                        />
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" 
+                                                            Value="true">
+                                                            <Setter 
+                                                                TargetName="img" 
+                                                                Property="Source"
+                                                                Value="\AppResources\Pictures\gearWhite.png"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </Grid>
                                 </Border>
 
                                 <ListView

@@ -1,24 +1,27 @@
-﻿<Window x:Class="ModernSort.View.Windows.SelectedRankingCategoryWindowView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vmsWin="clr-namespace:ModernSort.ViewModel.Windows"
-        xmlns:vmsPgs="clr-namespace:ModernSort.ViewModel.Pages"
-        xmlns:viewPgs="clr-namespace:ModernSort.View.Pages"
-        xmlns:customUI="clr-namespace:ModernSort.CustomeControls"
-        xmlns:local="clr-namespace:ModernSort.View.Windows"
-        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        mc:Ignorable="d"
-        Title="SelectedRankingCategoryWindowView" 
-        Height="800" 
-        Width="1100"
-        WindowStyle="none"
-        ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen"
-        AllowsTransparency="True"
-        Background="Transparent"
-        >
+﻿<customCtrs:BaseWindow 
+    x:Class="ModernSort.View.Windows.SelectedRankingCategoryWindowView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vmsWin="clr-namespace:ModernSort.ViewModel.Windows"
+    xmlns:vmsPgs="clr-namespace:ModernSort.ViewModel.Pages"
+    xmlns:viewPgs="clr-namespace:ModernSort.View.Pages"
+    xmlns:customUI="clr-namespace:ModernSort.CustomeControls"
+    xmlns:customCtrs ="clr-namespace:ModernSort.CustomeControls.CustomUIControls"
+    xmlns:local="clr-namespace:ModernSort.View.Windows"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    mc:Ignorable="d"
+    Title="SelectedRankingCategoryWindowView" 
+    Height="800" 
+    Width="1100"
+    WindowStyle="none"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    AllowsTransparency="True"
+    Background="Transparent"
+    MouseLeftButtonDown="Window_DragHandler"
+        > 
     <Window.DataContext>
         <vmsWin:SelectedRankingCategoryViewModel/>
     </Window.DataContext>
@@ -48,36 +51,55 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="50"/>
                         <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="50"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="2"
-             Command="{Binding CloseDialog}"
-             ToolTip="Закрыть">
-                        <Button.Template> 
+
+                    <Button Grid.Column="1"
+         ToolTip="Закрыть"
+            Click="HideButton_Click">
+                        <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="10 20 0 10">
-                                    <Image Margin="5" Source="\AppResources\PowerOffButtonIcon.png"/>
+                                    <Image Margin="5" Source="/AppResources/Pictures/circleWhite64px.png"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="brd" Property="Background" Value="#a1261d"/>
+                                        <Setter TargetName="brd" Property="Background" Value="#492988"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
 
-                    <Button Grid.Column="1"
-             Command="{Binding CollapselicationCommand}"
-             ToolTip="Свернуть">
+                    <Button Grid.Column="2"
+         ToolTip="Свернуть"
+            Click="MaximizeButton_Click">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="10 20 0 10">
-                                    <Image Margin="5" Source="\AppResources\CollapseWindpwIcon.png"/>
+                                    <Image Margin="5" Source="/AppResources/Pictures/CollapseWindpwIcon.png"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter TargetName="brd" Property="Background" Value="#492988"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Grid.Column="3"
+        Command="{Binding CloseDialog}"
+        ToolTip="Закрыть">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="10 20 0 10">
+                                    <Image Margin="5" Source="/AppResources/Pictures/PowerOffButtonIcon.png"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="brd" Property="Background" Value="#a1261d"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -100,12 +122,54 @@
                     </Grid.ColumnDefinitions>
                     <Border
                         Grid.Column="0"
-                        Background="#6795de"  
+                        Background="#512f95"
+                        CornerRadius="0 0 20 0"
+                        Margin="0 0 20 0"
                         >
-                        <TextBox
-                            Style="{StaticResource TuskDataTextBoxStyle}"
-                            Margin="20 10 150 10"
-                            />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="100"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox
+                               x:Name="SearchTbox"
+                                ToolTip="Category  Descryption"
+                                Grid.Row="1"
+                                FontSize="25"
+                                Foreground="#6795de"
+                                TextWrapping="Wrap"
+                                Padding="10"
+                                Style="{StaticResource TuskDataTextBoxStyle}"
+                                Margin="20 10 20 10"
+                                />
+                            <Button
+                                Grid.Column="1"
+                                >
+                                <Button.Template>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border
+                                            x:Name="brd"
+                                            CornerRadius="20 0 20 20"
+                                            >
+                                            <Image
+                                                x:Name="img"
+                                                Margin="10"
+                                                Source="/AppResources/Pictures/magnifierWhite64px.png"
+                                                />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" 
+                                                Value="true">
+                                                <Setter
+                                                    TargetName="brd" 
+                                                    Property="Background"
+                                                    Value="#492988"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </Grid>
                     </Border>
 
                     <Border
@@ -149,6 +213,8 @@
                                 </Grid>
                             </customUI:MenuRadiobutton>
 
+                            
+                            
                             <customUI:MenuRadiobutton
                                         Command="{Binding SetFiltrationPageValue}" 
                                         Grid.Column="1" 
@@ -181,7 +247,7 @@
                     </Border>
 
                 </Grid>
-                
+
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -333,37 +399,42 @@
                     x:Name="MultiFunktionArea"
                     Background="#efefff" 
                     Grid.Row="2">
-                    <StackPanel
-                        Orientation="Horizontal"
-                        >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
                         <Button
+                            Grid.Column="0"
                             Background="#512f95"
                             Style="{StaticResource Button}"
                             Margin="15"
-                            Width="300"
                             Command="{Binding CreateMediaObjectWindowOpen}"
                             Content="Create MediaObject"
                             >
                         </Button>
                         <Button
-                             Background="#512f95"
-                             Style="{StaticResource Button}"
-                             Margin="15"
-                             Width="300"
-                             Command="{Binding EditMediaObjectWindowOpen}"
-                             Content="Edit MediaObject"
+                            Grid.Column="1"
+                            Background="#512f95"
+                            Style="{StaticResource Button}"
+                            Margin="15"
+                            Command="{Binding EditMediaObjectWindowOpen}"
+                            Content="Edit MediaObject"
                             />
                         <Button
-                             Background="#512f95"
-                             Style="{StaticResource Button}"
-                             Margin="15"
-                             Width="300"
-                             Command="{Binding CreateFilterCriterionWindowOpen}"
-                             Content="CreateFilterCriterion"
+                            Grid.Column="2"
+                            Grid.ColumnSpan="2"
+                            Background="#512f95"
+                            Style="{StaticResource Button}"
+                            Margin="15"
+                            Command="{Binding CreateFilterCriterionWindowOpen}"
+                            Content="CreateFilterCriterion"
                             />
-                    </StackPanel>
+                    </Grid>
                 </Border>
             </Grid>
         </Grid>
     </Border>
-</Window>
+</customCtrs:BaseWindow>

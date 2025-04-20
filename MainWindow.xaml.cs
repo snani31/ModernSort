@@ -1,21 +1,12 @@
-﻿using ModernSort.Services.Dialog;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using ModernSort.CustomeControls.CustomUIControls;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ModernSort
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window,IDialog
+    public partial class MainWindow : BaseWindow
     {
         public MainWindow()
         {
@@ -23,3 +14,4 @@ namespace ModernSort
         }
     }
 }
+

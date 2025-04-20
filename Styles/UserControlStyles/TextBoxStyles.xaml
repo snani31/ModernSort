@@ -102,18 +102,6 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Setter Property="Validation.ErrorTemplate">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Border 
-                        BorderBrush="#7d4c94" 
-                        BorderThickness="0 0 0 2"
-                        >
-                            <AdornedElementPlaceholder/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
         </Style.Setters>
     </Style>
 </ResourceDictionary>

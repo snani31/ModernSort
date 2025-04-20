@@ -82,10 +82,14 @@ namespace ModernSort
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            var a = new MeinWindowViewModel(_outputContentService, _operationService, _catalogStore, _jsonDeserializer, _jsonSerializer, _dialogService);
             MainWindow = new MainWindow()
             {
-                DataContext = new MeinWindowViewModel(_outputContentService,_operationService, _catalogStore, _jsonDeserializer, _jsonSerializer, _dialogService)
+                DataContext = a
             };
+            
+
+
             MainWindow.Show();
 
         }

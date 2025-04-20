@@ -13,6 +13,8 @@ namespace ModernSort.Services.Dialog
         bool? DialogResult { get; set; }
         Window Owner { get; set; }
         void Close();
+        void Hide();
+        void Show();
         bool? ShowDialog();
     }
 }

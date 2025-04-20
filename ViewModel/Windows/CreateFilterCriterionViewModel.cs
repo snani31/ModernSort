@@ -42,7 +42,7 @@ namespace ModernSort.ViewModel.Windows
 
         public ICommand RemoveFilterFromList { get; init; }
         public ICommand CreateFilter {  get; init; }
-        public ICommand CloseDialogCommand { get; init; }
+        public ICommand CloseDialog { get; init; }
 
 
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
@@ -84,7 +84,7 @@ namespace ModernSort.ViewModel.Windows
 
         private CreateFilterCriterionViewModel()
         {
-            CloseDialogCommand = new RelayCommand(
+            CloseDialog = new RelayCommand(
     (p) => CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(false)));
             CreatedFilters = new ObservableCollection<Filter>();
             CreatedFilters.CollectionChanged += (object? sender, NotifyCollectionChangedEventArgs e) =>

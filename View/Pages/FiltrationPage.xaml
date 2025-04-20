@@ -104,7 +104,7 @@
                         BorderThickness="0"
                         ItemsSource="{Binding FilterItems}"
                         Background="Transparent"
-                        Padding="0 10 20 10"
+                        Padding="0 10 20 25"
                         ItemContainerStyle="{StaticResource RankingListItemStyle}"
                           >
                                     <ListView.ItemTemplate>
@@ -139,18 +139,18 @@
                                         Margin="30 0 0 0"
                                         />
                                                 <Viewbox
-                                        Grid.Row="0"
-                                        Grid.Column="1"
-                                        Width="50"
-                                        Height="50"
-                                        HorizontalAlignment="Right"
-                                        >
+                                                    Grid.Row="0"
+                                                    Grid.Column="1"
+                                                    Width="50"
+                                                    Height="50"
+                                                    HorizontalAlignment="Right"
+                                                    >
                                                     <CheckBox
                                                         IsChecked="{Binding IsFilterSelected, Mode=TwoWay}"
-                                            BorderBrush="#512f95"
-                                            Background="White"
-                                            Style="{StaticResource CheckBoxRoundenStyle}"
-                                        >
+                                                        BorderBrush="#512f95"
+                                                        Background="White"
+                                                        Style="{StaticResource CheckBoxRoundenStyle}"
+                                                        >
                                                         <i:Interaction.Triggers>
                                                             <i:EventTrigger EventName="Checked">
                                                                 <i:InvokeCommandAction

@@ -21,18 +21,22 @@
     <None Remove="AppResources\Pictures\addPlusWhiteNoBorder.png" />
     <None Remove="AppResources\Pictures\addPurple.png" />
     <None Remove="AppResources\Pictures\addWhite.png" />
+    <None Remove="AppResources\Pictures\circleWhite64px.png" />
+    <None Remove="AppResources\Pictures\CollapseWindpwIcon.png" />
     <None Remove="AppResources\Pictures\filterWhite.png" />
     <None Remove="AppResources\Pictures\galleryWhite.png" />
     <None Remove="AppResources\Pictures\gearWhite.png" />
     <None Remove="AppResources\Pictures\gearWhiteBordered.png" />
     <None Remove="AppResources\Pictures\leftArrowPurple.png" />
     <None Remove="AppResources\Pictures\leftArrowWhite.png" />
+    <None Remove="AppResources\Pictures\magnifierWhite64px.png" />
     <None Remove="AppResources\Pictures\pencilBlack.png" />
     <None Remove="AppResources\Pictures\pencilBlack128px.png" />
     <None Remove="AppResources\Pictures\pencilBlack64px.png" />
     <None Remove="AppResources\Pictures\pencilPurple.png" />
     <None Remove="AppResources\Pictures\PentagonBorderRedCross.png" />
     <None Remove="AppResources\Pictures\PentagonWhiteCross.png" />
+    <None Remove="AppResources\Pictures\PowerOffButtonIcon.png" />
     <None Remove="AppResources\Pictures\redCrossBorder.png" />
     <None Remove="AppResources\Pictures\redCrossFill.png" />
     <None Remove="AppResources\Pictures\rightArrowPurple.png" />
@@ -48,23 +52,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="AppResources\CollapseWindpwIcon.png" />
     <Resource Include="AppResources\Fonts\Pribambas.ttf" />
     <Resource Include="AppResources\Pictures\addPlusPurple.png" />
     <Resource Include="AppResources\Pictures\addPlusWhiteNoBorder.png" />
     <Resource Include="AppResources\Pictures\addPurple.png" />
     <Resource Include="AppResources\Pictures\addWhite.png" />
+    <Resource Include="AppResources\Pictures\circleWhite64px.png" />
+    <Resource Include="AppResources\Pictures\CollapseWindpwIcon.png" />
     <Resource Include="AppResources\Pictures\filterWhite.png" />
     <Resource Include="AppResources\Pictures\galleryWhite.png" />
     <Resource Include="AppResources\Pictures\gearWhite.png" />
     <Resource Include="AppResources\Pictures\gearWhiteBordered.png" />
     <Resource Include="AppResources\Pictures\leftArrowPurple.png" />
     <Resource Include="AppResources\Pictures\leftArrowWhite.png" />
+    <Resource Include="AppResources\Pictures\magnifierWhite64px.png" />
     <Resource Include="AppResources\Pictures\pencilBlack128px.png" />
     <Resource Include="AppResources\Pictures\pencilBlack64px.png" />
     <Resource Include="AppResources\Pictures\pencilPurple.png" />
     <Resource Include="AppResources\Pictures\PentagonBorderRedCross.png" />
     <Resource Include="AppResources\Pictures\PentagonWhiteCross.png" />
+    <Resource Include="AppResources\Pictures\PowerOffButtonIcon.png" />
     <Resource Include="AppResources\Pictures\redCrossBorder.png" />
     <Resource Include="AppResources\Pictures\redCrossFill.png" />
     <Resource Include="AppResources\Pictures\rightArrowPurple.png" />
@@ -72,7 +79,6 @@
     <Resource Include="AppResources\Pictures\trashCanCloseRed.png" />
     <Resource Include="AppResources\Pictures\trashCanOpenRed.png" />
     <Resource Include="AppResources\Pictures\trashCanOpenWhite.png" />
-    <Resource Include="AppResources\PowerOffButtonIcon.png" />
     <Resource Include="Styles\UserControlStyles\RadioButtonStyles.xaml" />
   </ItemGroup>
 

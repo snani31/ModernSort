@@ -109,7 +109,11 @@ namespace ModernSort.ViewModel
                 ContentService.SelectRankingCategory(selectedCategory);
 
                 var selectedRankingCategoryViewModel = new SelectedRankingCategoryViewModel(ContentService,CatalogStore,OperationService,selectedCategory, DialogService, Serializer, Deserializer);
-                DialogService.ShowDialog(selectedRankingCategoryViewModel);
+
+                if (DialogService.ShowDialog(selectedRankingCategoryViewModel) ?? false)
+                {
+                    MessageBox.Show("adasd");
+                }
             }
            
         }

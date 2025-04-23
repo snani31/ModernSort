@@ -24,17 +24,10 @@ namespace ModernSort.Services
             BaseFilterableCollectionState = baseFilterableCollectionState;
             CurrentFilterableCollectionState = BaseFilterableCollectionState;
         }
-        /// <summary>
-        /// Метод, который обнуляет фильтры
-        /// </summary>
-        public void ReloadFiltration()
-        {
-
-        }
 
         public void AddNewFilter(IFilter filter)
         {
-            IList<TFilterableType> fil = CurrentFilterableCollectionState.ToList();
+            IList<TFilterableType> currentFiltereblesState = CurrentFilterableCollectionState.ToList();
             SelectedFilters.Add(filter);
 
             foreach (var tempFilter in SelectedFilters)
@@ -43,13 +36,12 @@ namespace ModernSort.Services
                 {
                     if (!tempFilter.CompliantToFilter(ss))
                     {
-                        fil.Remove(ss);
+                        currentFiltereblesState.Remove(ss);
                     }
                 }
             }
 
-            CurrentFilterableCollectionState = fil;
-
+            CurrentFilterableCollectionState = currentFiltereblesState;
         }
 
         public void RefreshFilters()

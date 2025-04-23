@@ -25,7 +25,7 @@ namespace ModernSort
 
         private readonly IDeserializer _jsonDeserializer;
         private readonly  ISerializer _jsonSerializer;
-        private readonly IDialogService _dialogService;
+        private IDialogService _dialogService;
         private readonly CatalogStore _catalogStore;
         private readonly OperationService _operationService ;
         private readonly OutputContentService _outputContentService;
@@ -33,15 +33,7 @@ namespace ModernSort
 
         App()
         {
-            _dialogService = new DialogService(MainWindow);
-            _dialogService.Register<AddNewRankingCategoryViewModel,AddNewRankingCategoryWindowView>();
-            _dialogService.Register<SelectedRankingCategoryViewModel,SelectedRankingCategoryWindowView >();
-            _dialogService.Register<CreateMediaObjectViewModel, CreateMediaObjectWindowView>();
-            _dialogService.Register<EditRankingWindowViewModel, EditRankingWindowView>();
-            _dialogService.Register<EditMediaObjectViewModel, EditMediaObjectWindowView>();
-            _dialogService.Register<CreateFilterCriterionViewModel, CreateFilterCriterionWindowView>();
-            _dialogService.Register<EditFilterCriterionViewModel, EditFilterCriterionWindowView>();
-
+            
             _jsonDeserializer = new JsonDeserializer();
             _jsonSerializer = new JsonSerializer();
             
@@ -82,13 +74,20 @@ namespace ModernSort
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            var a = new MeinWindowViewModel(_outputContentService, _operationService, _catalogStore, _jsonDeserializer, _jsonSerializer, _dialogService);
-            MainWindow = new MainWindow()
-            {
-                DataContext = a
-            };
-            
+            MainWindow = new MainWindow();
 
+            _dialogService = new DialogService(MainWindow);
+            _dialogService.Register<AddNewRankingCategoryViewModel, AddNewRankingCategoryWindowView>();
+            _dialogService.Register<SelectedRankingCategoryViewModel, SelectedRankingCategoryWindowView>();
+            _dialogService.Register<CreateMediaObjectViewModel, CreateMediaObjectWindowView>();
+            _dialogService.Register<EditRankingWindowViewModel, EditRankingWindowView>();
+            _dialogService.Register<EditMediaObjectViewModel, EditMediaObjectWindowView>();
+            _dialogService.Register<CreateFilterCriterionViewModel, CreateFilterCriterionWindowView>();
+            _dialogService.Register<EditFilterCriterionViewModel, EditFilterCriterionWindowView>();
+
+            var a = new MeinWindowViewModel(_outputContentService, _operationService, _catalogStore, _jsonDeserializer, _jsonSerializer, _dialogService);
+
+            MainWindow.DataContext = a;
 
             MainWindow.Show();
 

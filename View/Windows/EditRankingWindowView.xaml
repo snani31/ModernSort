@@ -15,12 +15,12 @@
         AllowsTransparency="True"
         Background="Transparent"
         ClipToBounds="False"
-         MouseLeftButtonDown="Window_DragHandler"
+        MouseLeftButtonDown="Window_DragHandler"
     >
     <Border
         
- Background= "#f7f9fe"
- CornerRadius="20"
+ Background= "#FFFFFF"
+ CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=MainBorderCornerRadius}"
  ClipToBounds="True"
      >
         <Grid ClipToBounds="True">
@@ -32,12 +32,13 @@
             </Grid.RowDefinitions>
             
             <Border
-         Grid.Column="0"
-         Grid.ColumnSpan="1"
-         CornerRadius="20,20,0,0"
-         Background="#512f95"
-         BorderThickness="0"
-         >
+                Grid.Column="0"
+                Grid.ColumnSpan="1"
+                d:CornerRadius="20 20 0 0"
+                CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=TopButtonsBarBorderCornerRadius}"
+                Background="#512f95"
+                BorderThickness="0"
+                >
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -81,12 +82,13 @@
                         </Button.Template>
                     </Button>
 
-                    <Button Grid.Column="3"
-             Command="{Binding CloseDialog}"
-             ToolTip="Close">
+                    <Button 
+                        Grid.Column="3"
+                        Command="{Binding CloseDialog}"
+                        ToolTip="Close">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
-                                <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="10 20 0 10">
+                                <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=TopRightCloseButtonBorderCornerRadius}">
                                     <Image Margin="5" Source="/AppResources/Pictures/PowerOffButtonIcon.png"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
@@ -179,7 +181,8 @@
 
                     <Border
                         Margin="0 10 0 0"
-                        CornerRadius="0 60 0 20"
+                        d:CornerRadius="0 60 0 20"
+                        CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=BottonLeftElementBorderCornerRadius}"
                         Background="#512f95"
                         Grid.Row="1"
                         >

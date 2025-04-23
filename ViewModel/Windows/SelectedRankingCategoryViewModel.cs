@@ -16,6 +16,24 @@ namespace ModernSort.ViewModel.Windows
 {
     internal class SelectedRankingCategoryViewModel : ViewModelBase, IDialogRequestClose
     {
+        public bool IsFiltrationPageSelected {  get; set; }
+        public bool IsMediaObjectPageSelected { get; set; }
+        public bool MediaObjectsListIsNotEmpthy 
+        {
+            get
+            {
+                return (MediaObjacts.Count > 0);
+            }
+        }
+
+        public bool FilterCriterionsListIsNotEmpthy
+        {
+            get
+            {
+                return (FilterCriterions.Count > 0);
+            }
+        }
+
         private NavigationStore NavigationStore {  get; init; }
         public ViewModelBase? CurrentPage
         {
@@ -32,12 +50,28 @@ namespace ModernSort.ViewModel.Windows
             {
                 _mediaObjacts = value;
                 OnPropertyChenged(nameof(MediaObjacts));
+                OnPropertyChenged(nameof(MediaObjectsListIsNotEmpthy));           
             }
             get
             {
                 return _mediaObjacts;
             }
         }
+
+        private List<FilterCriterion> _fitlerCriterions;
+        private List<FilterCriterion> FilterCriterions
+        {
+            get 
+            { 
+                return _fitlerCriterions; 
+            }
+            set 
+            { 
+                _fitlerCriterions = value;
+                OnPropertyChenged(nameof(FilterCriterionsListIsNotEmpthy));
+            }
+        }
+
 
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
 
@@ -83,6 +117,10 @@ namespace ModernSort.ViewModel.Windows
             SetMediaObjectPageValue = new RelayCommand(
                 (p) => 
                 {
+                    if (ContentService.MediaObjectContentService.SelectedMediaObject is null)
+                    {
+                        OpenMediaObjectPageView(MediaObjacts.First());
+                    }
                     NavigationStore.CurrentViewModel = CurrentMediaObjectPageViewModel;
                 });
 
@@ -91,6 +129,7 @@ namespace ModernSort.ViewModel.Windows
                 {
                     NavigationStore.CurrentViewModel = CurrentFiltrationPageViewModel;
                 });
+
 
         }
 
@@ -163,16 +202,26 @@ namespace ModernSort.ViewModel.Windows
                 ContentService.MediaObjectContentService
                 .GetUnloadedMediaObjects()
                 .Select(x => new MediaObjectItemViewModel(x, CatalogStore.MediaFilesCatalogPath)));
+            
+            IsMediaObjectPageSelected = false;
+            OnPropertyChenged(nameof(IsMediaObjectPageSelected));
+
+            IsFiltrationPageSelected = false;
+            OnPropertyChenged(nameof(IsFiltrationPageSelected));
+
+            FilterCriterions = new List<FilterCriterion>(ContentService.FilterCriterionContentService.GetUnloadedFilterCriterions());
 
             CurrentMediaObjectPageViewModel = new SelectedMediaObjectPageViewModel(ContentService);
-            NavigationStore.CurrentViewModel = CurrentMediaObjectPageViewModel;
+            NavigationStore.CurrentViewModel = null;
 
-            CurrentFiltrationPageViewModel = new FiltrationPageViewModel(MediaObjacts, ContentService);
+            CurrentFiltrationPageViewModel = new FiltrationPageViewModel(MediaObjacts,
+                ContentService,
+                FilterCriterions);
             CurrentFiltrationPageViewModel.SetFilterableCollectionValue +=
-                (d) =>
+                (mediaObjects) =>
                 {
-                    var a = d.Select(x => new MediaObjectItemViewModel(x, CatalogStore.MediaFilesCatalogPath));
-                    MediaObjacts = new ObservableCollection<MediaObjectItemViewModel>(a);
+                    var mediaObjectsItemsResult = mediaObjects.Select(x => new MediaObjectItemViewModel(x, CatalogStore.MediaFilesCatalogPath));
+                    MediaObjacts = new ObservableCollection<MediaObjectItemViewModel>(mediaObjectsItemsResult);
                 };
             CurrentFiltrationPageViewModel.OnEditButtonPressed += OpenEditFilterCriterionPage;
         }
@@ -192,7 +241,6 @@ namespace ModernSort.ViewModel.Windows
                     CurrentMediaObjectPageViewModel = new SelectedMediaObjectPageViewModel(ContentService);
                 }
             }
-
         }
 
         private void OpenEditFilterCriterionPage(FilterCriterion filterCriterion)

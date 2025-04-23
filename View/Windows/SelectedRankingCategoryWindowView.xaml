@@ -27,7 +27,7 @@
     </Window.DataContext>
     <Border
     Background="#f7f9fe" 
-    CornerRadius="20"
+    CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=MainBorderCornerRadius}"
     ClipToBounds="True"
     >
         <Grid ClipToBounds="True">
@@ -40,12 +40,13 @@
                 />
             </Grid.RowDefinitions>
             <Border
-                 Grid.Column="0"
-                 Grid.ColumnSpan="1"
-                 CornerRadius="20,20,0,0"
-                 Background="#512f95"
-                 BorderThickness="0"
-                 >
+                Grid.Column="0"
+                Grid.ColumnSpan="1"
+                d:CornerRadius="20 20 0 0"
+                CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=TopButtonsBarBorderCornerRadius}"
+                Background="#512f95"
+                BorderThickness="0"
+                >
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -94,7 +95,7 @@
         ToolTip="Закрыть">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
-                                <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="10 20 0 10">
+                                <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=TopRightCloseButtonBorderCornerRadius}">
                                     <Image Margin="5" Source="/AppResources/Pictures/PowerOffButtonIcon.png"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
@@ -187,6 +188,8 @@
                             <customUI:MenuRadiobutton
                                 Command="{Binding SetMediaObjectPageValue}" 
                                 Grid.Column="0" 
+                                IsEnabled="{Binding MediaObjectsListIsNotEmpthy}"
+                                IsChecked="{Binding IsMediaObjectPageSelected, Mode=TwoWay}"
                                 Style="{StaticResource MenuRadiobuttonStyle}"
                                     >
                                 <Grid>
@@ -216,10 +219,12 @@
                             
                             
                             <customUI:MenuRadiobutton
-                                        Command="{Binding SetFiltrationPageValue}" 
-                                        Grid.Column="1" 
-                                        Style="{StaticResource MenuRadiobuttonStyle}"
-                                            >
+                                Command="{Binding SetFiltrationPageValue}" 
+                                Grid.Column="1" 
+                                IsEnabled="{Binding FilterCriterionsListIsNotEmpthy}"
+                                IsChecked="{Binding IsFiltrationPageSelected, Mode=TwoWay}"
+                                Style="{StaticResource MenuRadiobuttonStyle}"
+                                    >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="1*"/>

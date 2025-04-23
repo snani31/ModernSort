@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 
 namespace ModernSort.Services.Dialog
 {
@@ -11,10 +6,9 @@ namespace ModernSort.Services.Dialog
     {
         object DataContext { get; set; }
         bool? DialogResult { get; set; }
+        public System.Windows.WindowState WindowState { get; set; }
         Window Owner { get; set; }
         void Close();
-        void Hide();
-        void Show();
         bool? ShowDialog();
     }
 }

@@ -32,7 +32,7 @@
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="brd" Property="Background" Value="green"/>
+                            <Setter TargetName="brd" Property="Background" Value="#efefff"/>
                             <Setter TargetName="presenter" Property="TextBlock.Foreground" Value="Orange"/>
                         </Trigger>
 
@@ -131,7 +131,7 @@
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="brd" Property="Background" Value="green"/>
+                            <Setter TargetName="brd" Property="Background" Value="#efefff"/>
                             <Setter TargetName="presenter" Property="TextBlock.Foreground" Value="Orange"/>
                         </Trigger>
 

@@ -27,6 +27,8 @@
     <None Remove="AppResources\Pictures\galleryWhite.png" />
     <None Remove="AppResources\Pictures\gearWhite.png" />
     <None Remove="AppResources\Pictures\gearWhiteBordered.png" />
+    <None Remove="AppResources\Pictures\getMoreInfoBorderedWhite64px.png" />
+    <None Remove="AppResources\Pictures\getMoreInfoFillWhite64px.png" />
     <None Remove="AppResources\Pictures\leftArrowPurple.png" />
     <None Remove="AppResources\Pictures\leftArrowWhite.png" />
     <None Remove="AppResources\Pictures\magnifierWhite64px.png" />
@@ -39,6 +41,10 @@
     <None Remove="AppResources\Pictures\PowerOffButtonIcon.png" />
     <None Remove="AppResources\Pictures\redCrossBorder.png" />
     <None Remove="AppResources\Pictures\redCrossFill.png" />
+    <None Remove="AppResources\Pictures\refreshPurple128px.png" />
+    <None Remove="AppResources\Pictures\resreshPurple128px.png" />
+    <None Remove="AppResources\Pictures\resreshPurple128px.png.png" />
+    <None Remove="AppResources\Pictures\resreshPurple64px.png" />
     <None Remove="AppResources\Pictures\rightArrowPurple.png" />
     <None Remove="AppResources\Pictures\rightArrowWhite.png" />
     <None Remove="AppResources\Pictures\trashCanCloseRed.png" />
@@ -63,6 +69,8 @@
     <Resource Include="AppResources\Pictures\galleryWhite.png" />
     <Resource Include="AppResources\Pictures\gearWhite.png" />
     <Resource Include="AppResources\Pictures\gearWhiteBordered.png" />
+    <Resource Include="AppResources\Pictures\getMoreInfoBorderedWhite64px.png" />
+    <Resource Include="AppResources\Pictures\getMoreInfoFillWhite64px.png" />
     <Resource Include="AppResources\Pictures\leftArrowPurple.png" />
     <Resource Include="AppResources\Pictures\leftArrowWhite.png" />
     <Resource Include="AppResources\Pictures\magnifierWhite64px.png" />
@@ -74,6 +82,7 @@
     <Resource Include="AppResources\Pictures\PowerOffButtonIcon.png" />
     <Resource Include="AppResources\Pictures\redCrossBorder.png" />
     <Resource Include="AppResources\Pictures\redCrossFill.png" />
+    <Resource Include="AppResources\Pictures\refreshPurple128px.png" />
     <Resource Include="AppResources\Pictures\rightArrowPurple.png" />
     <Resource Include="AppResources\Pictures\rightArrowWhite.png" />
     <Resource Include="AppResources\Pictures\trashCanCloseRed.png" />

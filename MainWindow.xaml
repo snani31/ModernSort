@@ -22,7 +22,7 @@
         >
     <Border
      Background= "#f7f9fe"
-     CornerRadius="20"
+     CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=MainBorderCornerRadius}"
      ClipToBounds="True"
          >
         <Grid ClipToBounds="True">
@@ -33,11 +33,11 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Border
-             Grid.Column="0"
-             Grid.ColumnSpan="1"
-             CornerRadius="20,20,0,0"
-             Background="#512f95"
-             BorderThickness="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="1"
+                Background="#512f95"
+                d:CornerRadius="20 20 0 0"
+                CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=TopButtonsBarBorderCornerRadius}"    
              >
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -87,7 +87,7 @@
                         ToolTip="Close">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
-                                <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="10 20 0 10">
+                                <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=TopRightCloseButtonBorderCornerRadius}">
                                     <Image Margin="5" Source="/AppResources/Pictures/PowerOffButtonIcon.png"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
@@ -243,6 +243,7 @@
                     <Button 
                         Background="#512f95"
                         Content="Settings"
+                        ToolTip="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=TopLeftCornerRadiusWindowValue}" 
                         Style="{StaticResource Button}"
                         Margin="20"
                         Grid.Row="1"

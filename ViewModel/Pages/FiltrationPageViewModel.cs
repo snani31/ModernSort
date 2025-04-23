@@ -4,13 +4,7 @@ using ModernSort.ViewModel.Items;
 using ModernSort.ViewModel.Items.FiltrationItems;
 using RankingEntityes.Filters;
 using RankingEntityes.Ranking_Entityes.MediaObjacts;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ModernSort.ViewModel.Pages
@@ -48,12 +42,12 @@ namespace ModernSort.ViewModel.Pages
         }
 
         public FiltrationPageViewModel(ObservableCollection<MediaObjectItemViewModel> filterableMediaObjects,
-            OutputContentService contentService) : this()
+            OutputContentService contentService, IEnumerable<FilterCriterion> existingFilterCriterions) : this()
         {
             FilterableMediaObjects = filterableMediaObjects;
 
             FilterCriterions = new ObservableCollection<FilterCriterionItemViewModel>(
-                contentService.FilterCriterionContentService.GetUnloadedFilterCriterions()
+                existingFilterCriterions
                 .Select(x => new FilterCriterionItemViewModel(x)));
 
 

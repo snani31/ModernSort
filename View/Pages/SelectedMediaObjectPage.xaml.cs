@@ -20,9 +20,29 @@ namespace ModernSort.View.Pages
     /// </summary>
     public partial class SelectedMediaObjectPage : UserControl
     {
+
+        ListView ListView1 { get; set; }
         public SelectedMediaObjectPage()
         {
             InitializeComponent();
+            ListView1 = MediaFilesList;
+            ListView1.SelectionChanged += SelectionShangeClosure();
+        }
+
+        private SelectionChangedEventHandler SelectionShangeClosure()
+        {
+
+            ListViewItem? ListViewSelectedItemContainer;
+
+            return (object sender, SelectionChangedEventArgs e) =>
+            {
+                ListViewSelectedItemContainer = ListView1
+                .ItemContainerGenerator
+                .ContainerFromItem(ListView1.SelectedItem) as ListViewItem;
+
+                ListViewSelectedItemContainer?.Focus();
+
+            };
         }
     }
 }

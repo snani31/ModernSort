@@ -9,7 +9,7 @@
         xmlns:enums="clr-namespace:ModernSort.Enums"
         mc:Ignorable="d"
         Title="EditMediaObjectWindowView" 
-        Height="500" 
+        Height="520" 
         Width="900"
         WindowStyle="none"
         ResizeMode="NoResize"
@@ -95,7 +95,7 @@ ClipToBounds="True"
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="brd" Property="Background" Value="#a1261d"/>
+                                            <Setter TargetName="brd" Property="Background" Value="MediumVioletRed"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -119,7 +119,7 @@ ClipToBounds="True"
                     >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
-                            <RowDefinition Height="100"/>
+                            <RowDefinition Height="120"/>
                         </Grid.RowDefinitions>
 
 
@@ -555,7 +555,7 @@ ClipToBounds="True"
                         <Grid.RowDefinitions>
                             <RowDefinition Height="100"/>
                             <RowDefinition Height="*"/>
-                            <RowDefinition Height="100"/>
+                            <RowDefinition Height="120"/>
                         </Grid.RowDefinitions>
 
                         <Grid
@@ -565,47 +565,21 @@ ClipToBounds="True"
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Button
-                            Grid.Column="0"
-                            Margin="10"
-                            ToolTip="Delete Category"
-                            Command="{Binding DeleteMediaObjact}"
-                                >
-                                <Button.Template>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Border
-                                        x:Name="brd"
-                                        CornerRadius="10"
-                                        BorderThickness="5"
-                                        BorderBrush="#bb432c"
-                                        Background="Transparent"
-                                        >
-                                            <Image
-                                            x:Name="img"
-                                            Margin="5"
-                                            Source="/AppResources/Pictures/trashCanCloseRed.png"
-                                            />
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" 
-                                            Value="true">
-                                                <Setter 
-                                                TargetName="img" 
-                                                Property="Source"
-                                                Value="\AppResources\Pictures\trashCanOpenWhite.png"/>
-                                                <Setter
-                                                TargetName="brd" 
-                                                Property="Background"
-                                                Value="#bb432c"/>
-                                                <Setter
-                                                TargetName="brd" 
-                                                Property="BorderThickness"
-                                                Value="0"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
+
+                            <customCtrs:CustomButton
+                                Background="#c71585"
+                                BorderThickness="5"
+                                ToolTip="Delete media object"
+                                ImageMargin="10"
+                                Command="{Binding DeleteMediaObjact}"
+                                TextBlockHorizontalAlignment ="Left"
+                                DisabledImageSource="\AppResources\Pictures\removeMultimediaBorderedVioletred128px.png"
+                                DefoultImageSource="\AppResources\Pictures\removeMultimediaBorderedVioletred128px.png"
+                                MouseHoverImageSource="\AppResources\Pictures\removeMultimediaFillWhite128px.png"
+                                Margin="10"
+                                Grid.Row="0"
+                                />
+                                
                             <TextBox 
                             Grid.Column="1"
                             x:Name="TytleTbx"
@@ -622,27 +596,35 @@ ClipToBounds="True"
                         </Grid>
 
                         <TextBox
-                        x:Name="DescryptioonTbx"
-                        ToolTip="Category  Descryption"
-                        Grid.Row="1"
-                        FontSize="30"
-                        Foreground="#6795de"
-                        TextWrapping="Wrap"
-                        Background="#ccd5f0"
-                        Text="{Binding MediaObjectDescryption, Mode=TwoWay}"
-                        Style="{StaticResource TuskDataTextBoxStyle}"
-                        Margin="10"
-                        Padding="10"
-                        />
+                            x:Name="DescryptioonTbx"
+                            ToolTip="Category  Descryption"
+                            Grid.Row="1"
+                            FontSize="30"
+                            Foreground="#6795de"
+                            TextWrapping="Wrap"
+                            Background="#ccd5f0"
+                            Text="{Binding MediaObjectDescryption, Mode=TwoWay}"
+                            Style="{StaticResource TuskDataTextBoxStyle}"
+                            Margin="10"
+                            Padding="10"
+                            />
 
-                        <Button
-                        Style="{StaticResource Button}"
-                        Background="#512f95"
-                        Margin="10"
-                        Grid.Row="2"
-                        Content="Apply Edit"
+
+                        <customCtrs:CustomButton
+                            Background="#512f95"
+                            Grid.Row="2"
+                            BorderThickness="4"
+                            FontSize="30"
+                            CornerRadius="10"
+                            Text="Apply Edit"
+                            Margin="10"
+                            ImageMargin="5"
                             Command="{Binding EditMediaObject}"
-                        />
+                            TextBlockHorizontalAlignment ="Center"
+                            DisabledImageSource="\AppResources\Pictures\editGalletyBorderedGray128px.png"
+                            DefoultImageSource="\AppResources\Pictures\editGalleryBorderedPurple128px.png"
+                            MouseHoverImageSource="\AppResources\Pictures\editGalleryFillWhite128px.png"
+                            />
 
                     </Grid>
 

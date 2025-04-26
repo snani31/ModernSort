@@ -100,7 +100,7 @@
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="brd" Property="Background" Value="#a1261d"/>
+                                        <Setter TargetName="brd" Property="Background" Value="MediumVioletRed"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -280,7 +280,7 @@
                     <Border 
                         x:Name="MediaObjactsArea"
                         BorderThickness="5"
-                        BorderBrush="#653bbb"
+                        BorderBrush="#512f95"
                         Grid.Column="0"
                         Background="Transparent"
                         CornerRadius="20"
@@ -411,32 +411,56 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Button
+
+                        <customCtrs:CustomButton
+                            Background="#512f95"
+                            BorderThickness="4"
+                            Margin="15"
                             Grid.Column="0"
-                            Background="#512f95"
-                            Style="{StaticResource Button}"
-                            Margin="15"
+                            Text="Create Media Object"
+                            CornerRadius="10"
+                            FontSize="22"
+                            TextBlockHorizontalAlignment ="Left"
+                            ImageMargin="15"
                             Command="{Binding CreateMediaObjectWindowOpen}"
-                            Content="Create MediaObject"
-                            >
-                        </Button>
-                        <Button
-                            Grid.Column="1"
+                            DisabledImageSource="\AppResources\Pictures\addMultimediaBorderedGray128px.png"
+                            DefoultImageSource="\AppResources\Pictures\addMultimediaBorderedPurple128px.png"
+                            MouseHoverImageSource="\AppResources\Pictures\addMultimediaFillWhite128px.png"
+                                />
+
+                        <customCtrs:CustomButton
                             Background="#512f95"
-                            Style="{StaticResource Button}"
+                            BorderThickness="4"
+                            CornerRadius="10"
                             Margin="15"
+                            Grid.Column="1"
+                            FontSize="22"
+                            Text="Edit Media Object"
+                            TextBlockHorizontalAlignment ="Left"
                             Command="{Binding EditMediaObjectWindowOpen}"
-                            Content="Edit MediaObject"
-                            />
-                        <Button
+                            ImageMargin="15"
+                            DisabledImageSource="\AppResources\Pictures\brushBorderedGray128px.png"
+                            DefoultImageSource="\AppResources\Pictures\brushBorderedPurple128px.png"
+                            MouseHoverImageSource="\AppResources\Pictures\brushFillWhite128px.png"
+                                />
+
+
+                        <customCtrs:CustomButton
+                            Background="#512f95"
+                            BorderThickness="4 4 2 4"
+                            CornerRadius="25 0 0 25"
+                            Margin="15 15 0 15"
                             Grid.Column="2"
                             Grid.ColumnSpan="2"
-                            Background="#512f95"
-                            Style="{StaticResource Button}"
-                            Margin="15"
+                            FontSize="30"
+                            Text="Create Filter Criterion"
+                            TextBlockHorizontalAlignment ="Center"
                             Command="{Binding CreateFilterCriterionWindowOpen}"
-                            Content="CreateFilterCriterion"
-                            />
+                            ImageMargin="10"
+                            DisabledImageSource="\AppResources\Pictures\plusFilterBorderedGray128px.png"
+                            DefoultImageSource="\AppResources\Pictures\plusFilterBorderedPurple128px.png"
+                            MouseHoverImageSource="\AppResources\Pictures\plusFilterFillWhite128px.png"
+                                />
                     </Grid>
                 </Border>
             </Grid>

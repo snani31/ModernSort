@@ -7,7 +7,7 @@
         xmlns:customCtrs ="clr-namespace:ModernSort.CustomeControls.CustomUIControls"
         mc:Ignorable="d"
         Title="EditRankingWindowView" 
-        Height="500" 
+        Height="520" 
         Width="900"
         WindowStyle="none"
         ResizeMode="NoResize"
@@ -93,7 +93,7 @@
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="brd" Property="Background" Value="#a1261d"/>
+                                        <Setter TargetName="brd" Property="Background" Value="MediumVioletRed"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -116,7 +116,7 @@
                     >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="120"/>
                     </Grid.RowDefinitions>
                     <Rectangle
                         Margin="10"
@@ -221,7 +221,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="100"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="120"/>
                     </Grid.RowDefinitions>
 
                     <Grid
@@ -231,46 +231,25 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
-                        <Button
+
+                        <customCtrs:CustomButton
                             Grid.Column="1"
                             Command="{Binding DeleteCategory}"
                             Margin="10"
-                            ToolTip="Delete Category">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border
-                                         x:Name="brd"
-                                        CornerRadius="10"
-                                        BorderThickness="5"
-                                        BorderBrush="#bb432c"
-                                        Background="Transparent"
-                                        >
-                                        <Image
-                                            x:Name="img"
-                                            Margin="5"
-                                            Source="\AppResources\Pictures\trashCanCloseRed.png"
-                                            />
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" 
-                                                 Value="true">
-                                            <Setter 
-                                                TargetName="img" 
-                                                Property="Source"
-                                                Value="\AppResources\Pictures\trashCanOpenWhite.png"/>
-                                            <Setter
-                                                TargetName="brd" 
-                                                Property="Background"
-                                                Value="#bb432c"/>
-                                            <Setter
-                                                TargetName="brd" 
-                                                Property="BorderThickness"
-                                                Value="0"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
+                            ToolTip="Delete Category"
+                            Background="#c71585"
+                            CornerRadius="10"
+                            BorderThickness="5"
+                            ImageMargin="5"
+                            TextBlockHorizontalAlignment ="Left"
+                            DisabledImageSource="\AppResources\Pictures\trashCanCoseBorderedVioletred128px.png"
+                            DefoultImageSource="\AppResources\Pictures\trashCanCoseBorderedVioletred128px.png"
+                            MouseHoverImageSource="\AppResources\Pictures\trashCanOpenFillWhite128px.png"
+                            Grid.Row="0"
+                            />
+
+                        
+                        
                         <TextBox 
                             x:Name="TytleTbx"
                             ToolTip="Category Tytle"
@@ -299,13 +278,20 @@
                         Text="{Binding CategoryDescryption, Mode=TwoWay}"
                         />
 
-                    <Button
-                        Style="{StaticResource Button}"
-                        Command="{Binding EditCategory}"
+                    <customCtrs:CustomButton
                         Background="#512f95"
-                        Margin="10"
                         Grid.Row="2"
-                        Content="Apply Edit"
+                        CornerRadius="10"
+                        BorderThickness="4"
+                        Text="Apply Edit"
+                        FontSize="30"
+                        Margin="10"
+                        ImageMargin="5"
+                        Command="{Binding EditCategory}"
+                        TextBlockHorizontalAlignment ="Center"
+                        DisabledImageSource="\AppResources\Pictures\pencilEditBorderedGray128px.png"
+                        DefoultImageSource="\AppResources\Pictures\pencilEditBorderedPurple128px.png"
+                        MouseHoverImageSource="\AppResources\Pictures\pencilEditFillWhite128px.png"
                         />
 
                 </Grid>

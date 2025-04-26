@@ -13,7 +13,7 @@
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
         Background="Transparent"
-        Height="600" 
+        Height="620" 
         Width="1000"
         d:DesignHeight ="1200"
         MouseLeftButtonDown="Window_DragHandler"
@@ -32,7 +32,7 @@
                 Height="*"
                 />
                 <RowDefinition
-                Height="100"
+                Height="120"
                 />
             </Grid.RowDefinitions>
             <Border
@@ -96,7 +96,7 @@
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="brd" Property="Background" Value="#a1261d"/>
+                                        <Setter TargetName="brd" Property="Background" Value="MediumVioletRed"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -503,16 +503,24 @@
                     </ScrollViewer>
                 </Border>
             </Grid>
-           
-            
-            <Button
-                Grid.Row="2"
-                Content="Create new MediaObject"
-                Margin="20"
+
+            <customCtrs:CustomButton
                 Background="#512f95"
-                Style="{StaticResource Button}"
+                Grid.Row="2"
+                CornerRadius="10"
+                FontSize="30"
+                Height="auto"
+                BorderThickness="2"
+                Text="Create new ranking category"
+                Margin="20"
+                ImageMargin="15"
                 Command="{Binding CreateMediaObjectCommand}"
-                        />
+                TextBlockHorizontalAlignment ="Center"
+                DisabledImageSource="\AppResources\Pictures\markListBorderedGray128px.png"
+                DefoultImageSource="\AppResources\Pictures\markListBorderedPurple128px.png"
+                MouseHoverImageSource="\AppResources\Pictures\markListFillWhite128px.png"
+                />
+            
         </Grid>
     </Border>
 </customCtrs:BaseWindow>

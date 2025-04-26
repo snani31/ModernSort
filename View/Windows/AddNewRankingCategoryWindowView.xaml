@@ -35,7 +35,7 @@
                     Height="*"
                     />
                 <RowDefinition
-                    Height="100"
+                    Height="120"
                     />
             </Grid.RowDefinitions>
             <Border
@@ -99,7 +99,7 @@
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="brd" Property="Background" Value="#a1261d"/>
+                                        <Setter TargetName="brd" Property="Background" Value="MediumVioletRed"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -233,13 +233,25 @@
                     </StackPanel>
                 </ScrollViewer>
             </Border>
-            <Button
+
+            <customCtrs:CustomButton
                 Background="#512f95"
                 Grid.Row="2"
-                Content="Make new Ranking"
+                CornerRadius="10"
+                Height="auto"
+                BorderThickness="2"
+                FontSize="25"
+                Text="Create new ranking category"
                 Margin="20"
-                Style="{StaticResource Button}"
-                Command="{Binding MakeNewRanking}"/>
+                ImageMargin="15"
+                Command="{Binding MakeNewRanking}"
+                TextBlockHorizontalAlignment ="Center"
+                DisabledImageSource="\AppResources\Pictures\markListBorderedGray128px.png"
+                DefoultImageSource="\AppResources\Pictures\markListBorderedPurple128px.png"
+                MouseHoverImageSource="\AppResources\Pictures\markListFillWhite128px.png"
+                />
+
+           
         </Grid>
     </Border>
 </customCtrs:BaseWindow>

@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:ModernSort.View.Windows"
         mc:Ignorable="d"
         Title="EditMediaObjectWindowView" 
-        Height="700" 
+        Height="720" 
         Width="900"
         WindowStyle="none"
         ResizeMode="NoResize"
@@ -91,7 +91,7 @@
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="brd" Property="Background" Value="#a1261d"/>
+                                            <Setter TargetName="brd" Property="Background" Value="MediumVioletRed"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -107,22 +107,31 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="100"/>
                         <RowDefinition/>
-                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="120"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <Button
+
+                    <customCtrs:CustomButton
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        FontSize="35"
+                        BorderThickness="0 0 4 4"
                         x:Name="AddNewFilterButton"
-                        Style="{StaticResource Button}"
-                        Content="Add Filter"
-                        Foreground="Red"
-                        FontSize="30"
-                        Background="#512f95"
+                        Text="Add Filter"
                         Command="{Binding CreateFilter}"
-                     />
+                        Background="#512f95"
+                        TextBlockHorizontalAlignment ="Center"
+                        ImageMargin="15"
+                        DisabledImageSource="\AppResources\Pictures\plusListBorderedGray128px.png"
+                        DefoultImageSource="\AppResources\Pictures\plusListBorderedPurple128px.png"
+                        MouseHoverImageSource="\AppResources\Pictures\plusListFillWhite128px.png"
+                        />
+
+                    
 
                     <TextBox
                         TextAlignment="Center"
@@ -177,6 +186,26 @@
                             Padding="0 10 20 10"
                             ItemContainerStyle="{StaticResource RankingListItemStyle}"
                               >
+                            <ListView.Style>
+                                <Style>
+                                    <Style.Setters>
+                                        <Setter Property="Validation.ErrorTemplate">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <Border
+                                                        CornerRadius="0 0 20 0"
+                                                        BorderThickness="0 0 2 2"
+                                                        BorderBrush="MediumVioletRed"
+                                                        Margin="3"
+                                                        >
+                                                        <AdornedElementPlaceholder/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style.Setters>
+                                </Style>
+                            </ListView.Style>
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid
@@ -222,7 +251,7 @@
                                             >
                                             <Button.Template>
                                                 <ControlTemplate TargetType="Button">
-                                                    <Image x:Name="icon" Margin="5" Source="\AppResources\Pictures\PentagonBorderRedCross.png"/>
+                                                    <Image x:Name="icon" Margin="5" Source="\AppResources\Pictures\crossPentagonBorderVioletRed128px.png"/>
                                                     <ControlTemplate.Triggers>
                                                         <Trigger Property="IsMouseOver" Value="True">
                                                             <Setter TargetName="icon" Property="Source" Value="\AppResources\Pictures\PentagonWhiteCross.png" />
@@ -293,15 +322,22 @@
                         </TextBlock>
                     </Border>
 
-                    <Button
+                    <customCtrs:CustomButton
+                        FontSize="30"
                         Grid.Row="2"
                         Grid.Column="1"
                         Grid.ColumnSpan="1"
-                        Style="{StaticResource Button}"
-                        Background="#512f95"
-                        Margin="10"
-                        Content="Create"
+                        BorderThickness="4"
+                        CornerRadius="10"
+                        Text="Create filter criterion"
                         Command="{Binding CreateFilterCriterionCommand}"
+                        Background="#512f95"
+                        TextBlockHorizontalAlignment ="Left"
+                        ImageMargin="15"
+                        Margin="10"
+                        DisabledImageSource="\AppResources\Pictures\markListBorderedGray128px.png"
+                        DefoultImageSource="\AppResources\Pictures\markListBorderedPurple128px.png"
+                        MouseHoverImageSource="\AppResources\Pictures\markListFillWhite128px.png"
                         />
 
                 </Grid>

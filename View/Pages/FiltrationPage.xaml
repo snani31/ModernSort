@@ -45,7 +45,7 @@
                     <DataTemplate>
 
                         <Border
-                MinHeight="350"
+                MinHeight="75"
                 Background="#f7f9fe"
                 CornerRadius="40"
                 Margin="20"
@@ -53,17 +53,18 @@
                             <StackPanel
                     Orientation="Vertical"
                     >
-                                <Border 
+                                    <Border 
                         MinHeight="75"
                         Background="#512f95"
                         CornerRadius="10">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition Width="85"/>
-                                            <ColumnDefinition Width="85"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="60"/>
+                                                <ColumnDefinition Width="60"/>
+                                                <ColumnDefinition Width="60"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock
                                             Grid.Column="0"
                                             TextWrapping="Wrap"
                                             Foreground="#f7f9fe"
@@ -75,79 +76,120 @@
                                             x:Name="FilterCriterionTytleTextBlock"
                                             Text="{Binding Tytle}"
                                             />
-                                        <Button
-                                            Grid.Column="1"
+                                            <CheckBox
+                                                Name="FilterCriterionExpanderCheckBox"
+                                                Checked="ExpandCheckBoxCheckHandler"
+                                                Unchecked="ExpandCheckBoxUncheckHandler"
+                                                Grid.Column="1"
+                                                Margin="5 5 10 5">
+                                                <CheckBox.Template>
+                                                    <ControlTemplate TargetType="CheckBox">
+                                                        <Border>
+                                                            <Image 
+                                                                Name="img"
+                                                                Source="\AppResources\Pictures\downArrowBorderedWhite64px.png"/>
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsChecked" Value="true">
+                                                                <Setter TargetName="img" Property="Source" Value="\AppResources\Pictures\upArrowBorderedWhite64px.png"/>
+                                                            </Trigger>
+                                                            <MultiTrigger>
+                                                                <MultiTrigger.Conditions>
+                                                                    <Condition Property="IsMouseOver" Value="true"/>
+                                                                    <Condition Property="IsChecked" Value="true"/>
+                                                                </MultiTrigger.Conditions>
+                                                                <Setter TargetName="img" Property="Source" Value="\AppResources\Pictures\upArrowFillWhite64px.png"/>
+                                                            </MultiTrigger>
+                                                            <MultiTrigger>
+                                                                <MultiTrigger.Conditions>
+                                                                    <Condition Property="IsMouseOver" Value="true"/>
+                                                                    <Condition Property="IsChecked" Value="false"/>
+                                                                </MultiTrigger.Conditions>
+                                                                <Setter TargetName="img" Property="Source" Value="\AppResources\Pictures\downArrowFillWhite64px.png"/>
+                                                            </MultiTrigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </CheckBox.Template>
+                                            </CheckBox>
+                                            
+                                            <Button
+                                            Grid.Column="2"
                                             ToolTip="{Binding Description}"
-                                            Margin="10 25 25 25">
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Border
+                                            Margin="10 10 10 10">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border
                                                         x:Name="brd"
                                                         Background="Transparent"
                                                         >
-                                                        <Image
+                                                            <Image
                                                             x:Name="img"
                                                             Source="\AppResources\Pictures\getMoreInfoBorderedWhite64px.png"
                                                             />
-                                                    </Border>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsMouseOver" 
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" 
                                                             Value="true">
-                                                            <Setter 
+                                                                <Setter 
                                                                 TargetName="img" 
                                                                 Property="Source"
                                                                 Value="\AppResources\Pictures\getMoreInfoFillWhite64px.png"/>
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Button.Template>
-                                        </Button>
-                                        <Button
-                                            Grid.Column="2"
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                            </Button>
+                                            
+                                            <Button
+                                            Grid.Column="3"
                                             Command="{Binding DataContext.OpenEditWindow, RelativeSource={RelativeSource AncestorType= ListView,Mode=FindAncestor}}"
                                             CommandParameter="{Binding}"
                                             ToolTip="Edit filter criterionn"
-                                            Margin="10 25 25 25">
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Border
+                                            Margin="10 10 10 10">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border
                                                         x:Name="brd"
                                                         Background="Transparent"
                                                         >
-                                                        <Image
+                                                            <Image
                                                         x:Name="img"
                                                         Source="\AppResources\Pictures\gearWhiteBordered.png"
                                                         />
-                                                    </Border>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsMouseOver" 
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" 
                                                             Value="true">
-                                                            <Setter 
+                                                                <Setter 
                                                                 TargetName="img" 
                                                                 Property="Source"
                                                                 Value="\AppResources\Pictures\gearWhite.png"/>
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Button.Template>
-                                        </Button>
-                                    </Grid>
-                                </Border>
-                                <ListView
-                        MinHeight="300"
-                        ScrollViewer.CanContentScroll="False"
-                        HorizontalContentAlignment="Stretch"
-                        BorderThickness="0"
-                        ItemsSource="{Binding FilterItems}"
-                        Background="Transparent"
-                        Padding="0 10 20 25"
-                        ItemContainerStyle="{StaticResource RankingListItemStyle}"
-                          >
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                            </Button>
+                                            
+                                        </Grid>
+                                    </Border>
+
+                                    <ListView
+                                        x:Name="FiltersListView"
+                                        Visibility="Collapsed"
+                                        MinHeight="300"
+                                        ScrollViewer.CanContentScroll="False"
+                                        HorizontalContentAlignment="Stretch"
+                                        BorderThickness="0"
+                                        ItemsSource="{Binding FilterItems}"
+                                        Background="Transparent"
+                                        Padding="0 10 20 25"
+                                        ItemContainerStyle="{StaticResource RankingListItemStyle}"
+                                          >
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid
-                                    HorizontalAlignment="Stretch"
-                                    >
+                                                    HorizontalAlignment="Stretch"
+                                                    >
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="50"/>
                                                     </Grid.RowDefinitions>
@@ -206,8 +248,7 @@
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
                                     </ListView>
-
-                            </StackPanel>
+                                </StackPanel>
                         </Border>
 
                     </DataTemplate>

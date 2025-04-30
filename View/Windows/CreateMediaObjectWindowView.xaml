@@ -261,11 +261,11 @@
                                         
                                         <DataTemplate>
                                             <Border
-                                                Background="Transparent"
+                                                Background="#512f95"
                                                 x:Name="brd" 
                                                 Width="300" 
                                                 MinHeight="400" 
-                                                CornerRadius="10">
+                                                CornerRadius="15 15 10 10">
                                                 <Grid>
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="50"/>
@@ -275,56 +275,39 @@
                                                         x:Name="InBrd"
                                                         Grid.Row="0"
                                                         CornerRadius="10 10 0 0"
-                                                        Background="#7947e1">
+                                                        Background="#ccd5f0">
                                                         <StackPanel
                                                             Orientation="Horizontal"
                                                             HorizontalAlignment="Right"
                                                             >
-                                                            <Button
-                                                                ToolTip="Remove media"
-                                                                Content="Выбрать"
-                                                                Height="50"
+
+                                                            <customCtrs:CustomButton
                                                                 Grid.Column="0"
+                                                                FirstButtonColor="#512f95"
+                                                                SecondButtonColor="#ccd5f0"
+                                                                CornerRadius="0 10 0 0"
+                                                                ToolTip="Remove file"
+                                                                ImageMargin="5"
                                                                 Command="{Binding RemoveMediafile}"
                                                                 CommandParameter="{Binding}"
-                                                                >
-                                                                <Button.Template>
-                                                                    <ControlTemplate TargetType="Button">
-                                                                        <Border 
-                                                                            BorderThickness="0" 
-                                                                            Margin="0" Name="brd" 
-                                                                            Background="Transparent">
-                                                                            <Image x:Name="icon" 
-                                                                                   Margin="5" 
-                                                                                   Source="\AppResources\Pictures\redCrossBorder.png"/>
-                                                                        </Border>
-                                                                        <ControlTemplate.Triggers>
-                                                                            <Trigger Property="IsMouseOver" Value="True">
-                                                                                <Setter TargetName="brd" Property="Background" Value="#653bbb"/>
-                                                                                <Setter TargetName="brd" Property="CornerRadius" Value="0 10 0 0"/>
-                                                                                <Setter TargetName="icon" Property="Source" Value="\AppResources\Pictures\redCrossFill.png" />
-                                                                            </Trigger>
-                                                                        </ControlTemplate.Triggers>
-                                                                    </ControlTemplate>
-                                                                </Button.Template>
-                                                            </Button>
+                                                                TextBlockHorizontalAlignment ="Left"
+                                                                DefoultImageSource="\AppResources\Pictures\roundedCrossBorderedVioletred64px.png"
+                                                                MouseHoverImageSource="\AppResources\Pictures\roundedCrossFillVioletred64px.png"
+                                                                
+                                                                />
+                                          
                                                         </StackPanel>
                                                     </Border>
-                                                    <Rectangle
-                                                        x:Name="racImg"
-                                                        Stroke="Red"
-                                                        StrokeThickness="5"
-                                                        Margin="10"
-                                                        Grid.Row="1"
-                                                        RadiusX="20"
-                                                        RadiusY="20"
-                                                        >
-                                                        <Rectangle.Fill>
-                                                            <ImageBrush
+                                                    <Border
+                                                        CornerRadius="0 0 10 10"
+                                                        x:Name="ImgBrd"
+                                                        Grid.Row="1">
+                                                        <Border.Background>
+                                                            <ImageBrush 
                                                                 Stretch="Fill"
-                                                                ImageSource="{Binding MediaImagePath}"/>
-                                                        </Rectangle.Fill>
-                                                    </Rectangle>
+                                                                ImageSource="{Binding MediaImagePath, Converter={StaticResource ToBitmapConverter}}"/>
+                                                        </Border.Background>
+                                                    </Border>
                                                 </Grid>
                                             </Border>
                                             <DataTemplate.Triggers>
@@ -332,8 +315,8 @@
                                                     <MultiTrigger.Conditions>
                                                         <Condition Property="IsMouseOver" Value="True" />
                                                     </MultiTrigger.Conditions>
-                                                    <Setter TargetName="brd" Property="Background" Value="#653bbb" />
-                                                    <Setter TargetName="racImg" Property="StrokeThickness" Value="0" />
+                                                    <Setter TargetName="ImgBrd" Property="Margin" Value="25" />
+                                                    <Setter TargetName="ImgBrd" Property="CornerRadius" Value="10" />
                                                 </MultiTrigger>
                                             </DataTemplate.Triggers>
                                         </DataTemplate>
@@ -505,7 +488,8 @@
             </Grid>
 
             <customCtrs:CustomButton
-                Background="#512f95"
+                FirstButtonColor="#512f95"
+                SecondButtonColor="White"
                 Grid.Row="2"
                 CornerRadius="10"
                 FontSize="30"

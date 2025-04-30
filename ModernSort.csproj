@@ -39,6 +39,10 @@
     <None Remove="AppResources\Pictures\circleWhite64px.png" />
     <None Remove="AppResources\Pictures\CollapseWindpwIcon.png" />
     <None Remove="AppResources\Pictures\crossPentagonBorderVioletRed128px.png" />
+    <None Remove="AppResources\Pictures\downArrowBorderedWhite128px.png" />
+    <None Remove="AppResources\Pictures\downArrowBorderedWhite64px.png" />
+    <None Remove="AppResources\Pictures\downArrowFillWhite128px.png" />
+    <None Remove="AppResources\Pictures\downArrowFillWhite64px.png" />
     <None Remove="AppResources\Pictures\editGalleryBorderedPurple128px.png" />
     <None Remove="AppResources\Pictures\editGalleryFillWhite128px.png" />
     <None Remove="AppResources\Pictures\editGalletyBorderedGray128px.png" />
@@ -79,6 +83,8 @@
     <None Remove="AppResources\Pictures\redCrossBorder.png" />
     <None Remove="AppResources\Pictures\redCrossFill.png" />
     <None Remove="AppResources\Pictures\refreshPurple128px.png" />
+    <None Remove="AppResources\Pictures\removeMediaFileBorderedPurple64px.png" />
+    <None Remove="AppResources\Pictures\removeMediaFileFillGray64px.png" />
     <None Remove="AppResources\Pictures\removeMultimediaBorderedVioletred128px.png" />
     <None Remove="AppResources\Pictures\removeMultimediaFillWhite128px.png" />
     <None Remove="AppResources\Pictures\resreshPurple128px.png" />
@@ -86,11 +92,22 @@
     <None Remove="AppResources\Pictures\resreshPurple64px.png" />
     <None Remove="AppResources\Pictures\rightArrowPurple.png" />
     <None Remove="AppResources\Pictures\rightArrowWhite.png" />
+    <None Remove="AppResources\Pictures\roundedCrossBorderedPurple64px.png" />
+    <None Remove="AppResources\Pictures\roundedCrossBorderedVioletred64px.png" />
+    <None Remove="AppResources\Pictures\roundedCrossFillGray64px.png" />
+    <None Remove="AppResources\Pictures\roundedCrossFillVioletred64px.png" />
+    <None Remove="AppResources\Pictures\selectFilderBorderedGray128px.png" />
+    <None Remove="AppResources\Pictures\selectFilderBorderedPurple128px.png" />
+    <None Remove="AppResources\Pictures\selectFilderFillWhite128px.png" />
     <None Remove="AppResources\Pictures\trashCanCloseRed.png" />
     <None Remove="AppResources\Pictures\trashCanCoseBorderedVioletred128px.png" />
     <None Remove="AppResources\Pictures\trashCanOpenFillWhite128px.png" />
     <None Remove="AppResources\Pictures\trashCanOpenRed.png" />
     <None Remove="AppResources\Pictures\trashCanOpenWhite.png" />
+    <None Remove="AppResources\Pictures\upArrowBorderedWhite128px.png" />
+    <None Remove="AppResources\Pictures\upArrowBorderedWhite64px.png" />
+    <None Remove="AppResources\Pictures\upArrowFillWhite128px.png" />
+    <None Remove="AppResources\Pictures\upArrowFillWhite64px.png" />
     <None Remove="AppResources\PowerOffButtonIcon.png" />
   </ItemGroup>
 
@@ -122,6 +139,8 @@
     <Resource Include="AppResources\Pictures\circleWhite64px.png" />
     <Resource Include="AppResources\Pictures\CollapseWindpwIcon.png" />
     <Resource Include="AppResources\Pictures\crossPentagonBorderVioletRed128px.png" />
+    <Resource Include="AppResources\Pictures\downArrowBorderedWhite64px.png" />
+    <Resource Include="AppResources\Pictures\downArrowFillWhite64px.png" />
     <Resource Include="AppResources\Pictures\editGalleryBorderedPurple128px.png" />
     <Resource Include="AppResources\Pictures\editGalleryFillWhite128px.png" />
     <Resource Include="AppResources\Pictures\editGalletyBorderedGray128px.png" />
@@ -161,15 +180,26 @@
     <Resource Include="AppResources\Pictures\redCrossBorder.png" />
     <Resource Include="AppResources\Pictures\redCrossFill.png" />
     <Resource Include="AppResources\Pictures\refreshPurple128px.png" />
+    <Resource Include="AppResources\Pictures\removeMediaFileBorderedPurple64px.png" />
+    <Resource Include="AppResources\Pictures\removeMediaFileFillGray64px.png" />
     <Resource Include="AppResources\Pictures\removeMultimediaBorderedVioletred128px.png" />
     <Resource Include="AppResources\Pictures\removeMultimediaFillWhite128px.png" />
     <Resource Include="AppResources\Pictures\rightArrowPurple.png" />
     <Resource Include="AppResources\Pictures\rightArrowWhite.png" />
+    <Resource Include="AppResources\Pictures\roundedCrossBorderedPurple64px.png" />
+    <Resource Include="AppResources\Pictures\roundedCrossBorderedVioletred64px.png" />
+    <Resource Include="AppResources\Pictures\roundedCrossFillGray64px.png" />
+    <Resource Include="AppResources\Pictures\roundedCrossFillVioletred64px.png" />
+    <Resource Include="AppResources\Pictures\selectFilderBorderedGray128px.png" />
+    <Resource Include="AppResources\Pictures\selectFilderBorderedPurple128px.png" />
+    <Resource Include="AppResources\Pictures\selectFilderFillWhite128px.png" />
     <Resource Include="AppResources\Pictures\trashCanCloseRed.png" />
     <Resource Include="AppResources\Pictures\trashCanCoseBorderedVioletred128px.png" />
     <Resource Include="AppResources\Pictures\trashCanOpenFillWhite128px.png" />
     <Resource Include="AppResources\Pictures\trashCanOpenRed.png" />
     <Resource Include="AppResources\Pictures\trashCanOpenWhite.png" />
+    <Resource Include="AppResources\Pictures\upArrowBorderedWhite64px.png" />
+    <Resource Include="AppResources\Pictures\upArrowFillWhite64px.png" />
     <Resource Include="Styles\UserControlStyles\RadioButtonStyles.xaml" />
   </ItemGroup>
 

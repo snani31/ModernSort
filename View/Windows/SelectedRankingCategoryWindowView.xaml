@@ -413,7 +413,8 @@
                         </Grid.ColumnDefinitions>
 
                         <customCtrs:CustomButton
-                            Background="#512f95"
+                            FirstButtonColor="#512f95"
+                            SecondButtonColor="White"
                             BorderThickness="4"
                             Margin="15"
                             Grid.Column="0"
@@ -429,7 +430,8 @@
                                 />
 
                         <customCtrs:CustomButton
-                            Background="#512f95"
+                            FirstButtonColor="#512f95"
+                            SecondButtonColor="White"
                             BorderThickness="4"
                             CornerRadius="10"
                             Margin="15"
@@ -446,7 +448,8 @@
 
 
                         <customCtrs:CustomButton
-                            Background="#512f95"
+                            FirstButtonColor="#512f95"
+                            SecondButtonColor="White"
                             BorderThickness="4 4 2 4"
                             CornerRadius="25 0 0 25"
                             Margin="15 15 0 15"

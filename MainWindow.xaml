@@ -234,8 +234,9 @@
                     </Grid.RowDefinitions>
                     
                     <customCtrs:CustomButton
-                        Background="#512f95"
                         BorderThickness="4"
+                        FirstButtonColor="#512f95"
+                        SecondButtonColor="White"
                         FontSize="22"
                         Command="{Binding OpenNewRankingWindow}"
                         TextBlockHorizontalAlignment ="Left"
@@ -250,7 +251,8 @@
                             />
 
                     <customCtrs:CustomButton
-                        Background="#512f95"
+                        FirstButtonColor="#512f95"
+                        SecondButtonColor="White"
                         BorderThickness="4"
                         Margin="20"
                         FontSize="22"
@@ -264,8 +266,9 @@
                         MouseHoverImageSource="\AppResources\Pictures\paletteFillWhite128px.png"
                             />
                     
-                    <customCtrs:CustomButton 
-                        Background="#512f95"
+                    <customCtrs:CustomButton
+                        FirstButtonColor="#512f95"
+                        SecondButtonColor="White"
                         Margin="20"
                         Grid.Row="2"
                         ImageMargin="15"

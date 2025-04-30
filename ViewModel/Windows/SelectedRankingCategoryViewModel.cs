@@ -22,7 +22,7 @@ namespace ModernSort.ViewModel.Windows
         {
             get
             {
-                return (MediaObjacts.Count > 0);
+                return (MediaObjacts?.Count > 0);
             }
         }
 
@@ -30,7 +30,7 @@ namespace ModernSort.ViewModel.Windows
         {
             get
             {
-                return (FilterCriterions.Count > 0);
+                return (FilterCriterions?.Count > 0);
             }
         }
 

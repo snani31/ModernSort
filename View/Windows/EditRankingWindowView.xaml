@@ -238,6 +238,8 @@
                             Margin="10"
                             ToolTip="Delete Category"
                             Background="#c71585"
+                            FirstButtonColor="#c71585"
+                            SecondButtonColor="White"
                             CornerRadius="10"
                             BorderThickness="5"
                             ImageMargin="5"
@@ -279,7 +281,8 @@
                         />
 
                     <customCtrs:CustomButton
-                        Background="#512f95"
+                        FirstButtonColor="#512f95"
+                        SecondButtonColor="White"
                         Grid.Row="2"
                         CornerRadius="10"
                         BorderThickness="4"

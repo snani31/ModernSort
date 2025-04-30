@@ -235,7 +235,8 @@
             </Border>
 
             <customCtrs:CustomButton
-                Background="#512f95"
+                FirstButtonColor="#512f95"
+                SecondButtonColor="White"
                 Grid.Row="2"
                 CornerRadius="10"
                 Height="auto"

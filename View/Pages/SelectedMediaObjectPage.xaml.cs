@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 
 namespace ModernSort.View.Pages
 {
@@ -20,25 +7,22 @@ namespace ModernSort.View.Pages
     /// </summary>
     public partial class SelectedMediaObjectPage : UserControl
     {
-
-        ListView ListView1 { get; set; }
         public SelectedMediaObjectPage()
         {
             InitializeComponent();
-            ListView1 = MediaFilesList;
-            ListView1.SelectionChanged += SelectionShangeClosure();
+            MediaFilesList.SelectionChanged += SelectionChangeClosure();
         }
 
-        private SelectionChangedEventHandler SelectionShangeClosure()
+        private SelectionChangedEventHandler SelectionChangeClosure()
         {
 
             ListViewItem? ListViewSelectedItemContainer;
 
             return (object sender, SelectionChangedEventArgs e) =>
             {
-                ListViewSelectedItemContainer = ListView1
+                ListViewSelectedItemContainer = MediaFilesList
                 .ItemContainerGenerator
-                .ContainerFromItem(ListView1.SelectedItem) as ListViewItem;
+                .ContainerFromItem(MediaFilesList.SelectedItem) as ListViewItem;
 
                 ListViewSelectedItemContainer?.Focus();
 

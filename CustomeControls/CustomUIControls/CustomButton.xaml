@@ -9,6 +9,8 @@
             x:Name="Btn"
             d:Background="#512f95"
             Grid.Row="0"
+        MouseEnter="Btn_MouseEnter"
+        MouseLeave="Btn_MouseLeave"
             >
     <Button.Template>
         <ControlTemplate TargetType="Button">
@@ -16,8 +18,11 @@
                 Name="brd"
                 CornerRadius="{Binding ElementName=Btn, Path=CornerRadius}"
                 BorderThickness="{TemplateBinding BorderThickness}"
-                BorderBrush="{TemplateBinding Background}"
-                Background="White">
+                Background="{Binding ElementName=Btn, Path=BorderColorBrush}"
+                BorderBrush="{Binding ElementName=Btn, Path=FirstButtonColor}"
+                >
+
+
 
                 <Grid 
                     VerticalAlignment="Stretch"
@@ -45,17 +50,15 @@
                         TextAlignment="Center"
                         FontSize="{TemplateBinding FontSize}"
                         Margin="0 0 5 0"
-                        Foreground ="{TemplateBinding Background}"
+                        Foreground="{Binding ElementName=Btn, Path=FirstButtonColor}"
                         Text="{Binding ElementName=Btn, Path=Text}"/>
-
 
                 </Grid>
             </Border>
             <ControlTemplate.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter TargetName="brd" Property="Background" Value="{Binding ElementName=brd, Path=BorderBrush}"/>
                     <Setter TargetName="brd" Property="BorderThickness" Value="0"/>
-                    <Setter TargetName="txt" Property="Foreground" Value="White"/>
+                    <Setter TargetName="txt" Property="Foreground" Value="{Binding ElementName=Btn, Path=SecondButtonColor}"/>
                     <Setter TargetName="img" Property="Source" Value="{Binding ElementName=Btn, Path=MouseHoverImageSource}"/>
                     <Setter TargetName="img" Property="Margin" Value="{Binding ElementName=Btn, Path=ImageMarginMouseHover}"/>
 
@@ -65,6 +68,8 @@
                     <Setter TargetName="brd" Property="BorderBrush" Value="#ccd5f0"/>
                     <Setter TargetName="img" Property="Source" Value="{Binding ElementName=Btn, Path=DisabledImageSource}"/>
                 </Trigger>
+               
+                
             </ControlTemplate.Triggers>
         </ControlTemplate>
     </Button.Template>

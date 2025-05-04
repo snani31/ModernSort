@@ -40,8 +40,8 @@ namespace ModernSort.ViewModel.Windows
             } 
         }
         private string _newRankingTytle;
-        [Required(ErrorMessage = "Tytle is required field")]
-        [MaxLength(30, ErrorMessage = "Tytle can not be bigger then 30 symbols")]
+        [Required(ErrorMessage = "Tytle can not be Empthy")]
+        [MaxLength(30, ErrorMessage = "Max Lenght for Tytle is 30 symbols")]
         public string NewRankingTytle
         {
             get { return _newRankingTytle; }
@@ -54,7 +54,8 @@ namespace ModernSort.ViewModel.Windows
 
         private string _newRankingDescryption;
 
-        [Required(ErrorMessage = $"Descryption is required field")]
+        [Required(ErrorMessage = "Descryption can not be Empthy")]
+        [MaxLength(100, ErrorMessage = "Max Lenght for Descryption is 100 symbols")]
         public string NewRankingDescryption
         {
             get { return _newRankingDescryption; }

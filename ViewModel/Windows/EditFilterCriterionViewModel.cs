@@ -3,16 +3,12 @@ using ModernSort.Services;
 using ModernSort.Services.Dialog;
 using ModernSort.Services.Operation;
 using ModernSort.Services.Operations;
+using ModernSort.ViewModel.Items.FiltrationItems;
 using Newtonsoft.Json;
 using RankingEntityes.Filters;
-using System;
-using System.Collections.Immutable;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace ModernSort.ViewModel.Windows
@@ -28,10 +24,10 @@ namespace ModernSort.ViewModel.Windows
 
         #region Observable propertyes
 
-        [MaxLength(20, ErrorMessage = $"Tytle can not be bigger then 20 symbols")]
-        [Required(ErrorMessage = "You neet to write some Tytle")]
-
         private string _title;
+
+        [Required(ErrorMessage = "Tytle can not be Empthy")]
+        [MaxLength(30, ErrorMessage = "Max Lenght for Tytle is 30 symbols")]
         public string Tytle
         {
             get
@@ -47,8 +43,8 @@ namespace ModernSort.ViewModel.Windows
         }
 
         private string _descriptyon;
-        [MaxLength(100, ErrorMessage = $"Description can not be bigger then 100 symbols")]
-        [Required(ErrorMessage = "You neet to write some Description")]
+        [Required(ErrorMessage = "Description can not be Empthy")]
+        [MaxLength(100, ErrorMessage = "Max Lenght for Description is 100 symbols")]
         public string Descriptyon
         {
             get
@@ -68,8 +64,8 @@ namespace ModernSort.ViewModel.Windows
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
 
         #endregion
-
-        public ObservableCollection<Filter> SelectedFilters { get; init; }
+        [MinLength(1, ErrorMessage = "You need to create just 1 filter at least")]
+        public ObservableCollection<ConditionFilterCreatingItem> SelectedFilters { get; init; }
 
         #endregion
 
@@ -91,7 +87,7 @@ namespace ModernSort.ViewModel.Windows
         public ICommand RemoveFilterCriterion { get; init; }
         public ICommand RemoveSelectedFilterFromList { get; init; }
         public ICommand CreateNewFilterInList { get; init; }
-        public ICommand EditFilterCriterion { get; init; }
+        public RelayCommand EditFilterCriterion { get; init; }
         public ICommand CloseDialog { get; init; }
 
         #endregion
@@ -100,7 +96,9 @@ namespace ModernSort.ViewModel.Windows
         private EditFilterCriterionViewModel()
         {
             RemoveFilterCriterion = new RelayCommand(RemoveSelectedFilterCriterion);
-            EditFilterCriterion = new RelayCommand(EditSelectedFilterCriterion);
+            EditFilterCriterion = new RelayCommand(EditSelectedFilterCriterion,base.CanExecuteByValidation);
+            base.PostValidationChange += EditFilterCriterion.OnCanExecuteChanged;
+
             RemoveSelectedFilterFromList = new RelayCommand(RemoveSelectedFilterFromListMethod);
             CreateNewFilterInList = new RelayCommand(NewFilterCreateClosure());
 
@@ -130,7 +128,20 @@ namespace ModernSort.ViewModel.Windows
 
             AlreadyExistingFilters = new ReadOnlyCollection<Filter>(AlreadyExistingFiltersDeepCopy.Select(filter => filter.DeepClone()).ToList());
 
-            SelectedFilters = new ObservableCollection<Filter>(AlreadyExistingFilters.ToList());
+            SelectedFilters = new ObservableCollection<ConditionFilterCreatingItem>(
+                AlreadyExistingFilters.ToList()
+                .Select(x => 
+                new ConditionFilterCreatingItem((ConditionFilter)x, EditFilterCriterion)));
+
+            foreach (var filterCreatingItem in SelectedFilters)
+            {
+                EditFilterCriterion.CanExecutePredicate += filterCreatingItem.CanExecuteByValidation;
+            }
+
+            SelectedFilters.CollectionChanged += (object? sender, NotifyCollectionChangedEventArgs e) =>
+            {
+                Validate(nameof(SelectedFilters), SelectedFilters);
+            };
         }
 
         private void RemoveSelectedFilterCriterion(object? parameter)
@@ -157,7 +168,7 @@ namespace ModernSort.ViewModel.Windows
                 ,RemovableAfterEditFilters
                 , GetEditableOfExistingFilters()
                 , NewCreatedFilters
-                ,SelectedFilters
+                ,SelectedFilters.Select(x => x.conditionFilter)
                 ,mediaObjects);
 
             if (OperationService.InvokeOperation<FilterCriterion>(editFilterCriterionOperation))
@@ -170,9 +181,13 @@ namespace ModernSort.ViewModel.Windows
         private void RemoveSelectedFilterFromListMethod(object? parameter)
         {
 
-            if (parameter is Filter filter)
+            if (parameter is ConditionFilterCreatingItem filterItem)
             {
-                SelectedFilters.Remove(filter);
+                Filter filter = filterItem.conditionFilter;
+                SelectedFilters.Remove(filterItem);
+
+                filterItem.ConditionTytle = "removed anyway";
+                EditFilterCriterion.CanExecutePredicate -= filterItem.CanExecuteByValidation;
 
                 if (AlreadyExistingFilters.Contains(filter))
                     RemovableAfterEditFilters.Add(filter);
@@ -185,7 +200,7 @@ namespace ModernSort.ViewModel.Windows
         {
             var resultList = new List<Filter>();
 
-            foreach (var filter in SelectedFilters) 
+            foreach (var filter in SelectedFilters.Select(x => x.conditionFilter)) 
             {
                 foreach (var existingFilter in AlreadyExistingFiltersDeepCopy)
                 {
@@ -207,7 +222,10 @@ namespace ModernSort.ViewModel.Windows
             {
                 string newFilterBaseTytle = $"New Filter {++newFilterStartNumber}";
                 Filter newFilter = CreateFilterCommandMethod(newFilterBaseTytle);
-                SelectedFilters.Add(newFilter);
+
+                var newConditionFilterCreationItem = new ConditionFilterCreatingItem((ConditionFilter)newFilter, EditFilterCriterion);
+                SelectedFilters.Add(newConditionFilterCreationItem);
+                EditFilterCriterion.CanExecutePredicate += newConditionFilterCreationItem.CanExecuteByValidation;
                 NewCreatedFilters.Add(newFilter);
             };
         }

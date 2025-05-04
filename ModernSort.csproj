@@ -46,6 +46,8 @@
     <None Remove="AppResources\Pictures\editGalleryBorderedPurple128px.png" />
     <None Remove="AppResources\Pictures\editGalleryFillWhite128px.png" />
     <None Remove="AppResources\Pictures\editGalletyBorderedGray128px.png" />
+    <None Remove="AppResources\Pictures\exclamationMarkBorderedVioletred64px.png" />
+    <None Remove="AppResources\Pictures\exclamationMarkFillWhite64px.png" />
     <None Remove="AppResources\Pictures\ExitDoorBorderedGray128px.png" />
     <None Remove="AppResources\Pictures\ExitDoorBorderedPurple128px.png" />
     <None Remove="AppResources\Pictures\ExitDoorFillWhite128px.png" />
@@ -144,6 +146,8 @@
     <Resource Include="AppResources\Pictures\editGalleryBorderedPurple128px.png" />
     <Resource Include="AppResources\Pictures\editGalleryFillWhite128px.png" />
     <Resource Include="AppResources\Pictures\editGalletyBorderedGray128px.png" />
+    <Resource Include="AppResources\Pictures\exclamationMarkBorderedVioletred64px.png" />
+    <Resource Include="AppResources\Pictures\exclamationMarkFillWhite64px.png" />
     <Resource Include="AppResources\Pictures\ExitDoorBorderedGray128px.png" />
     <Resource Include="AppResources\Pictures\ExitDoorBorderedPurple128px.png" />
     <Resource Include="AppResources\Pictures\ExitDoorFillWhite128px.png" />

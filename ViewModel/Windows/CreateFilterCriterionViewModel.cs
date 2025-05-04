@@ -2,19 +2,11 @@
 using ModernSort.Services.Dialog;
 using ModernSort.Services.Operation.Classes.FilterCriteron;
 using ModernSort.Services.Operations;
-using ModernSort.ViewModel.Items;
+using ModernSort.ViewModel.Items.FiltrationItems;
 using RankingEntityes.Filters;
-using RankingEntityes.Ranking_Entityes.MediaObjacts;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Printing;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ModernSort.ViewModel.Windows
@@ -24,9 +16,9 @@ namespace ModernSort.ViewModel.Windows
 
         private OperationService OperationService { get; init; }
 
-        private ObservableCollection<Filter> _createdFilters;
+        private ObservableCollection<ConditionFilterCreatingItem> _createdFilters;
         [MinLength(1, ErrorMessage = "You need to create just 1 filter at Least")]
-        public ObservableCollection<Filter> CreatedFilters {
+        public ObservableCollection<ConditionFilterCreatingItem> CreatedFilters {
             get
             {
                 return _createdFilters;
@@ -49,8 +41,8 @@ namespace ModernSort.ViewModel.Windows
 
         private string _title;
 
-        [MaxLength(20, ErrorMessage = $"Tytle can not be bigger then 20 symbols")]
-        [Required(ErrorMessage = "You neet to write some Tytle")]
+        [Required(ErrorMessage = "Tytle can not be Empthy")]
+        [MaxLength(30, ErrorMessage = "Max Lenght for Tytle is 30 symbols")]
         public string Tytle
         {
             get
@@ -66,8 +58,8 @@ namespace ModernSort.ViewModel.Windows
 
         private string _descriptyon;
 
-        [MaxLength(100, ErrorMessage = $"Description can not be bigger then 100 symbols")]
-        [Required(ErrorMessage = "You neet to write some Description")]
+        [Required(ErrorMessage = "Descryption can not be Empthy")]
+        [MaxLength(100, ErrorMessage = "Max Lenght for Descryption is 100 symbols")]
         public string Descriptyon
         {
             get
@@ -86,7 +78,7 @@ namespace ModernSort.ViewModel.Windows
         {
             CloseDialog = new RelayCommand(
     (p) => CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(false)));
-            CreatedFilters = new ObservableCollection<Filter>();
+            CreatedFilters = new ObservableCollection<ConditionFilterCreatingItem>();
             CreatedFilters.CollectionChanged += (object? sender, NotifyCollectionChangedEventArgs e) =>
             {
                 Validate(nameof(CreatedFilters), CreatedFilters);
@@ -109,7 +101,7 @@ namespace ModernSort.ViewModel.Windows
         private void CreateFilterCriterionCommandMethod(object? parameter)
         {
             ConditionFilterCriterion newConditionFilterCriterion = new ConditionFilterCriterion();
-            newConditionFilterCriterion.Filters = CreatedFilters;
+            newConditionFilterCriterion.Filters = CreatedFilters.Select(x => x.conditionFilter);
             newConditionFilterCriterion.Tytle = Tytle;
             newConditionFilterCriterion.Description = Descriptyon;
 
@@ -130,7 +122,9 @@ namespace ModernSort.ViewModel.Windows
             return (object? p) =>
             {
                 string newFilterBaseTytle = $"New Filter {++newFilterStartNumber}";
-                CreatedFilters.Add(CreateFilterCommandMethod(newFilterBaseTytle));
+                var newConditionFilterCreationItem = new ConditionFilterCreatingItem((ConditionFilter)CreateFilterCommandMethod(newFilterBaseTytle), CreateFilterCriterionCommand);
+                CreatedFilters.Add(newConditionFilterCreationItem);
+                CreateFilterCriterionCommand.CanExecutePredicate += newConditionFilterCreationItem.CanExecuteByValidation;
             };
         }
 
@@ -144,9 +138,11 @@ namespace ModernSort.ViewModel.Windows
 
         private void RemoveFilterFromListCommandMethod(object? parameter)
         {
-            if (parameter is Filter removableFilter and not null)
+            if (parameter is ConditionFilterCreatingItem removableFilterItem and not null)
             {
-                CreatedFilters.Remove(removableFilter);
+                CreatedFilters.Remove(removableFilterItem);
+                removableFilterItem.ConditionTytle = "removed anyway";
+                CreateFilterCriterionCommand.CanExecutePredicate -= removableFilterItem.CanExecuteByValidation;
             }
         }
     }

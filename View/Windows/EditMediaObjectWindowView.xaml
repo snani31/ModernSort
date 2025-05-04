@@ -143,11 +143,12 @@ ClipToBounds="True"
                                     xmlns:l="clr-namespace:ModernSort.CustomeControls.TemplateSelectors"
                                     >
                                     <Grid.Resources>
-                                        <DataTemplate 
+                                        <DataTemplate
+                                            x:Name="Files"
                                             x:Key="Files">
                                             <Border
                                                 DataContext="{Binding DataContext,
-                                                    RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
                                                 Background="Transparent"
                                                 >
                                                 <Grid>
@@ -162,7 +163,6 @@ ClipToBounds="True"
                                                         Grid.Row="0"
                                                         BorderThickness="0"
                                                         FontSize="30"
-                                                        CornerRadius="0 0 0 10"
                                                         Text="Select File"
                                                         ImageMargin="15"
                                                         Command="{Binding SelectMultimediaFiles}"
@@ -173,31 +173,41 @@ ClipToBounds="True"
                                                         />
 
                                                     <ListView
-                                                        
-                                                    Grid.Row="1"
-                                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                                    ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                                    HorizontalContentAlignment="Center"
-                                                    x:Name="MediaFilesList"
-                                                    ItemContainerStyle="{StaticResource MediaObjactContenerStyle}"
-                                                    ItemsSource="{Binding SelectedFilePaths}"
-                                                    BorderThickness="0"
-                                                    Background="Transparent"
-                                                    Padding="0 10 0 0"
-                                                    >
+                                                        Grid.Row="1"
+                                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                                        HorizontalContentAlignment="Center"
+                                                        x:Name="MediaFilesList"
+                                                        ItemContainerStyle="{StaticResource MediaObjactContenerStyle}"
+                                                        ItemsSource="{Binding SelectedFilePaths}"
+                                                        BorderThickness="0"
+                                                        Background="Transparent"
+                                                        Padding="0 10 0 0"
+                                                        >
                                                         <ListView.Style>
-                                                            <Style>
+                                                            <Style
+                                                                TargetType="ListView"
+                                                                BasedOn="{StaticResource RoundedListViewStyle}">
                                                                 <Style.Setters>
-                                                                    <Setter Property="Validation.ErrorTemplate">
+                                                                    <Setter Property="Template">
                                                                         <Setter.Value>
-                                                                            <ControlTemplate>
+                                                                            <ControlTemplate TargetType="ListView">
                                                                                 <Border
-                                                                                CornerRadius="15"
-                                                                                BorderBrush="#512f95" 
-                                                                                BorderThickness="2"
-                                                                                >
-                                                                                    <AdornedElementPlaceholder />
+                                                                                    Name="brd"
+                                                                                    CornerRadius="0 0 0 20"
+                                                                                    Background="{TemplateBinding Background}"
+                                                                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                                                                    >
+                                                                                    <ScrollViewer Padding="{TemplateBinding Padding}">
+                                                                                        <ItemsPresenter/>
+                                                                                    </ScrollViewer>
                                                                                 </Border>
+                                                                                <ControlTemplate.Triggers>
+                                                                                    <Trigger Property="Validation.HasError" Value="True">
+                                                                                        <Setter TargetName="brd" Property="BorderThickness" Value="2 0 0 2"/>
+                                                                                        <Setter TargetName="brd" Property="BorderBrush" Value="#c71585"/>
+                                                                                    </Trigger>
+                                                                                </ControlTemplate.Triggers>
                                                                             </ControlTemplate>
                                                                         </Setter.Value>
                                                                     </Setter>
@@ -448,6 +458,7 @@ ClipToBounds="True"
                                             />
                                     </Grid.Resources>
                                     <ContentControl
+                                        x:Name="SelectFunktionPrtesenter"
                                         ContentTemplateSelector="{StaticResource FunctionSelector}"
                                         Content="{Binding Path=PagePresenter}"
                                         >
@@ -519,18 +530,7 @@ ClipToBounds="True"
                                 <TextBlock.Text>
                                     <MultiBinding Converter="{StaticResource ValidationStringConverter}">
                                         <Binding
-                                            ElementName="TytleTbx" 
-                                            Path= "(Validation.Errors)[0].ErrorContent"
-                                            Mode="OneWay"
-                                            />
-                                        <Binding/>
-                                        <Binding
-                                            ElementName="DescryptioonTbx" 
-                                            Path= "(Validation.Errors)[0].ErrorContent"
-                                            Mode="OneWay"
-                                            />
-                                        <Binding
-                                            ElementName="FilterFilePresenterGrid.MediaFilesLists" 
+                                            ElementName="FilterFilePresenterGrid" 
                                             Path= "(Validation.Errors)[0].ErrorContent"
                                             Mode="OneWay"
                                             />

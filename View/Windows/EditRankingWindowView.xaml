@@ -237,7 +237,6 @@
                             Command="{Binding DeleteCategory}"
                             Margin="10"
                             ToolTip="Delete Category"
-                            Background="#c71585"
                             FirstButtonColor="#c71585"
                             SecondButtonColor="White"
                             CornerRadius="10"

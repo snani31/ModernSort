@@ -134,7 +134,7 @@
                             TextWrapping="Wrap"
                             Margin="10 5 10 0"
                             FontSize="20"
-                            Foreground="Red"
+                            Foreground="#c71585"
                             Text="{Binding ElementName=InputTytle, Path=(Validation.Errors)[0].ErrorContent}"
                             />
                         <TextBox
@@ -159,7 +159,7 @@
                             TextWrapping="Wrap"
                             Margin="10 5 10 0"
                             FontSize="20"
-                            Foreground="Red"
+                            Foreground="#c71585"
                             Text="{Binding ElementName=InputDescryption, Path=(Validation.Errors)[0].ErrorContent}"
                             />
                         <TextBox
@@ -176,7 +176,7 @@
                         <Label
                             Margin="10 5 10 0"
                             FontSize="20"
-                            Foreground="Red"
+                            Foreground="#c71585"
                             Content="{Binding ElementName=InputImage, Path=(Validation.Errors)[0].ErrorContent}"
                             />
                         <Grid >

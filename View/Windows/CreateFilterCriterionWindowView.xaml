@@ -132,15 +132,16 @@
                         MouseHoverImageSource="\AppResources\Pictures\plusListFillWhite128px.png"
                         />
 
-                    
+
 
                     <TextBox
                         TextAlignment="Center"
                         Grid.Row="0"
+                        Style="{StaticResource ResourceKey=UnderlineTextBoxStyle}"
                         Grid.Column="1"
                         Grid.ColumnSpan="1"
                         x:Name="TytleTbx"
-                        ToolTip="Category  Descryption"
+                        ToolTip="Criterion tytle"
                         FontSize="30"
                         Foreground="#6795de"
                         Background="Transparent"
@@ -150,23 +151,6 @@
                         Margin="20 20 20 10"
                         Padding="10"
                         >
-                        <TextBox.Style>
-                            <Style TargetType="{x:Type TextBox}" 
-                                   BasedOn="{StaticResource ResourceKey=UnderlineTextBoxStyle}">
-                                <Setter Property="Validation.ErrorTemplate">
-                                    <Setter.Value>
-                                        <ControlTemplate>
-                                            <Border
-                                                BorderBrush="MediumVioletRed" 
-                                                BorderThickness="3"
-                                                >
-                                                <AdornedElementPlaceholder />
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </TextBox.Style>
                     </TextBox>
 
                     <Border 
@@ -179,6 +163,7 @@
                         >
 
                         <ListView
+                            x:Name="CreatedFiltersList"
                             ScrollViewer.CanContentScroll="False"
                             HorizontalContentAlignment="Stretch"
                             BorderThickness="0"
@@ -186,30 +171,12 @@
                             Background="Transparent"
                             Padding="0 10 20 10"
                             ItemContainerStyle="{StaticResource RankingListItemStyle}"
+                            Style="{StaticResource RoundedListViewStyle}"
                               >
-                            <ListView.Style>
-                                <Style>
-                                    <Style.Setters>
-                                        <Setter Property="Validation.ErrorTemplate">
-                                            <Setter.Value>
-                                                <ControlTemplate>
-                                                    <Border
-                                                        CornerRadius="0 0 20 0"
-                                                        BorderThickness="0 0 2 2"
-                                                        BorderBrush="MediumVioletRed"
-                                                        Margin="3"
-                                                        >
-                                                        <AdornedElementPlaceholder/>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style.Setters>
-                                </Style>
-                            </ListView.Style>
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid
+                                        x:Name="Grd"
                                         HorizontalAlignment="Stretch"
                                         >
                                         <Grid.RowDefinitions>
@@ -217,6 +184,7 @@
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="50"/>
                                             <ColumnDefinition Width="50"/>
                                         </Grid.ColumnDefinitions>
 
@@ -240,9 +208,31 @@
                                             />
 
                                         <Button
+                                            x:Name="WarningBtn"
                                             HorizontalAlignment="Right"
                                             Grid.Row="0"
                                             Grid.Column="1"
+                                            ToolTip="Filter Tytle is required field"
+                                            Width="50"
+                                            Height="50"
+                                            Visibility="Collapsed"
+                                            >
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Image x:Name="icon" Margin="5" Source="\AppResources\Pictures\exclamationMarkBorderedVioletred64px.png"/>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="icon" Property="Source" Value="\AppResources\Pictures\exclamationMarkFillWhite64px.png" />
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+
+                                        <Button
+                                            HorizontalAlignment="Right"
+                                            Grid.Row="0"
+                                            Grid.Column="2"
                                             Command="{Binding DataContext.RemoveFilterFromList,
                                                 RelativeSource={RelativeSource AncestorType=ListView,Mode=FindAncestor}}"
                                             CommandParameter="{Binding}"
@@ -262,6 +252,11 @@
                                             </Button.Template>
                                         </Button>
                                     </Grid>
+                                    <DataTemplate.Triggers>
+                                        <Trigger SourceName="TytleTbx" Property="Validation.HasError" Value="True">
+                                            <Setter TargetName="WarningBtn" Property="Visibility" Value="Visible" />
+                                        </Trigger>
+                                    </DataTemplate.Triggers>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                             <ListView.Resources>
@@ -275,7 +270,7 @@
                         Grid.Row="1"
                         Grid.Column="1"
                         Grid.ColumnSpan="1"
-                        x:Name="DeskriptionTbox"
+                        x:Name="DescryptioonTbx"
                         ToolTip="Category  Descryption"
                         FontSize="30"
                         Foreground="#6795de"
@@ -314,6 +309,12 @@
                                     <Binding/>
                                     <Binding
                                         ElementName="DescryptioonTbx" 
+                                        Path= "(Validation.Errors)[0].ErrorContent"
+                                        Mode="OneWay"
+                                        />
+                                    <Binding/>
+                                    <Binding
+                                        ElementName="CreatedFiltersList" 
                                         Path= "(Validation.Errors)[0].ErrorContent"
                                         Mode="OneWay"
                                         />

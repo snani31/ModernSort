@@ -46,7 +46,7 @@
                     <ControlTemplate>
                         <Border
                             CornerRadius="15"
-                            BorderBrush="#7d4c94" 
+                            BorderBrush="#c71585" 
                             BorderThickness="2"
                             >
                             <AdornedElementPlaceholder />
@@ -62,6 +62,11 @@
     TargetType="TextBox"
     x:Key="UnderlineTextBoxStyle">
         <Style.Setters>
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate/>
+                </Setter.Value>
+            </Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox" x:Name="ctrtmp">
@@ -82,23 +87,14 @@
                             BorderThickness="0"
                             Margin="10,0,10,0"
                             Foreground="#CFCFCF"/>
-                                <TextBlock 
-                                    TextAlignment="{TemplateBinding TextAlignment}"
-                                    MaxWidth="{TemplateBinding Width}"
-                                    x:Name="hint"
-                                    Text="{TemplateBinding Text}"
-                                    TextWrapping="Wrap"
-                                    IsHitTestVisible="False"
-                                    VerticalAlignment="Bottom"
-                                    HorizontalAlignment="Left"
-                                    FontSize="{TemplateBinding FontSize}"
-                                    Margin="15,0,0,0"
-                                    Foreground="{TemplateBinding Foreground}"
-                                    Visibility="Collapsed"
-                                   >
-                                </TextBlock>
                             </Grid>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Validation.HasError" Value="true">
+                                <Setter TargetName="brd" Property="BorderThickness" Value="0 0 0 2"/>
+                                <Setter TargetName="brd" Property="BorderBrush" Value="#c71585"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>

@@ -2,12 +2,14 @@
 using ModernSort.Services;
 using ModernSort.Services.Dialog;
 using ModernSort.Services.Operations;
+using ModernSort.Services.Searching;
 using ModernSort.Stores.Catalog;
 using ModernSort.Stores.Navigation;
 using ModernSort.ViewModel.Items;
 using ModernSort.ViewModel.Pages;
 using RankingEntityes.Filters;
 using RankingEntityes.IO_Entities.Interfaces;
+using RankingEntityes.Ranking_Entityes.MediaObjacts;
 using RankingEntityes.Ranking_Entityes.Ranking_Categories;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -16,6 +18,16 @@ namespace ModernSort.ViewModel.Windows
 {
     internal class SelectedRankingCategoryViewModel : ViewModelBase, IDialogRequestClose
     {
+        private string _searchMediaObjectQuery;
+        public string SearchMediaObjectQuery
+        {
+            get => _searchMediaObjectQuery;
+            set
+            {
+                _searchMediaObjectQuery = value;
+                OnPropertyChenged(nameof(SearchMediaObjectQuery));
+            }
+        }
         public bool IsFiltrationPageSelected {  get; set; }
         public bool IsMediaObjectPageSelected { get; set; }
         public bool MediaObjectsListIsNotEmpthy 
@@ -75,7 +87,8 @@ namespace ModernSort.ViewModel.Windows
 
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
 
-
+        public ICommand SetNotSearchedMediaObjectsState{ get; init; }
+        public ICommand SearchMediaObjact { get; init; }
         public ICommand SetMediaObjectPageValue { get; init; }
         public ICommand SetFiltrationPageValue { get; init; }
         public ICommand CreateMediaObjectWindowOpen { get; init; }
@@ -83,8 +96,13 @@ namespace ModernSort.ViewModel.Windows
         public RelayCommand EditMediaObjectWindowOpen { get; init; }
         public ICommand OpenMediaObjectPage { get; init; }
         public ICommand CloseDialog { get; init; }
+
+        public  SearchingService<MediaObject> SearchingService { get; }
+
         public OutputContentService ContentService { get; }
+
         private CatalogStore CatalogStore {  get; init; }
+
         private OperationService OperationService { get; init; }
 
         private IDialogService DialogService {  get; init; }
@@ -93,6 +111,7 @@ namespace ModernSort.ViewModel.Windows
         private SelectedMediaObjectPageViewModel? CurrentMediaObjectPageViewModel {  get; set; }
 
         private SelectedMediaObjectPageViewModel? _currentMediaObjectPagePresenter;
+
         public SelectedMediaObjectPageViewModel? CurrentMediaObjectPagePresenter
         {
             get 
@@ -130,6 +149,19 @@ namespace ModernSort.ViewModel.Windows
                     NavigationStore.CurrentViewModel = CurrentFiltrationPageViewModel;
                 });
 
+            SearchMediaObjact = new RelayCommand(SearchMediaObjectMethod);
+
+            SetNotSearchedMediaObjectsState = new RelayCommand(
+                (p) =>
+                {
+                    MediaObjacts = new ObservableCollection<MediaObjectItemViewModel>(
+                        SearchingService.SearchElements
+                        .Select(
+                            x => new MediaObjectItemViewModel(x, CatalogStore.MediaFilesCatalogPath)
+                            )
+                            );
+                    SearchMediaObjectQuery = String.Empty;
+                });
 
         }
 
@@ -193,6 +225,8 @@ namespace ModernSort.ViewModel.Windows
                     CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(false));
                 });
 
+            SearchingService = new SearchingService<MediaObject>(minLenghtForSearchQueryWordsDecrission:3);
+
             InitStartEntities();
         }
 
@@ -214,6 +248,8 @@ namespace ModernSort.ViewModel.Windows
             CurrentMediaObjectPageViewModel = new SelectedMediaObjectPageViewModel(ContentService);
             NavigationStore.CurrentViewModel = null;
 
+            SearchingService.SearchElements = new List<MediaObject>(MediaObjacts.Select(x => x.MediaObject));
+
             CurrentFiltrationPageViewModel = new FiltrationPageViewModel(MediaObjacts,
                 ContentService,
                 FilterCriterions);
@@ -222,6 +258,7 @@ namespace ModernSort.ViewModel.Windows
                 {
                     var mediaObjectsItemsResult = mediaObjects.Select(x => new MediaObjectItemViewModel(x, CatalogStore.MediaFilesCatalogPath));
                     MediaObjacts = new ObservableCollection<MediaObjectItemViewModel>(mediaObjectsItemsResult);
+                    SearchingService.SearchElements = MediaObjacts.Select(x => x.MediaObject);
                 };
             CurrentFiltrationPageViewModel.OnEditButtonPressed += OpenEditFilterCriterionPage;
         }
@@ -253,6 +290,17 @@ namespace ModernSort.ViewModel.Windows
                 InitStartEntities();
             }
             ContentService.FilterCriterionContentService.DropSelectionOfFilterCriterion();
+        }
+
+        private void SearchMediaObjectMethod(object? parameter)
+        {
+            List<MediaObject> ExistingMediaObjects = new List<MediaObject>(MediaObjacts.Select(x => x.MediaObject));
+            ExistingMediaObjects = (List<MediaObject>)SearchingService.SerchElements(SearchMediaObjectQuery);
+
+            var mediaObjectsItemsResult = ExistingMediaObjects.Select(x => new MediaObjectItemViewModel(x, CatalogStore.MediaFilesCatalogPath));
+
+            MediaObjacts = new ObservableCollection<MediaObjectItemViewModel>(mediaObjectsItemsResult);
+
         }
 
     }

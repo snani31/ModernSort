@@ -129,47 +129,89 @@
                         >
                         <Grid>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="100"/>
                             </Grid.ColumnDefinitions>
+
+                            <customCtrs:CustomButton
+                                SecondButtonColor="White"
+                                CornerRadius="15 0 0 15"
+                                FirstButtonColor="#c71585"
+                                Margin="20 10 0 10"
+                                Command="{Binding SetNotSearchedMediaObjectsState}"
+                                ImageMargin="0 5 0 5"
+                                DefoultImageSource="\AppResources\Pictures\roundedCrossBorderedPurple64px.png"
+                                MouseHoverImageSource="\AppResources\Pictures\roundedCrossFillWhite64px.png"
+                                />
+
                             <TextBox
                                x:Name="SearchTbox"
                                 ToolTip="Category  Descryption"
-                                Grid.Row="1"
+                                Grid.Column="1"
                                 FontSize="25"
                                 Foreground="#6795de"
                                 TextWrapping="Wrap"
                                 Padding="10"
-                                Style="{StaticResource TuskDataTextBoxStyle}"
-                                Margin="20 10 20 10"
-                                />
-                            <Button
-                                Grid.Column="1"
+                                Text="{Binding SearchMediaObjectQuery, Mode=TwoWay}"
+                                Margin="0 10 20 10"
                                 >
-                                <Button.Template>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Border
-                                            x:Name="brd"
-                                            CornerRadius="20 0 20 20"
-                                            >
-                                            <Image
-                                                x:Name="img"
-                                                Margin="10"
-                                                Source="/AppResources/Pictures/magnifierWhite64px.png"
-                                                />
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" 
-                                                Value="true">
-                                                <Setter
-                                                    TargetName="brd" 
-                                                    Property="Background"
-                                                    Value="#492988"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
+                                <TextBox.Style>
+                                    <Style TargetType="{x:Type TextBox}"
+                                           BasedOn="{StaticResource TuskDataTextBoxStyle}">
+                                        <Style.Setters>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type TextBox}">
+                                                        <Border x:Name="brd" 
+                                                                CornerRadius="0 15 15 0" 
+                                                                Background ="{TemplateBinding Background}"
+                                                                Width="{TemplateBinding Width}"
+                                                                MinHeight="{TemplateBinding Height}">
+                                                            <Grid>
+                                                                <Rectangle StrokeThickness="1"/>
+                                                                <ScrollViewer 
+                                                                    x:Name="PART_ContentHost" 
+                                                                    Background="Transparent"
+                                                                    BorderThickness="0"
+                                                                    VerticalContentAlignment="Center"
+                                                                    Margin="10,0,10,0"
+                                                                    Foreground="#CFCFCF"/>
+                                                                <TextBlock 
+                                                                    MaxWidth="{TemplateBinding Width}"
+                                                                    x:Name="hint"
+                                                                    Text="{TemplateBinding Text}"
+                                                                    TextWrapping="Wrap"
+                                                                    IsHitTestVisible="False"
+                                                                    VerticalAlignment="Top"
+                                                                    HorizontalAlignment="Left"
+                                                                    FontSize="{TemplateBinding FontSize}"
+                                                                    Margin="15,0,0,0"
+                                                                    Foreground="{TemplateBinding Foreground}"
+                                                                    Visibility="Collapsed"
+                                                                           >
+                                                                </TextBlock>
+                                                            </Grid>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style.Setters>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+
+                            <customCtrs:CustomButton
+                                SecondButtonColor="#512f95"
+                                CornerRadius="20 0 20 20"
+                                FirstButtonColor="#492988"
+                                Grid.Column="2"
+                                ImageMargin="10"
+                                Command="{Binding SearchMediaObjact}"
+                                DefoultImageSource="\AppResources\Pictures\magnifierWhite64px.png"
+                                MouseHoverImageSource="\AppResources\Pictures\magnifierWhite64px.png"
+                                />
+
                         </Grid>
                     </Border>
 

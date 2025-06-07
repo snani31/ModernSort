@@ -1,0 +1,137 @@
+﻿<RadioButton x:Class="ModernSort.CustomeControls.CustomUIControls.CustomRadioButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ModernSort.CustomeControls.CustomUIControls"
+             mc:Ignorable="d" 
+             x:Name="RadioBtn"
+             d:DesignHeight="800" d:DesignWidth="300"
+             >
+
+    <RadioButton.Resources>
+        <ControlTemplate x:Name="HorizonatalOrientationRadioButtonTemplate" x:Key="HorizonatalOrientationRadioButtonTemplate" TargetType="RadioButton">
+
+            <Border 
+                Name="brd"
+                Background="{Binding ElementName=RadioBtn, Path=BorderColorBrush}" 
+                >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="5"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image
+                Name="img"
+                Margin="5 5 5 5"
+                Grid.Row="0"
+                Grid.Column="0"
+                HorizontalAlignment="Stretch"
+                Source="{Binding ElementName=RadioBtn, Path=DefoultImageSource}"/>
+
+                    <TextBlock 
+                Name="txt"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                TextWrapping="Wrap"
+                Grid.Row="0"
+                Grid.Column="1"
+                Text="{Binding ElementName=RadioBtn, Path=Text}"
+                Margin="0 5 40 10"
+                Style="{StaticResource SpanDefoult}"
+                FontSize="{TemplateBinding FontSize}"
+                FontWeight="DemiBold"
+                Foreground="{Binding ElementName=RadioBtn, Path=DefoultTextColor}"
+                />
+
+                    <Border
+                        VerticalAlignment="Bottom"
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        x:Name="indicator"
+                        Height="0"
+                        Background="{Binding ElementName=RadioBtn, Path=IndicatorLineColor}"/>
+
+                </Grid>
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="img" Property="Source" Value="{Binding ElementName=RadioBtn, Path=MouseHoverImageSource}"/>
+
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter TargetName="brd" Property="Background" Value="{Binding ElementName=RadioBtn, Path=DisabledColor}"/>
+                    <Setter TargetName="img" Property="Source" Value="{Binding ElementName=RadioBtn, Path=DisabledImageSource}"/>
+                </Trigger>
+
+                <Trigger Property="IsChecked" Value="true">
+                    <Setter TargetName="brd" Property="Background" Value="{Binding ElementName=RadioBtn, Path=SelectedColor}"/>
+                    <Setter TargetName="img" Property="Source" Value="{Binding ElementName=RadioBtn, Path=SelectedImageSource}"/>
+                    <Setter TargetName="txt" Property="Foreground" Value="{Binding ElementName=RadioBtn, Path=SelectedTextColor}"/>
+                    <Setter TargetName="indicator" Property="Visibility" Value="Hidden"/>
+                </Trigger>
+
+
+            </ControlTemplate.Triggers>
+
+        </ControlTemplate>
+        <ControlTemplate x:Name="VerticalOrientationRadioButtonTemplate" x:Key="VerticalOrientationRadioButtonTemplate" TargetType="RadioButton">
+
+            <Border 
+                Name="brd"
+                Background="{Binding ElementName=RadioBtn, Path=BorderColorBrush}" 
+                >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image
+                        Name="img"
+                        Margin="5 5 5 5"
+                        Grid.RowSpan="2"
+                        Grid.Column="1"
+                        HorizontalAlignment="Stretch"
+                        Source="{Binding ElementName=RadioBtn, Path=DefoultImageSource}"/>
+
+
+                    <Border
+                        HorizontalAlignment="Left"
+                        Grid.RowSpan="2"
+                        Grid.Column="0"
+                        x:Name="indicator"
+                        Width="0"
+                        Background="{Binding ElementName=RadioBtn, Path=IndicatorLineColor}"/>
+
+                </Grid>
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="img" Property="Source" Value="{Binding ElementName=RadioBtn, Path=MouseHoverImageSource}"/>
+
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter TargetName="brd" Property="Background" Value="{Binding ElementName=RadioBtn, Path=DisabledColor}"/>
+                    <Setter TargetName="img" Property="Source" Value="{Binding ElementName=RadioBtn, Path=DisabledImageSource}"/>
+                </Trigger>
+
+                <Trigger Property="IsChecked" Value="true">
+                    <Setter TargetName="brd" Property="Background" Value="{Binding ElementName=RadioBtn, Path=SelectedColor}"/>
+                    <Setter TargetName="img" Property="Source" Value="{Binding ElementName=RadioBtn, Path=SelectedImageSource}"/>
+                    <Setter TargetName="indicator" Property="Visibility" Value="Hidden"/>
+                </Trigger>
+
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </RadioButton.Resources>
+</RadioButton>

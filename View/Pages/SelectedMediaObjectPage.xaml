@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ModernSort.View.Pages"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:customCtrs ="clr-namespace:ModernSort.CustomeControls.CustomUIControls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
     <Border
@@ -31,7 +32,7 @@
             </Rectangle>
             <Border
                 CornerRadius="15 15 20 20"
-                Background="White"
+                Background="{DynamicResource MeinBackgroundColor}"
                 Grid.Row="1">
                 <Grid
                     >
@@ -40,51 +41,22 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="100"/>
                     </Grid.ColumnDefinitions>
-                    
-                    <Button
-                        Content="Лево"
+
+                    <customCtrs:CustomButton
                         Grid.Column="0"
                         Command="{Binding ScrollPresenterLeft}"
                         ToolTip="Left scroll"
-                        >
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border
-                                    x:Name="brd"
-                                    CornerRadius="0 0 0 20"
-                                    Background="White"
-                                    >
-                                    <Image
-                                        x:Name="img"
-                                        Margin="10"
-                                        Source="\AppResources\Pictures\leftArrowPurple.png"
-                                        />
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsMouseOver" 
-                                            Value="true">
-                                        <Setter 
-                                                TargetName="img" 
-                                                Property="Source"
-                                                Value="\AppResources\Pictures\leftArrowWhite.png"/>
-                                        <Setter 
-                                                TargetName="img" 
-                                                Property="Margin"
-                                                Value="20"/>
-                                        <Setter
-                                            TargetName="brd" 
-                                            Property="Background"
-                                            Value="#512f95"/>
-                                        <Setter
-                                            TargetName="brd" 
-                                            Property="BorderThickness"
-                                            Value="0"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-                    
+                        FirstButtonColor="{DynamicResource MeinThemeColor}"
+                        SecondButtonColor="{DynamicResource MeinBackgroundColor}"
+                        ImageMargin="5"
+                        CornerRadius="0 0 0 20"
+                        TextBlockHorizontalAlignment ="Left"
+                        DefoultImageSource="{DynamicResource TriangleArrowMein}"
+                        MouseHoverImageSource="{DynamicResource TriangleArrowBordered}"
+                        ImageFlowDirection="RightToLeft"
+                        />
+
+                   
                     <Border
                         Grid.Column="1"
                         >
@@ -118,20 +90,20 @@
                                                         Value="true">
                                                         <Setter 
                                                             Property="Background"
-                                                            Value="#a0a7bd"/>
+                                                            Value="{DynamicResource DimBackgroundColor}"/>
                                                         <Setter 
                                                             Property="BorderBrush"
-                                                            Value="#a0a7bd"/>
+                                                            Value="{DynamicResource DimBackgroundColor}"/>
                                                     </Trigger>
                                                     <Trigger 
                                                         Property="IsSelected"
                                                         Value="true">
                                                         <Setter 
                                                             Property="Background"
-                                                            Value="#653bbb"/>
+                                                            Value="{DynamicResource MeinThemeColor}"/>
                                                         <Setter 
                                                             Property="BorderBrush"
-                                                            Value="#492a87"/>
+                                                            Value="{DynamicResource DimMeinThemeColor}"/>
                                                         <Setter 
                                                             Property="BorderThickness"
                                                             Value="1"/>
@@ -179,49 +151,20 @@
                             </ListView.ItemsPanel>
                         </ListView>
                     </Border>
-                    <Button
-                        Content="Лево"
+
+                    <customCtrs:CustomButton
                         Grid.Column="2"
+                        CornerRadius="0 0 20 0"
                         Command="{Binding ScrollPresenterRight}"
                         ToolTip="Left scroll"
-                        >
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border
-                                    x:Name="brd"
-                                    CornerRadius="0 0 20 0"
-                                    Background="White"
-                                    >
-                                    <Image
-                                        x:Name="img"
-                                        Margin="10"
-                                        Source="\AppResources\Pictures\rightArrowPurple.png"
-                                        />
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsMouseOver" 
-                                             Value="true">
-                                        <Setter 
-                                            TargetName="img" 
-                                            Property="Source"
-                                            Value="\AppResources\Pictures\rightArrowWhite.png"/>
-                                        <Setter 
-                                            TargetName="img" 
-                                            Property="Margin"
-                                            Value="20"/>
-                                        <Setter
-                                            TargetName="brd" 
-                                            Property="Background"
-                                            Value="#512f95"/>
-                                        <Setter
-                                            TargetName="brd" 
-                                            Property="BorderThickness"
-                                            Value="0"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
+                        FirstButtonColor="{DynamicResource MeinThemeColor}"
+                        SecondButtonColor="{DynamicResource MeinBackgroundColor}"
+                        ImageMargin="5"
+                        TextBlockHorizontalAlignment ="Left"
+                        DefoultImageSource="{DynamicResource TriangleArrowMein}"
+                        MouseHoverImageSource="{DynamicResource TriangleArrowBordered}"
+                        />
+
                 </Grid>
             </Border>
         </Grid>

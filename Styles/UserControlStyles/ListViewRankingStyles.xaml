@@ -5,7 +5,7 @@
        TargetType="ListViewItem"
        x:Key="RankingListItemStyle">
         <Setter Property="TextBlock.Foreground" 
-                Value="#7d4c94"/>
+                Value="{DynamicResource FontColor1}"/>
         <Setter Property="Background"
             Value="Transparent"/>
         <Setter Property="BorderBrush"
@@ -50,9 +50,9 @@
                         <Trigger Property="IsMouseOver"
                              Value="true">
                             <Setter Property="Background"
-                                Value="#a0a7bd"/>
+                                Value="{DynamicResource DimMeinThemeColor3Opacity}"/>
                             <Setter Property="BorderBrush"
-                                Value="#a0a7bd"/>
+                                Value="{DynamicResource DimMeinThemeColor3}"/>
                             <Setter TargetName="UpperHighlight"
                                 Property="Visibility"
                                 Value="Visible"/>
@@ -60,11 +60,11 @@
                         <Trigger Property="IsSelected"
                              Value="true">
                             <Setter Property="Background"
-                                Value="#653bbb"/>
+                                Value="{DynamicResource MeinThemeColor}"/>
                             <Setter Property="BorderBrush"
-                                Value="#492a87"/>
+                                Value="{DynamicResource DimMeinThemeColor}"/>
                             <Setter Property="TextBlock.Foreground"
-                                    Value="AliceBlue"/>
+                                    Value="{DynamicResource FontColor1Hover}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled"
                              Value="false">

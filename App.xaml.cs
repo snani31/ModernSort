@@ -1,19 +1,22 @@
-﻿using ModernSort.Services.Dialog;
+﻿using ModernSort.Enums;
+using ModernSort.Services;
+using ModernSort.Services.Dialog;
+using ModernSort.Services.Operations;
+using ModernSort.Services.RankingContent;
+using ModernSort.Services.UITheme;
+using ModernSort.Stores.Catalog;
 using ModernSort.View.Windows;
 using ModernSort.ViewModel;
 using ModernSort.ViewModel.Windows;
+using RankingEntityes.Filters;
 using RankingEntityes.IO_Entities.Classes;
 using RankingEntityes.IO_Entities.Interfaces;
-using System.IO;
-using System.Windows;
-using ModernSort.Stores.Catalog;
-using ModernSort.Services.Operations;
-using ModernSort.Services;
-using ModernSort.Services.RankingContent;
-using RankingEntityes.Filters;
 using RankingEntityes.Json.Converters;
 using RankingEntityes.Ranking_Entityes.MediaObjacts;
 using RankingEntityes.Ranking_Entityes.Ranking_Categories;
+using System;
+using System.IO;
+using System.Windows;
 
 namespace ModernSort
 {
@@ -29,6 +32,7 @@ namespace ModernSort
         private readonly CatalogStore _catalogStore;
         private readonly OperationService _operationService ;
         private readonly OutputContentService _outputContentService;
+        private readonly UIThemeService _themeService;
 
 
         App()
@@ -68,12 +72,22 @@ namespace ModernSort
             _operationService.RegistrateDeserializer(typeof(FilterCriterion), jsonDeserializerWithFilterCriterionConverter);
             _operationService.RegistrateDeserializer(typeof(RankingCategory), _jsonDeserializer);
 
-
             _outputContentService = new OutputContentService(_catalogStore, _jsonDeserializer, filterCriterionsContentService,mediaObjectsContentService);
+
+            _themeService = new UIThemeService();
+            _themeService.ThemeRegister(UIThemes.DeepPurple, new Uri("AppResources/ApplicationThemes/DeepPurpleTheme.xaml", UriKind.Relative));
+            _themeService.ThemeRegister(UIThemes.DarkestGreen, new Uri("AppResources/ApplicationThemes/DarkestGreen.xaml", UriKind.Relative));
+            _themeService.ThemeRegister(UIThemes.Pinapple, new Uri("AppResources/ApplicationThemes/PinappleTheme.xaml", UriKind.Relative));
+            _themeService.ThemeRegister(UIThemes.SeeRed, new Uri("AppResources/ApplicationThemes/SeeRed.xaml", UriKind.Relative));
+
+            
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
+
+            _themeService.SetApplicationThemeToSelected();
+
             MainWindow = new MainWindow();
 
             _dialogService = new DialogService(MainWindow);
@@ -85,11 +99,12 @@ namespace ModernSort
             _dialogService.Register<CreateFilterCriterionViewModel, CreateFilterCriterionWindowView>();
             _dialogService.Register<EditFilterCriterionViewModel, EditFilterCriterionWindowView>();
 
-            var a = new MeinWindowViewModel(_outputContentService, _operationService, _catalogStore, _jsonDeserializer, _jsonSerializer, _dialogService);
+            var a = new MeinWindowViewModel(_outputContentService, _operationService, _catalogStore, _dialogService,_themeService);
 
             MainWindow.DataContext = a;
 
             MainWindow.Show();
+
 
         }
 

@@ -22,7 +22,7 @@
         <vms:AddNewRankingCategoryViewModel/>
     </Window.DataContext>
     <Border
-        Background= "#f7f9fe"
+        Background= "{DynamicResource MeinBackgroundColor}"
         CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=MainBorderCornerRadius}"
         ClipToBounds="True"
         >
@@ -43,7 +43,7 @@
                 Grid.ColumnSpan="1"
                 d:CornerRadius="20,20,0,0"
                 CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=TopButtonsBarBorderCornerRadius}"
-                Background="#512f95"
+                Background="{DynamicResource MeinThemeColor}"
                 BorderThickness="0"
                 >
                 <Grid>
@@ -60,12 +60,12 @@
             Click="HideButton_Click">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
-                                <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="10 20 0 10">
-                                    <Image Margin="5" Source="/AppResources/Pictures/circleWhite64px.png"/>
+                                <Border BorderThickness="0" Margin="0" Name="brd" CornerRadius="10 20 0 10">
+                                    <Image Margin="8" Source="{DynamicResource MinimizeBordered}"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="brd" Property="Background" Value="#492988"/>
+                                        <Setter TargetName="brd" Property="Background" Value="{DynamicResource DimMeinThemeColor}"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -78,11 +78,11 @@
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="10 20 0 10">
-                                    <Image Margin="5" Source="/AppResources/Pictures/CollapseWindpwIcon.png"/>
+                                    <Image Margin="8" Source="{DynamicResource MaximizeBordered}"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="brd" Property="Background" Value="#492988"/>
+                                        <Setter TargetName="brd" Property="Background" Value="{DynamicResource DimMeinThemeColor}"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -90,16 +90,16 @@
                     </Button>
 
                     <Button Grid.Column="3"
-        Command="{Binding CloseDialog}"
-        ToolTip="Закрыть">
+                        Command="{Binding CloseDialog}"
+                        ToolTip="Закрыть">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=TopRightCloseButtonBorderCornerRadius}">
-                                    <Image Margin="5" Source="/AppResources/Pictures/PowerOffButtonIcon.png"/>
+                                    <Image Margin="10" Source="{DynamicResource PowerOffMeinBackgroundImage}"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="brd" Property="Background" Value="MediumVioletRed"/>
+                                        <Setter TargetName="brd" Property="Background" Value="{DynamicResource ContrastingColor}"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -110,13 +110,14 @@
             </Border>
             <Border
                 Grid.Row="1"
-                Background="#ccd5f0"
+                Background="{DynamicResource DimBackgroundColor}"
                 CornerRadius="20"
                 Margin="20 20 20 0"
                 >
                 <ScrollViewer
                     Margin="10"
                     Padding="20"
+                    Background="{DynamicResource DimBackgroundColorFillImage}"
                     >
                     <ScrollViewer.Resources>
                         <Style TargetType="ScrollBar" BasedOn="{StaticResource WhiteScrollBarStyle}"/>
@@ -125,7 +126,7 @@
                         >
                         <TextBlock
                             TextWrapping="Wrap"
-                            Foreground="#7d4c94"
+                            Foreground="{DynamicResource MeinThemeColor}"
                             FontSize="25"
                             Style="{StaticResource SpanDefoult}"
                             Text="Select tytle for new Category"
@@ -134,15 +135,15 @@
                             TextWrapping="Wrap"
                             Margin="10 5 10 0"
                             FontSize="20"
-                            Foreground="#c71585"
+                            Foreground="{DynamicResource ContrastingColor}"
                             Text="{Binding ElementName=InputTytle, Path=(Validation.Errors)[0].ErrorContent}"
                             />
                         <TextBox
                             x:Name="InputTytle"
                             FontSize="30"
-                            Foreground="#6795de"
+                            Foreground="{DynamicResource MeinThemeColor2}"
                             TextWrapping="Wrap"
-                            Background= "#f7f9fe"
+                            Background= "{DynamicResource MeinBackgroundColor}"
                             Style="{StaticResource TuskDataTextBoxStyle}"
                             Margin="15 5 15 15"
                             Padding="10"
@@ -150,7 +151,7 @@
                             />
                         <TextBlock
                             TextWrapping="Wrap"
-                            Foreground="#7d4c94"
+                            Foreground="{DynamicResource MeinThemeColor}"
                             FontSize="25"
                             Style="{StaticResource SpanDefoult}"
                             Text="Write some descripryons for your category"
@@ -159,15 +160,15 @@
                             TextWrapping="Wrap"
                             Margin="10 5 10 0"
                             FontSize="20"
-                            Foreground="#c71585"
+                            Foreground="{DynamicResource ContrastingColor}"
                             Text="{Binding ElementName=InputDescryption, Path=(Validation.Errors)[0].ErrorContent}"
                             />
                         <TextBox
                             x:Name="InputDescryption"
                             FontSize="30"
-                            Foreground="#6795de"
+                            Foreground="{DynamicResource MeinThemeColor2}"
                             TextWrapping="Wrap"
-                            Background= "#f7f9fe"
+                            Background= "{DynamicResource MeinBackgroundColor}"
                             Style="{StaticResource TuskDataTextBoxStyle}"
                             Margin="15 5 15 15"
                             Padding="10"
@@ -176,7 +177,7 @@
                         <Label
                             Margin="10 5 10 0"
                             FontSize="20"
-                            Foreground="#c71585"
+                            Foreground="{DynamicResource ContrastingColor}"
                             Content="{Binding ElementName=InputImage, Path=(Validation.Errors)[0].ErrorContent}"
                             />
                         <Grid >
@@ -189,36 +190,32 @@
                                 VerticalAlignment="Center"
                                 Grid.Column="0"
                                 TextWrapping="Wrap"
-                                Foreground="#7d4c94"
+                                Foreground="{DynamicResource MeinThemeColor}"
                                 FontSize="25"
                                 Style="{StaticResource SpanDefoult}"
                                 Text="Select picture"
                                 Margin="100 0 0 15"
                                  />
-                            <Button
-                                ToolTip="Select picture"
+
+                            <customCtrs:CustomButton
+                               ToolTip="Select picture"
                                 Command="{Binding SelectImageFile}"
-                                Content="Выбрать"
                                 Height="60"
-                                Grid.Column="1">
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="10 20 0 10">
-                                            <Image x:Name="icon" Margin="5" Source="\AppResources\Pictures\addPurple.png"/>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="brd" Property="Background" Value="#512f95"/>
-                                                <Setter TargetName="icon" Property="Source" Value="\AppResources\Pictures\addWhite.png" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
+                                Grid.Column="1"
+                                FirstButtonColor="{DynamicResource MeinThemeColor}"
+                                SecondButtonColor="{DynamicResource DimBackgroundColor}"
+                                CornerRadius="10 0 0 0"
+                                ImageMargin="5"
+                                TextBlockHorizontalAlignment ="Left"
+                                DefoultImageSource="{DynamicResource AddPlusMein}"
+                                MouseHoverImageSource="{DynamicResource AddPlusBordered}"
+                                Grid.Row="0"
+                                />
+
                         </Grid>
                         <Border
                             CornerRadius="20 0 0 0"
-                            Background="#512f95"
+                            Background="{DynamicResource MeinThemeColor}"
                             >
                             <Image
                                 x:Name="InputImage"
@@ -235,8 +232,9 @@
             </Border>
 
             <customCtrs:CustomButton
-                FirstButtonColor="#512f95"
-                SecondButtonColor="White"
+                FirstButtonColor="{DynamicResource MeinThemeColor}"
+                SecondButtonColor="{DynamicResource MeinBackgroundColor}"
+                DisabledStateColor="{DynamicResource DimBackgroundColor}"
                 Grid.Row="2"
                 CornerRadius="10"
                 Height="auto"
@@ -247,9 +245,9 @@
                 ImageMargin="15"
                 Command="{Binding MakeNewRanking}"
                 TextBlockHorizontalAlignment ="Center"
-                DisabledImageSource="\AppResources\Pictures\markListBorderedGray128px.png"
-                DefoultImageSource="\AppResources\Pictures\markListBorderedPurple128px.png"
-                MouseHoverImageSource="\AppResources\Pictures\markListFillWhite128px.png"
+                DisabledImageSource="{DynamicResource MarkListBordered2}"
+                DefoultImageSource="{DynamicResource MarkListMein}"
+                MouseHoverImageSource="{DynamicResource MarkListBordered}"
                 />
 
            

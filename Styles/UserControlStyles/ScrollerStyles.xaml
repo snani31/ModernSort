@@ -9,11 +9,11 @@
                 <ControlTemplate TargetType="{x:Type Thumb}">
                     <Border x:Name="rectangle"
                         SnapsToDevicePixels="True"
-                        Background="#808d97"
+                        Background="{DynamicResource DimMeinThemeColor3}"
                         Opacity="0.3"
                         CornerRadius="4"
                         Height="{TemplateBinding Height}"
-                            Margin="0 10 0 10"
+                        Margin="0 10 0 10"
                         Width="{TemplateBinding Width}"/>
                     <ControlTemplate.Triggers>
                         <EventTrigger RoutedEvent="MouseEnter">
@@ -31,7 +31,7 @@
                             </BeginStoryboard>
                         </EventTrigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="rectangle" Property="Background" Value="#b388ff" />
+                            <Setter TargetName="rectangle" Property="Background" Value="{DynamicResource BrightMeinThemeColor}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

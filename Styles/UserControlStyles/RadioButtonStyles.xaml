@@ -22,17 +22,17 @@
                             Height="5"
                             VerticalAlignment="Bottom"
                             Width="auto"
-                            Background="#FFFFFF"
+                            Background="{DynamicResource MeinBackgroundColor}"
                             Visibility="Collapsed"/>
 
-                            <ContentPresenter x:Name="presenter" TextBlock.Foreground="White"/>
+                            <ContentPresenter x:Name="presenter" TextBlock.Foreground="{DynamicResource MeinBackgroundColor}"/>
                         </Grid>
                     </Border>
 
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="brd" Property="Background" Value="#efefff"/>
+                            <Setter TargetName="brd" Property="Background" Value="{DynamicResource DimBackgroundColor2}"/>
                             <Setter TargetName="presenter" Property="TextBlock.Foreground" Value="Orange"/>
                         </Trigger>
 
@@ -53,7 +53,7 @@
                                     Storyboard.TargetName="BorderBackground"
                                     Storyboard.TargetProperty="Color"
                                     From="Transparent"
-                                    To="MediumVioletRed"
+                                    To="PaleVioletRed"
                                     Duration="0:0:0.2"
                                     />
                                 </Storyboard>
@@ -80,7 +80,7 @@
 
                         <Trigger Property="IsChecked" Value="True">
 
-                            <Setter Property="Background" Value="#512f95" TargetName="brd"/>
+                            <Setter Property="Background" Value="{DynamicResource MeinThemeColor}" TargetName="brd"/>
                             <Setter Property="Visibility" Value="Visible" TargetName="indicator"/>
 
                         </Trigger>
@@ -117,13 +117,13 @@
                             <Border 
                                 Grid.Column="0"
                                 x:Name="indicator"
-                                Background="#512f95"
+                                Background="{DynamicResource MeinBackgroundColor}"
                                 Visibility="Collapsed"/>
 
                             <ContentPresenter 
                                 Grid.Column="1"
                                 x:Name="presenter" 
-                                TextBlock.Foreground="White"
+                                TextBlock.Foreground="{DynamicResource MeinBackgroundColor}"
                                 />
                         </Grid>
                     </Border>
@@ -131,7 +131,7 @@
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="brd" Property="Background" Value="#efefff"/>
+                            <Setter TargetName="brd" Property="Background" Value="{DynamicResource DimBackgroundColor2}"/>
                             <Setter TargetName="presenter" Property="TextBlock.Foreground" Value="Orange"/>
                         </Trigger>
 
@@ -179,7 +179,7 @@
 
                         <Trigger Property="IsChecked" Value="True">
 
-                            <Setter Property="Background" Value="#512f95" TargetName="brd"/>
+                            <Setter Property="Background" Value="{DynamicResource MeinThemeColor}" TargetName="brd"/>
                             <Setter Property="Visibility" Value="Visible" TargetName="indicator"/>
 
                         </Trigger>

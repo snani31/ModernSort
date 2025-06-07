@@ -19,7 +19,7 @@
     >
     <Border
         
- Background= "#FFFFFF"
+ Background= "{DynamicResource MeinBackgroundColor}"
  CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=MainBorderCornerRadius}"
  ClipToBounds="True"
      >
@@ -36,7 +36,7 @@
                 Grid.ColumnSpan="1"
                 d:CornerRadius="20 20 0 0"
                 CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=TopButtonsBarBorderCornerRadius}"
-                Background="#512f95"
+                Background="{DynamicResource MeinThemeColor}"
                 BorderThickness="0"
                 >
                 <Grid>
@@ -54,11 +54,11 @@
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="10 20 0 10">
-                                    <Image Margin="5" Source="/AppResources/Pictures/circleWhite64px.png"/>
+                                    <Image Margin="8" Source="{DynamicResource MinimizeBordered}"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="brd" Property="Background" Value="#492988"/>
+                                        <Setter TargetName="brd" Property="Background" Value="{DynamicResource DimMeinThemeColor}"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -71,11 +71,11 @@
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="10 20 0 10">
-                                    <Image Margin="5" Source="/AppResources/Pictures/CollapseWindpwIcon.png"/>
+                                    <Image Margin="8" Source="{DynamicResource MaximizeBordered}"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="brd" Property="Background" Value="#492988"/>
+                                        <Setter TargetName="brd" Property="Background" Value="{DynamicResource DimMeinThemeColor}"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -89,11 +89,11 @@
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=TopRightCloseButtonBorderCornerRadius}">
-                                    <Image Margin="5" Source="/AppResources/Pictures/PowerOffButtonIcon.png"/>
+                                    <Image Margin="10" Source="{DynamicResource PowerOffMeinBackgroundImage}"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="brd" Property="Background" Value="MediumVioletRed"/>
+                                        <Setter TargetName="brd" Property="Background" Value="{DynamicResource ContrastingColor}"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -144,8 +144,8 @@
                                     x:Name="brd"
                                     CornerRadius="20"
                                     Background="Transparent"
-                                    d:Background="#ccd5f0"
-                                    d:Opacity="0.5"
+                                    d:Background="{DynamicResource DimBackgroundColor}"
+                                    d:Opacity="1"
                                     >
                                     <Image
                                         x:Name="img"
@@ -160,18 +160,13 @@
                                         <Setter
                                             TargetName="img"
                                             Property="Source"
-                                            Value="\AppResources\Pictures\pencilBlack128px.png"
+                                            Value="{DynamicResource EditPencelContrasting512}"
                                             />
                                         <Setter
                                             TargetName="brd"
                                             Property="Background"
+                                            Value="{DynamicResource ContrastingColorOpacity}"
                                             >
-                                            <Setter.Value>
-                                                <SolidColorBrush
-                                                    Color="Black"
-                                                    Opacity="0.5"
-                                                    />
-                                            </Setter.Value>
                                         </Setter>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
@@ -183,14 +178,14 @@
                         Margin="0 10 0 0"
                         d:CornerRadius="0 60 0 20"
                         CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=BottonLeftElementBorderCornerRadius}"
-                        Background="#512f95"
+                        Background="{DynamicResource MeinThemeColor}"
                         Grid.Row="1"
                         >
                         <TextBlock
                             Margin="15 0 20 0"
                             VerticalAlignment="Center"
                             TextWrapping="Wrap"
-                            Foreground="#f7f9fe"
+                            Foreground="{DynamicResource MeinBackgroundColor}"
                             FontSize="20"
                             Style="{StaticResource SpanDefoult}"
                             >
@@ -237,15 +232,14 @@
                             Command="{Binding DeleteCategory}"
                             Margin="10"
                             ToolTip="Delete Category"
-                            FirstButtonColor="#c71585"
-                            SecondButtonColor="White"
+                            FirstButtonColor="{DynamicResource ContrastingColor}"
+                            SecondButtonColor="{DynamicResource MeinBackgroundColor}"
                             CornerRadius="10"
                             BorderThickness="5"
                             ImageMargin="5"
                             TextBlockHorizontalAlignment ="Left"
-                            DisabledImageSource="\AppResources\Pictures\trashCanCoseBorderedVioletred128px.png"
-                            DefoultImageSource="\AppResources\Pictures\trashCanCoseBorderedVioletred128px.png"
-                            MouseHoverImageSource="\AppResources\Pictures\trashCanOpenFillWhite128px.png"
+                            DefoultImageSource="{DynamicResource TrashCanContrasting}"
+                            MouseHoverImageSource="{DynamicResource TrashCanBordered}"
                             Grid.Row="0"
                             />
 
@@ -255,9 +249,9 @@
                             x:Name="TytleTbx"
                             ToolTip="Category Tytle"
                             FontSize="30"
-                            Foreground="#6795de"
+                            Foreground="{DynamicResource MeinThemeColor2}"
                             TextWrapping="Wrap"
-                            Background="#ccd5f0"
+                            Background="{DynamicResource DimBackgroundColor}"
                             Style="{StaticResource TuskDataTextBoxStyle}"
                             Margin="10"
                             Padding="10"
@@ -270,9 +264,9 @@
                         ToolTip="Category Descryption"
                         Grid.Row="1"
                         FontSize="30"
-                        Foreground="#6795de"
+                        Foreground="{DynamicResource MeinThemeColor2}"
                         TextWrapping="Wrap"
-                        Background="#ccd5f0"
+                        Background="{DynamicResource DimBackgroundColor}"
                         Style="{StaticResource TuskDataTextBoxStyle}"
                         Margin="10"
                         Padding="10"
@@ -280,8 +274,9 @@
                         />
 
                     <customCtrs:CustomButton
-                        FirstButtonColor="#512f95"
-                        SecondButtonColor="White"
+                        SecondButtonColor="{DynamicResource MeinBackgroundColor}"
+                        FirstButtonColor="{DynamicResource MeinThemeColor}"
+                        DisabledStateColor="{DynamicResource DimBackgroundColor}"
                         Grid.Row="2"
                         CornerRadius="10"
                         BorderThickness="4"
@@ -291,9 +286,9 @@
                         ImageMargin="5"
                         Command="{Binding EditCategory}"
                         TextBlockHorizontalAlignment ="Center"
-                        DisabledImageSource="\AppResources\Pictures\pencilEditBorderedGray128px.png"
-                        DefoultImageSource="\AppResources\Pictures\pencilEditBorderedPurple128px.png"
-                        MouseHoverImageSource="\AppResources\Pictures\pencilEditFillWhite128px.png"
+                        DisabledImageSource="{DynamicResource PencilEditBordered2}"
+                        DefoultImageSource="{DynamicResource PencilEditMein}"
+                        MouseHoverImageSource="{DynamicResource PencilEditBordered}"
                         />
 
                 </Grid>

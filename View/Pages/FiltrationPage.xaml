@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ModernSort.View.Pages"
+      xmlns:customCtrs ="clr-namespace:ModernSort.CustomeControls.CustomUIControls"
       mc:Ignorable="d" 
      d:DesignHeight="600" d:DesignWidth="800">
     <Grid>
@@ -16,7 +17,7 @@
         <Border
             d:Background="Aquamarine"
             Padding="20"
-            >
+            Background="{DynamicResource DimBackgroundColorFillImage2}">
             <ScrollViewer
                 PreviewMouseWheel ="ListView_PreviewMouseWheel"
                 CanContentScroll="False"
@@ -46,7 +47,7 @@
 
                         <Border
                 MinHeight="75"
-                Background="#f7f9fe"
+                Background="{DynamicResource MeinBackgroundColor}"
                 CornerRadius="40"
                 Margin="20"
                 >
@@ -55,7 +56,7 @@
                     >
                                     <Border 
                         MinHeight="75"
-                        Background="#512f95"
+                        Background="{DynamicResource MeinThemeColor}"
                         CornerRadius="10">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -67,7 +68,7 @@
                                             <TextBlock
                                             Grid.Column="0"
                                             TextWrapping="Wrap"
-                                            Foreground="#f7f9fe"
+                                            Foreground="{DynamicResource MeinBackgroundColor}"
                                             FontSize="25"
                                             Style="{StaticResource SpanDefoult}"
                                             TextAlignment="Center"
@@ -75,6 +76,7 @@
                                             HorizontalAlignment="Center"
                                             x:Name="FilterCriterionTytleTextBlock"
                                             Text="{Binding Tytle}"
+                                            ToolTip="{Binding Tytle}"
                                             />
                                             <CheckBox
                                                 Name="FilterCriterionExpanderCheckBox"
@@ -87,25 +89,25 @@
                                                         <Border>
                                                             <Image 
                                                                 Name="img"
-                                                                Source="\AppResources\Pictures\downArrowBorderedWhite64px.png"/>
+                                                                Source="{DynamicResource DownArrowBordered}"/>
                                                         </Border>
                                                         <ControlTemplate.Triggers>
                                                             <Trigger Property="IsChecked" Value="true">
-                                                                <Setter TargetName="img" Property="Source" Value="\AppResources\Pictures\upArrowBorderedWhite64px.png"/>
+                                                                <Setter TargetName="img" Property="Source" Value="{DynamicResource UpArrowBordered}"/>
                                                             </Trigger>
                                                             <MultiTrigger>
                                                                 <MultiTrigger.Conditions>
                                                                     <Condition Property="IsMouseOver" Value="true"/>
                                                                     <Condition Property="IsChecked" Value="true"/>
                                                                 </MultiTrigger.Conditions>
-                                                                <Setter TargetName="img" Property="Source" Value="\AppResources\Pictures\upArrowFillWhite64px.png"/>
+                                                                <Setter TargetName="img" Property="Source" Value="{DynamicResource UpArrowBorderedFill}"/>
                                                             </MultiTrigger>
                                                             <MultiTrigger>
                                                                 <MultiTrigger.Conditions>
                                                                     <Condition Property="IsMouseOver" Value="true"/>
                                                                     <Condition Property="IsChecked" Value="false"/>
                                                                 </MultiTrigger.Conditions>
-                                                                <Setter TargetName="img" Property="Source" Value="\AppResources\Pictures\downArrowFillWhite64px.png"/>
+                                                                <Setter TargetName="img" Property="Source" Value="{DynamicResource DownArrowBorderedFill}"/>
                                                             </MultiTrigger>
                                                         </ControlTemplate.Triggers>
                                                     </ControlTemplate>
@@ -124,7 +126,7 @@
                                                         >
                                                             <Image
                                                             x:Name="img"
-                                                            Source="\AppResources\Pictures\getMoreInfoBorderedWhite64px.png"
+                                                            Source="{DynamicResource MoreInfoBordered}"
                                                             />
                                                         </Border>
                                                         <ControlTemplate.Triggers>
@@ -133,7 +135,7 @@
                                                                 <Setter 
                                                                 TargetName="img" 
                                                                 Property="Source"
-                                                                Value="\AppResources\Pictures\getMoreInfoFillWhite64px.png"/>
+                                                                Value="{DynamicResource MoreInfoBorderedFill}"/>
                                                             </Trigger>
                                                         </ControlTemplate.Triggers>
                                                     </ControlTemplate>
@@ -154,7 +156,7 @@
                                                         >
                                                             <Image
                                                         x:Name="img"
-                                                        Source="\AppResources\Pictures\gearWhiteBordered.png"
+                                                        Source="{DynamicResource GearBordered}"
                                                         />
                                                         </Border>
                                                         <ControlTemplate.Triggers>
@@ -163,7 +165,7 @@
                                                                 <Setter 
                                                                 TargetName="img" 
                                                                 Property="Source"
-                                                                Value="\AppResources\Pictures\gearWhite.png"/>
+                                                                Value="{DynamicResource GearBorderedFill}"/>
                                                             </Trigger>
                                                         </ControlTemplate.Triggers>
                                                     </ControlTemplate>
@@ -199,23 +201,24 @@
                                                     </Grid.ColumnDefinitions>
 
                                                     <TextBlock
-                                        HorizontalAlignment="Left"
-                                        
-                                        Foreground="{Binding 
-                                        Path=Foreground, 
-                                        RelativeSource={RelativeSource AncestorType=ListViewItem,Mode=FindAncestor}}"
-                                        
-                                        Grid.Row="0"
-                                        Grid.Column="0"
-                                        x:Name="TytleTbx"
-                                        FontSize="20"
-                                        TextWrapping="Wrap"
-                                        Background="Transparent"
-                                        Text="{Binding ConditionTytle}"
-                                        Width="250"
-                                        Height="50"
-                                        Margin="30 0 0 0"
-                                        />
+                                                        HorizontalAlignment="Left"
+                                                        
+                                                        Foreground="{Binding 
+                                                        Path=Foreground, 
+                                                        RelativeSource={RelativeSource AncestorType=ListViewItem,Mode=FindAncestor}}"
+                                                        
+                                                        Grid.Row="0"
+                                                        Grid.Column="0"
+                                                        x:Name="TytleTbx"
+                                                        FontSize="20"
+                                                        TextWrapping="Wrap"
+                                                        Background="Transparent"
+                                                        ToolTip="{Binding ConditionTytle}"
+                                                        Text="{Binding ConditionTytle}"
+                                                        Width="250"
+                                                        Height="50"
+                                                        Margin="30 0 0 0"
+                                                        />
                                                     <Viewbox
                                                     Grid.Row="0"
                                                     Grid.Column="1"
@@ -225,8 +228,8 @@
                                                     >
                                                         <CheckBox
                                                         IsChecked="{Binding IsFilterSelected, Mode=TwoWay}"
-                                                        BorderBrush="#512f95"
-                                                        Background="White"
+                                                        BorderBrush="{DynamicResource MeinThemeColor}"
+                                                        Background="{DynamicResource MeinBackgroundColor}"
                                                         Style="{StaticResource CheckBoxRoundenStyle}"
                                                         >
                                                             <i:Interaction.Triggers>
@@ -280,36 +283,20 @@
                     <ColumnDefinition Width="4*"/>
                     <ColumnDefinition Width="150"/>
                 </Grid.ColumnDefinitions>
-                <Button
+
+                <customCtrs:CustomButton
                     Grid.Column="2"
                     ToolTip="Refresh"
                     Command="{Binding RefreshFilterSelectionList}"
-                    >
-                    <Button.Template>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <Border
-                                x:Name="brd"
-                                Background="Transparent"
-                                CornerRadius="30 0 20 0"
-                                >
-                                <Image
-                                    x:Name="img"
-                                    Margin="10"
-                                    Source="/AppResources/Pictures/refreshPurple128px.png"
-                                    />
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" 
-                                    Value="true">
-                                    <Setter
-                                        TargetName="brd" 
-                                        Property="Background"
-                                        Value="#B8BED6"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
+                    FirstButtonColor="{DynamicResource DimMeinThemeColor3}"
+                    SecondButtonColor="Transparent"
+                    ImageMargin="5"
+                    CornerRadius="30 0 20 0"
+                    TextBlockHorizontalAlignment ="Left"
+                    DefoultImageSource="{DynamicResource RefreshmeinMein}"
+                    MouseHoverImageSource="{DynamicResource RefreshmeinMein}"
+                    />
+
             </Grid>
         </Border>
         

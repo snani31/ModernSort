@@ -22,7 +22,7 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="Validation.HasError" Value="True">
                                 <Setter TargetName="brd" Property="BorderThickness" Value="2 0 2 2"/>
-                                <Setter TargetName="brd" Property="BorderBrush" Value="#c71585"/>
+                                <Setter TargetName="brd" Property="BorderBrush" Value="{DynamicResource ContrastingColor}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

@@ -21,7 +21,7 @@
         MouseLeftButtonDown="Window_DragHandler"
         >
     <Border
-     Background= "#f7f9fe"
+     Background= "{DynamicResource MeinBackgroundColor}"
      CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=MainBorderCornerRadius}"
      ClipToBounds="True"
          >
@@ -35,7 +35,7 @@
             <Border
                 Grid.Column="0"
                 Grid.ColumnSpan="1"
-                Background="#512f95"
+                Background="{DynamicResource MeinThemeColor}"
                 d:CornerRadius="20 20 0 0"
                 CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=TopButtonsBarBorderCornerRadius}"    
              >
@@ -54,11 +54,11 @@
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="10 20 0 10">
-                                    <Image Margin="5" Source="/AppResources/Pictures/circleWhite64px.png"/>
+                                    <Image Margin="8" Source="{DynamicResource MinimizeBordered}"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="brd" Property="Background" Value="#492988"/>
+                                        <Setter TargetName="brd" Property="Background" Value="{DynamicResource DimMeinThemeColor}"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -70,12 +70,12 @@
                             Click="MaximizeButton_Click">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
-                                <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="10 20 0 10">
-                                    <Image Margin="5" Source="/AppResources/Pictures/CollapseWindpwIcon.png"/>
+                                <Border BorderThickness="0" Margin="0" Name="brd" CornerRadius="10 20 0 10">
+                                    <Image Margin="8" Source="{DynamicResource MaximizeBordered}"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="brd" Property="Background" Value="#492988"/>
+                                        <Setter TargetName="brd" Property="Background" Value="{DynamicResource DimMeinThemeColor}"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -87,12 +87,12 @@
                         ToolTip="Close">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
-                                <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=TopRightCloseButtonBorderCornerRadius}">
-                                    <Image Margin="5" Source="/AppResources/Pictures/PowerOffButtonIcon.png"/>
+                                <Border BorderThickness="0" Margin="0" Name="brd" CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=TopRightCloseButtonBorderCornerRadius}">
+                                    <Image Margin="10" Source="{DynamicResource PowerOffMeinBackgroundImage}"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="brd" Property="Background" Value="MediumVioletRed"/>
+                                        <Setter TargetName="brd" Property="Background" Value="{DynamicResource ContrastingColor}"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -112,118 +112,117 @@
                 </Grid.ColumnDefinitions>
                 <Border
                     Grid.Column="0"
-                    Background= "#ccd5f0"
+                    Background= "{DynamicResource DimBackgroundColor}"
                     CornerRadius="0,20,20,0"
                     ClipToBounds="True">
-                    <ListView
+                    <Border Background="{DynamicResource DimBackgroundColorFillImage}">
+                        <ListView
                     ScrollViewer.CanContentScroll="False"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     HorizontalContentAlignment="Left"
                     BorderThickness="0"
                     ItemsSource="{Binding RankingCategoriesItems}"
                     Background="Transparent"
-                    Padding="0 10 20 10"
+                    Padding="0 10 0 10"
                       >
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource RankingListItemStyle}">
-                                <Setter Property="ToolTip" Value="{Binding Descryption}"/>
-                                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource RankingListItemStyle}">
+                                    <Setter Property="ToolTip" Value="{Binding Descryption}"/>
+                                    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="Margin" Value="0 0 20 0"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid
                                     Background="Transparent"
                                     >
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="150"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="150"/>
-                                        <ColumnDefinition Width="3*"/>
-                                    </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="150"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="150"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
 
-                                    <Border
+                                        <Border
                                         x:Name="ItemBrd"
-                                        BorderBrush="#f7f9fe"
+                                        BorderBrush="{DynamicResource MeinBackgroundColor}"
                                         BorderThickness="5"
                                         ClipToBounds="True"
-                                        Background="#512f95"
+                                        CornerRadius="20"
                                         >
-                                        <Image
-                                            Stretch="Fill"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Center"
-                                            Grid.Column="0" 
-                                            Grid.Row="0"
-                                            Source="{Binding RankingIconPath,
-                                            Converter={StaticResource ToBitmapConverter}}"/>
-                                    </Border>
-                                    <TextBlock 
+                                            <Border.Background>
+                                                <ImageBrush
+                                                    Stretch="Fill"
+                                                    ImageSource="{Binding RankingIconPath,
+                                                    Converter={StaticResource ToBitmapConverter}}"
+                                                    />
+                                            </Border.Background>
+                                        </Border>
+                                        <TextBlock 
                                         Margin="25"
-                                        FontSize="20"
+                                        FontSize="30"
+                                        FontWeight="DemiBold"
+                                        FontFamily="\AppResources\Fonts\#Pribambas"
                                         TextWrapping="Wrap"
-                                        HorizontalAlignment="Left"
+                                        HorizontalAlignment="Stretch"
                                         VerticalAlignment="Center"
                                         Grid.Column="1"
                                         Grid.Row="0"
-                                        MaxWidth="450"
                                         Text="{Binding Tytle}"/>
-                                    <Button
+                                        <Button
                                         Grid.Column="0"
                                         Command="{Binding DataContext.OpenEditRankingWindow, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
                                         CommandParameter="{Binding}"
                                         ToolTip="Edit Category"
                                         Background="Transparent"
                                         >
-                                        <Button.Template>
-                                            <ControlTemplate TargetType="Button">
-                                                <Border 
-                                                    BorderBrush="Black"
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border 
+                                                    BorderBrush="{DynamicResource ContrastingColor}"
                                                     Name="brd" 
                                                     Background="Transparent"
                                                     VerticalAlignment="Center"
-                                                    HorizontalAlignment="Center">
-                                                    <Image
+                                                    HorizontalAlignment="Center"
+                                                    CornerRadius="20">
+                                                        <Image
                                                         x:Name="img"
-                                                        Margin="20"
+                                                        Margin="40"
                                                         />
-                                                </Border>
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter TargetName="img" Property="Source" Value="AppResources\Pictures\pencilBlack64px.png"/>
-                                                        <Setter TargetName="brd" Property="BorderThickness" Value="{Binding ElementName=ItemBrd, Path=BorderThickness}"/>
-                                                        <Setter TargetName="brd" Property="Background">
-                                                            <Setter.Value>
-                                                                <SolidColorBrush
-                                                                    Color="Black"
-                                                                    Opacity="0.5"
-                                                                    />
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                    </Trigger>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="img" Property="Source" Value="{DynamicResource EditPencelContrasting}"/>
+                                                            <Setter TargetName="brd" Property="BorderThickness" Value="{Binding ElementName=ItemBrd, Path=BorderThickness}"/>
+                                                            <Setter TargetName="brd" Property="Background" Value="{DynamicResource ContrastingColorOpacity}">
+                                                            </Setter>
+                                                        </Trigger>
 
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Button.Template>
-                                    </Button>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
 
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseDown">
-                                            <i:InvokeCommandAction 
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseDown">
+                                                <i:InvokeCommandAction 
                                                 Command="{Binding DataContext.OpenSelectedRankingWindow, 
                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
                                                 CommandParameter="{Binding}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
 
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                        <ListView.Resources>
-                            <Style TargetType="ScrollBar" BasedOn="{StaticResource WhiteScrollBarStyle}"/>
-                        </ListView.Resources>
-                    </ListView>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            <ListView.Resources>
+                                <Style TargetType="ScrollBar" BasedOn="{StaticResource WhiteScrollBarStyle}"/>
+                            </ListView.Resources>
+                        </ListView>
+                    </Border>
                 </Border>
 
                 <Grid Grid.Column="1">
@@ -232,43 +231,51 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    
+
                     <customCtrs:CustomButton
                         BorderThickness="4"
-                        FirstButtonColor="#512f95"
-                        SecondButtonColor="White"
+                        BorderColorBrush="Red"
+                        FirstButtonColor="{DynamicResource MeinThemeColor}"
+                        SecondButtonColor="{DynamicResource MeinBackgroundColor}"
+                        DisabledStateColor="{DynamicResource DimBackgroundColor}"
                         FontSize="22"
                         Command="{Binding OpenNewRankingWindow}"
                         TextBlockHorizontalAlignment ="Left"
                         Text="Create new Ranking"
                         ImageMargin="15"
                         CornerRadius="10"
-                        DisabledImageSource="\AppResources\Pictures\AddRecordBorderedGray128px.png"
-                        DefoultImageSource="\AppResources\Pictures\AddRecordBorderedPurple128px.png"
-                        MouseHoverImageSource="\AppResources\Pictures\AddRecordFillWhite128px.png"
+                        DisabledImageSource="{DynamicResource AddRecordBordered2}"
+                        DefoultImageSource="{DynamicResource AddRecordMein}"
+                        MouseHoverImageSource="{DynamicResource AddRecordBordered}"
                         Margin="20"
                         Grid.Row="0"
                             />
 
                     <customCtrs:CustomButton
-                        FirstButtonColor="#512f95"
-                        SecondButtonColor="White"
+                        BorderColorBrush="Red"
+                        FirstButtonColor="{DynamicResource MeinThemeColor}"
+                        SecondButtonColor="{DynamicResource MeinBackgroundColor}"
+                        DisabledStateColor="{DynamicResource DimBackgroundColor}"     
+                        Command="{Binding ChangeUITheme}"
                         BorderThickness="4"
                         Margin="20"
                         FontSize="22"
                         Grid.Row="1"
                         CornerRadius="10"
                         ImageMargin="15"
-                        Text="Switch Style"
+                        Text="Switch theme"
                         TextBlockHorizontalAlignment ="Left"
-                        DisabledImageSource="\AppResources\Pictures\paletteBorderedGray128px.png"
-                        DefoultImageSource="\AppResources\Pictures\paletteBorderedPurple128px.png"
-                        MouseHoverImageSource="\AppResources\Pictures\paletteFillWhite128px.png"
-                            />
-                    
+                        DisabledImageSource="{DynamicResource PaletteBordered2}"
+                        DefoultImageSource="{DynamicResource PaletteMein}"
+                        MouseHoverImageSource="{DynamicResource PaletteBordered}"
+                            
+                        />
+
                     <customCtrs:CustomButton
-                        FirstButtonColor="#512f95"
-                        SecondButtonColor="White"
+                        BorderColorBrush="Red"
+                        FirstButtonColor="{DynamicResource MeinThemeColor}"
+                        SecondButtonColor="{DynamicResource MeinBackgroundColor}"
+                        DisabledStateColor="{DynamicResource DimBackgroundColor}"
                         Margin="20"
                         Grid.Row="2"
                         ImageMargin="15"
@@ -278,10 +285,11 @@
                         Command="{Binding CloseApplication}"
                         Text="Exit"
                         TextBlockHorizontalAlignment ="Left"
-                        DisabledImageSource="\AppResources\Pictures\ExitDoorBorderedGray128px.png"
-                        DefoultImageSource="\AppResources\Pictures\ExitDoorBorderedPurple128px.png"
-                        MouseHoverImageSource="\AppResources\Pictures\ExitDoorFillWhite128px.png"
-                            />
+                        DisabledImageSource="{DynamicResource DoorExitBordered2}"
+                        DefoultImageSource="{DynamicResource DoorExitMein}"
+                        MouseHoverImageSource="{DynamicResource DoorExitBordered}"
+                            >
+                    </customCtrs:CustomButton>
                 </Grid>
             </Grid>
 

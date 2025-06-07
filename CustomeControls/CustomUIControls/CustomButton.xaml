@@ -9,51 +9,53 @@
             x:Name="Btn"
             d:Background="#512f95"
             Grid.Row="0"
-        MouseEnter="Btn_MouseEnter"
-        MouseLeave="Btn_MouseLeave"
+            MouseEnter="Btn_MouseEnter"
+            MouseLeave="Btn_MouseLeave"
             >
     <Button.Template>
         <ControlTemplate TargetType="Button">
-            <Border
-                Name="brd"
-                CornerRadius="{Binding ElementName=Btn, Path=CornerRadius}"
-                BorderThickness="{TemplateBinding BorderThickness}"
-                Background="{Binding ElementName=Btn, Path=BorderColorBrush}"
-                BorderBrush="{Binding ElementName=Btn, Path=FirstButtonColor}"
-                >
-
-
+            <Border Background="{Binding ElementName=Btn, Path=SecondButtonColor}"
+                    CornerRadius="{Binding ElementName=Btn, Path=CornerRadius}">
+                <Border
+                    Name="brd"
+                    CornerRadius="{Binding ElementName=Btn, Path=CornerRadius}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Background="{Binding ElementName=Btn, Path=BorderColorBrush}"
+                    BorderBrush="{Binding ElementName=Btn, Path=FirstButtonColor}"
+                    >
 
                 <Grid 
-                    VerticalAlignment="Stretch"
-                    HorizontalAlignment="Stretch">
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="{Binding ElementName=brd, Path=Height}"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
                     <Image
-                        Name="img"
-                        Margin="{Binding ElementName=Btn, Path=ImageMargin}"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="{Binding ElementName=Btn, Path=IndexOfImageColumnSpan}"
-                        Source="{Binding ElementName=Btn, Path=DefoultImageSource}"
-                        />
+                            Name="img"
+                            Margin="{Binding ElementName=Btn, Path=ImageMargin}"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="{Binding ElementName=Btn, Path=IndexOfImageColumnSpan}"
+                            Source="{Binding ElementName=Btn, Path=DefoultImageSource}"
+                            FlowDirection="{Binding ElementName=Btn, Path=ImageFlowDirection}"
+                            />
 
                     <TextBlock
-                        Grid.Column="1"
-                        Name="txt"
-                        TextWrapping="Wrap"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="{Binding ElementName=Btn, Path=TextBlockHorizontalAlignment}"
-                        FontWeight="Bold"
-                        TextAlignment="Center"
-                        FontSize="{TemplateBinding FontSize}"
-                        Margin="0 0 5 0"
-                        Foreground="{Binding ElementName=Btn, Path=FirstButtonColor}"
-                        Text="{Binding ElementName=Btn, Path=Text}"/>
+                            Grid.Column="1"
+                            Name="txt"
+                            TextWrapping="Wrap"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="{Binding ElementName=Btn, Path=TextBlockHorizontalAlignment}"
+                            FontWeight="Bold"
+                            TextAlignment="Center"
+                            FontSize="{TemplateBinding FontSize}"
+                            Margin="0 0 5 0"
+                            Foreground="{Binding ElementName=Btn, Path=FirstButtonColor}"
+                            Text="{Binding ElementName=Btn, Path=Text}"/>
 
                 </Grid>
+            </Border>
             </Border>
             <ControlTemplate.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
@@ -64,11 +66,11 @@
 
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
-                    <Setter TargetName="txt" Property="Foreground" Value="#ccd5f0"/>
-                    <Setter TargetName="brd" Property="BorderBrush" Value="#ccd5f0"/>
+                    <Setter TargetName="txt" Property="Foreground" Value="{Binding ElementName=Btn, Path=DisabledStateColor}"/>
+                    <Setter TargetName="brd" Property="BorderBrush" Value="{Binding ElementName=Btn, Path=DisabledStateColor}"/>
                     <Setter TargetName="img" Property="Source" Value="{Binding ElementName=Btn, Path=DisabledImageSource}"/>
                 </Trigger>
-               
+                
                 
             </ControlTemplate.Triggers>
         </ControlTemplate>

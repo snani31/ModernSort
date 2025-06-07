@@ -21,7 +21,7 @@ namespace ModernSort.Services.Searching
         public IEnumerable<T> SerchElements(string searchQuery)
         {
             if (searchQuery == String.Empty || searchQuery is null)
-                return SearchElements;
+                return SearchElements.ToList();
 
             var result = SearchElements.ToList();
             result.Clear();

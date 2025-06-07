@@ -166,7 +166,7 @@ namespace ModernSort.ViewModel.Windows
         }
 
         public SelectedRankingCategoryViewModel(OutputContentService contentService,CatalogStore catalogStore,OperationService operationService,RankingCategory selectedRankingCategory,
-            IDialogService dialogService, ISerializer serializer, IDeserializer deserializer): this()
+            IDialogService dialogService): this()
         {
             DialogService = dialogService;
             OperationService = operationService;

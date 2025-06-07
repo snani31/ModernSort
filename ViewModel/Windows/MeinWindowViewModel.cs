@@ -1,27 +1,16 @@
 ﻿using ModernSort.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 using RankingEntityes.Ranking_Entityes.Ranking_Categories;
 using System.Collections.ObjectModel;
 using ModernSort.ViewModel.Items;
-using System.Linq;
-using RankingEntityes.IO_Entities.Interfaces;
-using ModernSort.View.Windows;
 using ModernSort.ViewModel.Windows;
-using ModernSort.Static;
-using System.Windows.Media.Animation;
 using ModernSort.Services.Dialog;
 using RankingEntityes.IO_Entities.Classes;
-using System.IO;
-using System.Reflection.Metadata;
 using ModernSort.Stores.Catalog;
 using ModernSort.Services.Operations;
 using ModernSort.Services;
+using ModernSort.Services.UITheme;
 
 namespace ModernSort.ViewModel
 {
@@ -31,12 +20,14 @@ namespace ModernSort.ViewModel
         public ICommand OpenEditRankingWindow { get; init; }
         public ICommand OpenSelectedRankingWindow { get; init; }
         public ICommand CloseApplication { get; }
+        public ICommand ChangeUITheme { get; init; }
         private IDialogService DialogService { get; init; }
         private OperationService OperationService { get; init; }
         private OutputContentService ContentService { get; init; }
+
+        private UIThemeService ThemeService { get; init; }
+
         private CatalogStore CatalogStore { get; init; }
-        private IDeserializer Deserializer {  get; init; }
-        private ISerializer Serializer { get; init; }
 
         private IoCollection<RankingCategory> _rankingCategories;
 
@@ -50,20 +41,27 @@ namespace ModernSort.ViewModel
             } 
         }
 
-        public MeinWindowViewModel(OutputContentService outputContentService,OperationService operationService, CatalogStore catalogService , IDeserializer deserializer,ISerializer serializer,IDialogService dialogService)
+        public MeinWindowViewModel(OutputContentService outputContentService,OperationService operationService, 
+            CatalogStore catalogService,IDialogService dialogService,UIThemeService themeService)
         {
             DialogService = dialogService;
             CatalogStore = catalogService;
             OperationService = operationService;
             ContentService = outputContentService;
+            ThemeService = themeService;
 
             OpenEditRankingWindow = new RelayCommand(OpenEditRankingCategoryWindow);
             OpenNewRankingWindow = new RelayCommand(GetOpenNewRankingWindow);
             OpenSelectedRankingWindow = new RelayCommand(OpenSelectedRankingCategoryWindow);
-            Deserializer = deserializer;
-            Serializer = serializer;
 
             _rankingCategories = ContentService.GetUnloadedRankingCategories();
+
+            ChangeUITheme = new RelayCommand(
+                (p) =>
+                {
+                    ThemeService.ChangeTheme();
+                }
+                );
 
             CloseApplication = new RelayCommand(
                 (a) => 
@@ -108,7 +106,8 @@ namespace ModernSort.ViewModel
 
                 ContentService.SelectRankingCategory(selectedCategory);
 
-                var selectedRankingCategoryViewModel = new SelectedRankingCategoryViewModel(ContentService,CatalogStore,OperationService,selectedCategory, DialogService, Serializer, Deserializer);
+                var selectedRankingCategoryViewModel = new SelectedRankingCategoryViewModel(ContentService,CatalogStore,OperationService,
+                    selectedCategory, DialogService);
 
                 if (DialogService.ShowDialog(selectedRankingCategoryViewModel) ?? false)
                 {

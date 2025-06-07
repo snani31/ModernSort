@@ -46,7 +46,7 @@
                     <ControlTemplate>
                         <Border
                             CornerRadius="15"
-                            BorderBrush="#c71585" 
+                            BorderBrush="{DynamicResource ContrastingColor}" 
                             BorderThickness="2"
                             >
                             <AdornedElementPlaceholder />
@@ -76,7 +76,7 @@
                             Width="{TemplateBinding Width}"
                             MinHeight="{TemplateBinding Height}"
                             BorderThickness="0 0 0 2"
-                            BorderBrush="#7d4c94"
+                            BorderBrush="{DynamicResource MeinThemeColor}"
                             VerticalAlignment="Bottom"
                                 >
                             <Grid>
@@ -92,7 +92,7 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="Validation.HasError" Value="true">
                                 <Setter TargetName="brd" Property="BorderThickness" Value="0 0 0 2"/>
-                                <Setter TargetName="brd" Property="BorderBrush" Value="#c71585"/>
+                                <Setter TargetName="brd" Property="BorderBrush" Value="{DynamicResource ContrastingColor}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

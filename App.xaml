@@ -6,6 +6,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ModernSort;component/AppResources/ApplicationThemes/DeepPurpleTheme.xaml"/>
                 <ResourceDictionary Source="Styles/UserControlStyles/ButtonStyles.xaml"/>
                 <ResourceDictionary Source="Styles/UserControlStyles/ScrollerStyles.xaml"/>
                 <ResourceDictionary Source="Styles/UserControlStyles/ListViewRankingStyles.xaml"/>

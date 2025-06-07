@@ -19,7 +19,7 @@
         >
     <Border
        
-    Background= "#f7f9fe"
+    Background= "{DynamicResource MeinBackgroundColor}"
     CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=MainBorderCornerRadius}"
     ClipToBounds="True"
     >
@@ -36,7 +36,7 @@
                     Grid.ColumnSpan="1"
                     d:CornerRadius="20,20,0,0"
                     CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=TopButtonsBarBorderCornerRadius}"
-                    Background="#512f95"
+                    Background="{DynamicResource MeinThemeColor}"
                     BorderThickness="0">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -53,11 +53,11 @@
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="10 20 0 10">
-                                        <Image Margin="5" Source="/AppResources/Pictures/circleWhite64px.png"/>
+                                        <Image Margin="8" Source="{DynamicResource MinimizeBordered}"/>
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="brd" Property="Background" Value="#492988"/>
+                                            <Setter TargetName="brd" Property="Background" Value="{DynamicResource DimMeinThemeColor}"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -70,11 +70,11 @@
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="10 20 0 10">
-                                        <Image Margin="5" Source="/AppResources/Pictures/CollapseWindpwIcon.png"/>
+                                        <Image Margin="8" Source="{DynamicResource MaximizeBordered}"/>
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="brd" Property="Background" Value="#492988"/>
+                                            <Setter TargetName="brd" Property="Background" Value="{DynamicResource DimMeinThemeColor}"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -87,11 +87,11 @@
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=TopRightCloseButtonBorderCornerRadius}">
-                                        <Image Margin="5" Source="/AppResources/Pictures/PowerOffButtonIcon.png"/>
+                                        <Image Margin="10" Source="{DynamicResource PowerOffMeinBackgroundImage}"/>
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="brd" Property="Background" Value="MediumVioletRed"/>
+                                            <Setter TargetName="brd" Property="Background" Value="{DynamicResource ContrastingColor}"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -123,13 +123,13 @@
                         x:Name="AddNewFilterButton"
                         Text="Add Filter"
                         Command="{Binding CreateFilter}"
-                        FirstButtonColor="#512f95"
-                        SecondButtonColor="White"
+                        FirstButtonColor="{DynamicResource MeinThemeColor}"
+                        SecondButtonColor="{DynamicResource MeinBackgroundColor}"
                         TextBlockHorizontalAlignment ="Center"
                         ImageMargin="15"
-                        DisabledImageSource="\AppResources\Pictures\plusListBorderedGray128px.png"
-                        DefoultImageSource="\AppResources\Pictures\plusListBorderedPurple128px.png"
-                        MouseHoverImageSource="\AppResources\Pictures\plusListFillWhite128px.png"
+                        DisabledImageSource="{DynamicResource PlusListBordered2}"
+                        DefoultImageSource="{DynamicResource PlusListMein}"
+                        MouseHoverImageSource="{DynamicResource PlusListBordered}"
                         />
 
 
@@ -143,7 +143,7 @@
                         x:Name="TytleTbx"
                         ToolTip="Criterion tytle"
                         FontSize="30"
-                        Foreground="#6795de"
+                        Foreground="{DynamicResource MeinThemeColor2}"
                         Background="Transparent"
                         TextWrapping="Wrap"
                         Width="200"
@@ -157,12 +157,12 @@
                         Grid.Row="1"
                         Grid.Column="0"
                         Grid.ColumnSpan="1"
-                        Background="#ccd5f0"
+                        Background="{DynamicResource DimBackgroundColor}"
                         Margin="0 0 0 20"
                         CornerRadius="0 0 20 0"
                         >
-
-                        <ListView
+                        <Border Background="{DynamicResource DimBackgroundColorFillImage}">
+                            <ListView
                             x:Name="CreatedFiltersList"
                             ScrollViewer.CanContentScroll="False"
                             HorizontalContentAlignment="Stretch"
@@ -173,22 +173,22 @@
                             ItemContainerStyle="{StaticResource RankingListItemStyle}"
                             Style="{StaticResource RoundedListViewStyle}"
                               >
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid
                                         x:Name="Grd"
                                         HorizontalAlignment="Stretch"
                                         >
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="50"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="50"/>
-                                            <ColumnDefinition Width="50"/>
-                                        </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="50"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="50"/>
+                                                    <ColumnDefinition Width="50"/>
+                                                </Grid.ColumnDefinitions>
 
-                                        <TextBox
+                                                <TextBox
                                             HorizontalAlignment="Left"
                                             Foreground="{Binding 
                                             Path=Foreground, 
@@ -207,7 +207,7 @@
                                             Margin="30 0 0 0"
                                             />
 
-                                        <Button
+                                                <Button
                                             x:Name="WarningBtn"
                                             HorizontalAlignment="Right"
                                             Grid.Row="0"
@@ -217,19 +217,19 @@
                                             Height="50"
                                             Visibility="Collapsed"
                                             >
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Image x:Name="icon" Margin="5" Source="\AppResources\Pictures\exclamationMarkBorderedVioletred64px.png"/>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter TargetName="icon" Property="Source" Value="\AppResources\Pictures\exclamationMarkFillWhite64px.png" />
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Button.Template>
-                                        </Button>
+                                                    <Button.Template>
+                                                        <ControlTemplate TargetType="Button">
+                                                            <Image x:Name="icon" Margin="5" Source="{DynamicResource ExclamationMarkContrasting}"/>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter TargetName="icon" Property="Source" Value="{DynamicResource ExclamationMarkBordered}" />
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Button.Template>
+                                                </Button>
 
-                                        <Button
+                                                <Button
                                             HorizontalAlignment="Right"
                                             Grid.Row="0"
                                             Grid.Column="2"
@@ -240,31 +240,31 @@
                                             Width="50"
                                             Height="50"
                                             >
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Image x:Name="icon" Margin="5" Source="\AppResources\Pictures\crossPentagonBorderVioletRed128px.png"/>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter TargetName="icon" Property="Source" Value="\AppResources\Pictures\PentagonWhiteCross.png" />
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Button.Template>
-                                        </Button>
-                                    </Grid>
-                                    <DataTemplate.Triggers>
-                                        <Trigger SourceName="TytleTbx" Property="Validation.HasError" Value="True">
-                                            <Setter TargetName="WarningBtn" Property="Visibility" Value="Visible" />
-                                        </Trigger>
-                                    </DataTemplate.Triggers>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                            <ListView.Resources>
-                                <Style TargetType="ScrollBar" BasedOn="{StaticResource WhiteScrollBarStyle}"/>
-                            </ListView.Resources>
-                        </ListView>
-
-                    </Border>
+                                                    <Button.Template>
+                                                        <ControlTemplate TargetType="Button">
+                                                            <Image x:Name="icon" Margin="5" Source="{DynamicResource CrossPentagonContrasting}"/>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter TargetName="icon" Property="Source" Value="{DynamicResource CrossPentagonBordered}" />
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Button.Template>
+                                                </Button>
+                                            </Grid>
+                                            <DataTemplate.Triggers>
+                                                <Trigger SourceName="TytleTbx" Property="Validation.HasError" Value="True">
+                                                    <Setter TargetName="WarningBtn" Property="Visibility" Value="Visible" />
+                                                </Trigger>
+                                            </DataTemplate.Triggers>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                    <ListView.Resources>
+                                        <Style TargetType="ScrollBar" BasedOn="{StaticResource WhiteScrollBarStyle}"/>
+                                    </ListView.Resources>
+                                </ListView>
+                            </Border>
+                        </Border>
 
                     <TextBox
                         Grid.Row="1"
@@ -273,9 +273,9 @@
                         x:Name="DescryptioonTbx"
                         ToolTip="Category  Descryption"
                         FontSize="30"
-                        Foreground="#6795de"
+                        Foreground="{DynamicResource MeinThemeColor2}"
                         TextWrapping="Wrap"
-                        Background="#ccd5f0"
+                        Background="{DynamicResource DimBackgroundColor}"
                         Style="{StaticResource TuskDataTextBoxStyle}"
                         Text="{Binding Descriptyon}"
                         Margin="20"
@@ -286,7 +286,7 @@
                         Margin="0 10 0 0"
                         d:CornerRadius="0  60 0 20"
                         CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=BottonLeftElementBorderCornerRadius}"
-                        Background="#512f95"
+                        Background="{DynamicResource MeinThemeColor}"
                         Grid.Row="2"
                         Grid.ColumnSpan="1"
                         Grid.Column="0"
@@ -295,7 +295,7 @@
                             Margin="15 0 20 0"
                             VerticalAlignment="Center"
                             TextWrapping="Wrap"
-                            Foreground="#f7f9fe"
+                            Foreground="{DynamicResource MeinBackgroundColor}"
                             FontSize="20"
                             Style="{StaticResource SpanDefoult}"
                             >
@@ -333,14 +333,15 @@
                         CornerRadius="10"
                         Text="Create filter criterion"
                         Command="{Binding CreateFilterCriterionCommand}"
-                        FirstButtonColor="#512f95"
-                        SecondButtonColor="White"
+                        FirstButtonColor="{DynamicResource MeinThemeColor}"
+                        SecondButtonColor="{DynamicResource MeinBackgroundColor}"
+                        DisabledStateColor="{DynamicResource DimBackgroundColor}"
                         TextBlockHorizontalAlignment ="Left"
                         ImageMargin="15"
                         Margin="10"
-                        DisabledImageSource="\AppResources\Pictures\markListBorderedGray128px.png"
-                        DefoultImageSource="\AppResources\Pictures\markListBorderedPurple128px.png"
-                        MouseHoverImageSource="\AppResources\Pictures\markListFillWhite128px.png"
+                        DisabledImageSource="{DynamicResource EditGalleryBordered2}"
+                        DefoultImageSource="{DynamicResource EditGalleryMein}"
+                        MouseHoverImageSource="{DynamicResource EditGalleryBordered}"
                         />
 
                 </Grid>

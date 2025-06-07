@@ -1,0 +1,211 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="MeinBackgroundColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="MeinThemeColor" Color="#512F95"/>
+    <SolidColorBrush x:Key="DimBackgroundColor" Color="#CCD5F0"/>
+    <SolidColorBrush x:Key="DimMeinThemeColor3" Color="#B8C2D7"/>
+    <SolidColorBrush x:Key="ContrastingColor" Color="#C71585"/>
+    <SolidColorBrush x:Key="DimBackgroundColor2" Color="#EFEFFF"/>
+    <SolidColorBrush x:Key="DimMeinThemeColor" Color="#492988"/>
+    <SolidColorBrush x:Key="MeinThemeColor2" Color="#6795DE"/>
+    <SolidColorBrush x:Key="BrightMeinThemeColor" Color="#653BBB"/>
+
+    <SolidColorBrush x:Key="FontColor1" Color="#512F95"/>
+    <SolidColorBrush x:Key="FontColor1Hover" Color="#FFFFFF"/>
+
+    <SolidColorBrush x:Key="FontColor2" Color="#512F95"/>
+    <SolidColorBrush x:Key="FontColor1Hover2" Color="#FFFFFF"/>
+
+    <SolidColorBrush x:Key="DimMeinThemeColor3Opacity" Color="#B8C2D7" Opacity="0.6"/>
+
+    <SolidColorBrush x:Key="ContrastingColorOpacity" Color="#C71585" Opacity="0.5"/>
+
+    <BitmapImage x:Key="PowerOffMeinBackgroundImage" 
+                 UriSource="/AppResources/Pictures/DeepPupleThemeImmages/PowerOffMeinBackgroundImage64px.png"/>
+
+    <BitmapImage x:Key="MaximizeBordered" 
+             UriSource="/AppResources/Pictures/DeepPupleThemeImmages/MaximizeBordered_64px.png"/>
+
+    <BitmapImage x:Key="MinimizeBordered" 
+         UriSource="/AppResources/Pictures/DeepPupleThemeImmages/MinimizeBordered_64px.png"/>
+
+    <BitmapImage x:Key="DoorExitBordered2" 
+             UriSource="/AppResources/Pictures/DeepPupleThemeImmages/DoorDimBackgroundColorN2_128px.png"/>
+    <BitmapImage x:Key="DoorExitBordered" 
+             UriSource="/AppResources/Pictures/DeepPupleThemeImmages/DoorMeinBackgroundColor128px.png"/>
+    <BitmapImage x:Key="DoorExitMein" 
+             UriSource="/AppResources/Pictures/DeepPupleThemeImmages/DoorMeinColor128px.png"/>
+
+    <BitmapImage x:Key="AddRecordBordered" 
+         UriSource="/AppResources/Pictures/DeepPupleThemeImmages/AddRecordBordered_128px.png"/>
+    <BitmapImage x:Key="AddRecordBordered2" 
+         UriSource="/AppResources/Pictures/DeepPupleThemeImmages/AddRecordBordered2_128px.png"/>
+    <BitmapImage x:Key="AddRecordMein" 
+         UriSource="/AppResources/Pictures/DeepPupleThemeImmages/AddRecordMein_128px.png"/>
+
+    <BitmapImage x:Key="PaletteBordered" 
+      UriSource="/AppResources/Pictures/DeepPupleThemeImmages/PaletteBordered_128px.png"/>
+    <BitmapImage x:Key="PaletteBordered2" 
+      UriSource="/AppResources/Pictures/DeepPupleThemeImmages/PaletteBordered2_128px.png"/>
+    <BitmapImage x:Key="PaletteMein" 
+      UriSource="/AppResources/Pictures/DeepPupleThemeImmages/PaletteMein_128px.png"/>
+
+    <BitmapImage x:Key="PencilEditBordered" 
+  UriSource="/AppResources/Pictures/DeepPupleThemeImmages/PencilEditBordered_128px.png"/>
+    <BitmapImage x:Key="PencilEditBordered2" 
+  UriSource="/AppResources/Pictures/DeepPupleThemeImmages/PencilEditBordered2_128px.png"/>
+    <BitmapImage x:Key="PencilEditMein" 
+  UriSource="/AppResources/Pictures/DeepPupleThemeImmages/PencilEditMein_128px.png"/>
+
+    <BitmapImage x:Key="TrashCanBordered" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/TrashCanBordered_128px.png"/>
+    <BitmapImage x:Key="TrashCanContrasting" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/TrashCanContrasting_128px.png"/>
+
+    <BitmapImage x:Key="MarkListBordered" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/MarkListBordered_128px.png"/>
+    <BitmapImage x:Key="MarkListBordered2" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/MarkListBordered2_128px.png"/>
+    <BitmapImage x:Key="MarkListMein" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/MarkListMein_128px.png"/>
+
+    <BitmapImage x:Key="AddPlusBordered" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/AddPlusBordered_64px.png"/>
+    <BitmapImage x:Key="AddPlusMein" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/AddPlusMein_64px.png"/>
+
+    <BitmapImage x:Key="AddMultimediaBordered" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/AddMultimediaBordered_128px.png"/>
+    <BitmapImage x:Key="AddMultimediaBordered2" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/AddMultimediaBordered2_128px.png"/>
+    <BitmapImage x:Key="AddMultimediaMein" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/AddMultimediaMein_128px.png"/>
+
+    <BitmapImage x:Key="BrushBordered" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/BrushBordered_128px.png"/>
+    <BitmapImage x:Key="BrushBordered2" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/BrushBordered2_128px.png"/>
+    <BitmapImage x:Key="BrushMein" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/BrushMein_128px.png"/>
+
+    <BitmapImage x:Key="PlusFilterBordered" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/PlusFilterBordered_128px.png"/>
+    <BitmapImage x:Key="PlusFilterBordered2" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/PlusFilterBordered2_128px.png"/>
+    <BitmapImage x:Key="PlusFilterMein" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/PlusFilterMein_128px.png"/>
+
+    <BitmapImage x:Key="GalleryBordered" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/GalleryBordered_64px.png"/>
+    <BitmapImage x:Key="GalleryMein" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/GalleryMein_64px.png"/>
+
+    <BitmapImage x:Key="FilterBordered" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/FilterBordered_64px.png"/>
+    <BitmapImage x:Key="FilterMein" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/FilterMein_64px.png"/>
+
+    <BitmapImage x:Key="RoundedCrossFillBordered" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/RoundedCrossFillBordered_64px.png"/>
+    <BitmapImage x:Key="RoundedCrossFillContrastinng" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/RoundedCrossFillContrasting_64px.png"/>
+    <BitmapImage x:Key="RoundedCrossContrastinng"
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/RoundedCrossContrasting_64px.png"/>
+    <BitmapImage x:Key="RoundedCrossMein" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/RoundedCrossMein_64px.png"/>
+
+    <BitmapImage x:Key="MagnifierBordered" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/MagnifierBordered_64px.png"/>
+
+    <BitmapImage x:Key="EditGalleryBordered"
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/EditGalleryBordered_128px.png"/>
+    <BitmapImage x:Key="EditGalleryBordered2" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/EditGalleryBordered2_128px.png"/>
+    <BitmapImage x:Key="EditGalleryMein" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/EditGalleryMein_128px.png"/>
+
+    <BitmapImage x:Key="RemoveMultimediaBordered"
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/RemoveMultimediaBordered_128px.png"/>
+    <BitmapImage x:Key="RemoveMultimediaContrasting" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/RemoveMultimediaContrasting_128px.png"/>
+
+    <BitmapImage x:Key="PlusListBordered"
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/PlusListBordered_128px.png"/>
+    <BitmapImage x:Key="PlusListBordered2" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/PlusListBordered2_128px.png"/>
+    <BitmapImage x:Key="PlusListMein" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/PlusListMein_128px.png"/>
+
+    <BitmapImage x:Key="CrossPentagonBordered" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/CrossPentagonBordered_64px.png"/>
+    <BitmapImage x:Key="CrossPentagonContrasting" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/CrossPentagonContrasting_128px.png"/>
+
+    <BitmapImage x:Key="ExclamationMarkBordered" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/ExclamationMarkBordered_64px.png"/>
+    <BitmapImage x:Key="ExclamationMarkContrasting" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/ExclamationMarkContrasting_64px.png"/>
+
+    <BitmapImage x:Key="TriangleArrowBordered" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/TriangleArrowBordered_64px.png"/>
+    <BitmapImage x:Key="TriangleArrowMein" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/TriangleArrowMein_64px.png"/>
+
+    <BitmapImage x:Key="RefreshmeinMein" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/Refreshmein_128px.png"/>
+
+    <BitmapImage x:Key="DownArrowBordered" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/DownArrowBordered_64px.png"/>
+    <BitmapImage x:Key="DownArrowBorderedFill" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/DownArrowBorderedFill_64px.png"/>
+    <BitmapImage x:Key="UpArrowBordered" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/UpArrowBordered_64px.png"/>
+    <BitmapImage x:Key="UpArrowBorderedFill" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/UpArrowBorderedFill_64px.png"/>
+
+    <BitmapImage x:Key="EditPencelContrasting" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/EditPencelContrasting_128px.png"/>
+    <BitmapImage x:Key="EditPencelContrasting512" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/EditPencelContrasting_512px.png"/>
+
+
+
+    <BitmapImage x:Key="MoreInfoBordered" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/MoreInfoBordered_64px.png"/>
+    <BitmapImage x:Key="MoreInfoBorderedFill" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/MoreInfoBorderedFill_64px.png"/>
+
+    <BitmapImage x:Key="GearBordered" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/GearBordered_64px.png"/>
+    <BitmapImage x:Key="GearBorderedFill" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/GearBorderedFill_64px.png"/>
+
+    <BitmapImage x:Key="SelectFolderBordered" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/SelectFolderBordered_128px.png"/>
+    <BitmapImage x:Key="SelectFolderBordered2" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/SelectFolderBordered2_128px.png"/>
+    <BitmapImage x:Key="SelectFolderMein" 
+UriSource="/AppResources/Pictures/DeepPupleThemeImmages/SelectFolderMein_128px.png"/>
+
+    <ImageBrush 
+        x:Key="DimBackgroundColorFillImage"
+        Stretch="UniformToFill"
+        ImageSource="/AppResources/Pictures/DeepPupleThemeImmages/BackgroundFills/StarFill2_1152x864px.png"
+        AlignmentX="Right"/>
+    <ImageBrush 
+        x:Key="MeinColorBackgroundFillImage"
+        Stretch="UniformToFill"
+        ImageSource="/AppResources/Pictures/DeepPupleThemeImmages/BackgroundFills/StarFill_720x1080px.png"
+        AlignmentX="Right"/>
+    <ImageBrush 
+        x:Key="DimBackgroundColorFillImage2"
+        Stretch="UniformToFill"
+        ImageSource="/AppResources/Pictures/DeepPupleThemeImmages/BackgroundFills/CosmicFear_628x1025px.png"
+        AlignmentX="Right"/>
+
+    <ImageBrush 
+    x:Key="RankingImageBrush"
+    Stretch="Fill"
+    ImageSource="/AppResources/Pictures/DeepPupleThemeImmages/pencilBlack128px.png"/>
+
+</ResourceDictionary>

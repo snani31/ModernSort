@@ -4,6 +4,7 @@ using ModernSort.Services.Dialog;
 using ModernSort.Services.Operations;
 using ModernSort.Services.RankingContent;
 using ModernSort.Services.UITheme;
+using ModernSort.Static;
 using ModernSort.Stores.Catalog;
 using ModernSort.View.Windows;
 using ModernSort.ViewModel;
@@ -52,7 +53,8 @@ namespace ModernSort
                 GUIDsFileName = "ProjactGUIDSFile.txt",
                 mediaFilesCatalogName = "Media",
                 mediaObjectsFileName = "MediaObjacts.json",
-                rankingCategoryIconNameNoExtention = "Ranking_Icon"
+                rankingCategoryIconNameNoExtention = "Ranking_Icon",
+                SelectedUIThemeFileName = "SelectedUITheme.txt"
             };
 
             var jsonFilterConverter = new FiltersConverterJson();
@@ -74,18 +76,23 @@ namespace ModernSort
 
             _outputContentService = new OutputContentService(_catalogStore, _jsonDeserializer, filterCriterionsContentService,mediaObjectsContentService);
 
-            _themeService = new UIThemeService();
-            _themeService.ThemeRegister(UIThemes.DeepPurple, new Uri("AppResources/ApplicationThemes/DeepPurpleTheme.xaml", UriKind.Relative));
+
+            List<string> pathsOfRequiredFiles = new List<string>() { _catalogStore.GUIDsFilePath,
+                _catalogStore.RankingCategoriesFilePath,_catalogStore.SelectedUIThemeFilePath};
+            ProjactIoWorker.ControlRequiredFilesExistence(new List<string>() { _catalogStore.coreResourcesCatalogPath },
+                pathsOfRequiredFiles
+                );
+
+            _themeService = new UIThemeService(_catalogStore, UIThemes.DeepPurple, new Uri("AppResources/ApplicationThemes/DeepPurpleTheme.xaml", UriKind.Relative));
             _themeService.ThemeRegister(UIThemes.DarkestGreen, new Uri("AppResources/ApplicationThemes/DarkestGreen.xaml", UriKind.Relative));
             _themeService.ThemeRegister(UIThemes.Pinapple, new Uri("AppResources/ApplicationThemes/PinappleTheme.xaml", UriKind.Relative));
             _themeService.ThemeRegister(UIThemes.SeeRed, new Uri("AppResources/ApplicationThemes/SeeRed.xaml", UriKind.Relative));
 
-            
+
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-
             _themeService.SetApplicationThemeToSelected();
 
             MainWindow = new MainWindow();

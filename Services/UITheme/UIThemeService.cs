@@ -1,37 +1,25 @@
 ﻿using ModernSort.Enums;
-using System;
+using ModernSort.Stores.Catalog;
 using System.IO;
-using System.IO.Pipes;
 using System.Windows;
 
 namespace ModernSort.Services.UITheme
 {
-    public class UIThemeService
+    internal class UIThemeService
     {
-        private UIThemes SelectedTheme { get; set; } = UIThemes.DeepPurple;
-
+        private UIThemes SelectedTheme { get; set; }
+        private UIThemes DefoultTheme { get; init; }
+        private string SelectedThemeFilePath {  get; init; }
         public IDictionary<UIThemes, Uri> ThemeMapping { get; private set; }
 
-        public UIThemeService()
+        public UIThemeService(CatalogStore catalogStore, UIThemes defoultTheme,Uri defoultThemeUri)
         {
             ThemeMapping = new Dictionary<UIThemes, Uri>();
-            
+            SelectedThemeFilePath = catalogStore.SelectedUIThemeFilePath;
+            DefoultTheme = defoultTheme;
+            ThemeRegister(defoultTheme,defoultThemeUri);
 
-            string selectedThemeStr;
-            using (var fileStream = new FileStream("C:\\Users\\vipar\\OneDrive\\Рабочий стол\\DataRanking\\Solution\\ModernSort\\bin\\Debug\\net9.0-windows\\UserResources\\SelectedUITheme.txt"
-                , FileMode.OpenOrCreate, FileAccess.Read))
-            using (var filereader = new StreamReader(fileStream))
-            {
-                selectedThemeStr = filereader.ReadLine() ?? "Pinapple";
-                filereader.Close();
-            }
-
-            SelectedTheme = UIThemes.DeepPurple;
-            object? assd;
-            if (Enum.TryParse(typeof(UIThemes), selectedThemeStr,true,out assd))
-            {
-                SelectedTheme = (UIThemes)assd;
-            }
+            GetLastSelectedTheme();
         }
 
         public void ThemeRegister(UIThemes theme, Uri themeUri)
@@ -56,7 +44,7 @@ namespace ModernSort.Services.UITheme
             };
             App.Current.Resources.MergedDictionaries[0] = theme;
 
-            using (var fileStream = new FileStream("C:\\Users\\vipar\\OneDrive\\Рабочий стол\\DataRanking\\Solution\\ModernSort\\bin\\Debug\\net9.0-windows\\UserResources\\SelectedUITheme.txt"
+            using (var fileStream = new FileStream(SelectedThemeFilePath
                 , FileMode.Create
                 , FileAccess.Write))
             using (var fileWriter = new StreamWriter(fileStream))
@@ -64,15 +52,37 @@ namespace ModernSort.Services.UITheme
 
         }
 
+        private void GetLastSelectedTheme()
+        {
+            string selectedThemeStr;
+
+            using (var fileStream = new FileStream(SelectedThemeFilePath
+                , FileMode.OpenOrCreate, FileAccess.Read))
+            using (var filereader = new StreamReader(fileStream))
+            {
+                selectedThemeStr = filereader.ReadLine();
+                filereader.Close();
+            }
+
+            object? stringResultOfSelectedTheme;
+            if (Enum.TryParse(typeof(UIThemes), selectedThemeStr, true, out stringResultOfSelectedTheme))
+            {
+                SelectedTheme = (UIThemes)stringResultOfSelectedTheme;
+            }
+            else
+            {
+                SelectedTheme = DefoultTheme;
+            }
+        }
+
         public void SetApplicationThemeToSelected()
         {
-            Uri uri = (ThemeMapping.ContainsKey(SelectedTheme)) ? ThemeMapping[SelectedTheme] : ThemeMapping[UIThemes.DeepPurple];
+            Uri uri = ThemeMapping.ContainsKey(SelectedTheme) ? ThemeMapping[SelectedTheme] : ThemeMapping[DefoultTheme];
 
             ResourceDictionary theme = new ResourceDictionary()
             {
                 Source = uri,
             };
-
             App.Current.Resources.MergedDictionaries[0] = theme;
         }
     }

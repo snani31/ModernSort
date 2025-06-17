@@ -17,6 +17,8 @@ namespace ModernSort.Stores.Catalog
 
         internal required string GUIDsFileName;
 
+        internal required string SelectedUIThemeFileName;
+
         internal required string rankingCategoryIconNameNoExtention;
         #endregion
 
@@ -32,6 +34,15 @@ namespace ModernSort.Stores.Catalog
             get
             {
                 return $@"{coreResourcesCatalogPath}\{GUIDsFileName}";
+            }
+
+        }
+
+        public string SelectedUIThemeFilePath
+        {
+            get
+            {
+                return $@"{coreResourcesCatalogPath}\{SelectedUIThemeFileName}";
             }
 
         }

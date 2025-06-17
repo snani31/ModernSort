@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System.IO;
 using System.IO.Pipelines;
+using System.Windows;
 using static System.Net.WebRequestMethods;
 
 namespace ModernSort.Static
@@ -8,46 +9,10 @@ namespace ModernSort.Static
     internal static class ProjactIoWorker
     {
         private static OpenFileDialog _fileDialog;
-        /// <summary>
-        /// Константа содержит имя директории, в которой будут соджержаться все ресурсы пользователя проекта
-        /// А именно - директории каждой созданной категории ранжира и их медиа ресурсов, вместе с json 
-        /// файлами категорий ранжира, критериев фильтрации, фильтрами и медиа объектами
-        /// </summary>
-        internal const string USER_RESOURCES_DIRECTORY_NAME = "UserResources";
-        /// <summary>
-        /// Константа содержит имя любой иконки для категории ранжира, за исключением формата изображения
-        /// </summary>
-        internal const string RANKING_CATEGORY_ICON_TYTLE = "Ranking_Icon";
-        /// <summary>
-        /// Константа содержит имя файла, хранящего состояние всех категорий ранжира проекта в формате json
-        /// </summary>
-        internal const string RANKING_CATEGORIES_JSON = "RankingCategories.json";
-        /// <summary>
-        /// Константа содержит имя файла, хранящего значения всех ранее присвоенных сущностям значений GUID
-        /// </summary>
-        internal const string PROJACT_GUIDS_FILE = "ProjactGUIDSFile.txt";
-        /// <summary>
-        /// Константа содержит имя Json файла, состояние всех существующих медиа-объектов выбранной кагерории
-        /// </summary>
-        internal const string MEDIA_OBJECTS_JSON = "MediaObjacts.json";
 
-        private static readonly string _currentExecutableFileDirectoryPath;
-        internal static string UserResourcesDirrectoryPath
-        {
-            get
-            {
-                if (!Directory.Exists(_currentExecutableFileDirectoryPath + $@"\{USER_RESOURCES_DIRECTORY_NAME}"))
-                {
-                    Directory.CreateDirectory(_currentExecutableFileDirectoryPath + $@"\{USER_RESOURCES_DIRECTORY_NAME}");
-                }
-                return _currentExecutableFileDirectoryPath + $@"\{USER_RESOURCES_DIRECTORY_NAME}";
-            }
-        }
         static ProjactIoWorker()
         {
             _fileDialog = new OpenFileDialog();
-            _currentExecutableFileDirectoryPath =
-                Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         }
 
         internal static string FilePickerGetImagePathScalar()
@@ -109,6 +74,34 @@ namespace ModernSort.Static
                 }
 
 
+        }
+
+        internal static void ControlRequiredFilesExistence(IEnumerable<string> dirrectoryPaths, IEnumerable<string> filePaths)
+        {
+
+            try
+            {
+                foreach (var dirrectoryPath in dirrectoryPaths)
+                {
+                    if (!Directory.Exists(dirrectoryPath))
+                    {
+                        Directory.CreateDirectory(dirrectoryPath);
+                    }
+                }
+
+                foreach (var filePath in filePaths)
+                {
+                    if (!System.IO.File.Exists(filePath))
+                    {
+                        using (System.IO.File.Create(filePath));
+                    }
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("Can not create base dirrectory files");
+            }
         }
 
     }

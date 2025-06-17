@@ -10,10 +10,9 @@
                     <Border x:Name="rectangle"
                         SnapsToDevicePixels="True"
                         Background="{DynamicResource DimMeinThemeColor3}"
-                        Opacity="0.3"
+                        Opacity="0.6"
                         CornerRadius="4"
                         Height="{TemplateBinding Height}"
-                        Margin="0 10 0 10"
                         Width="{TemplateBinding Width}"/>
                     <ControlTemplate.Triggers>
                         <EventTrigger RoutedEvent="MouseEnter">
@@ -52,6 +51,7 @@
                     <ControlTemplate TargetType="{x:Type ScrollBar}">
                     <Grid x:Name="Bg" SnapsToDevicePixels="true" Background="Transparent">
                         <Border
+                            Margin="5"
                     Padding="0,4">
                             <Track x:Name="PART_Track"
                          IsDirectionReversed="True"

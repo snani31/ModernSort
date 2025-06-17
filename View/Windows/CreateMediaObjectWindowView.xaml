@@ -217,8 +217,9 @@
                             <Border 
                                 BorderBrush="{DynamicResource MeinThemeColor}"
                                 BorderThickness="3"
-                                CornerRadius="20"
-                                Height="300"
+                                CornerRadius="0 20 20 20"
+                                MinHeight="300"
+                                MaxHeight="500"
                                 Background="{DynamicResource MeinBackgroundColor}"
                                 >
                                 <ListView
@@ -239,7 +240,7 @@
                                                     <Setter.Value>
                                                         <ControlTemplate>
                                                             <Border
-                                                                CornerRadius="20"
+                                                                CornerRadius="0 20 20 20"
                                                                 BorderBrush="{DynamicResource ContrastingColor}" 
                                                                 BorderThickness="3"
                                                                 >

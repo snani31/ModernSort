@@ -113,7 +113,7 @@
                 <Border
                     Grid.Column="0"
                     Background= "{DynamicResource DimBackgroundColor}"
-                    CornerRadius="0,20,20,0"
+                    CornerRadius="0,20,20,20"
                     ClipToBounds="True">
                     <Border Background="{DynamicResource DimBackgroundColorFillImage}">
                         <ListView

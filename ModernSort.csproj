@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>sorting-pc-application.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -441,10 +442,15 @@
     <None Remove="AppResources\Pictures\upArrowFillWhite128px.png" />
     <None Remove="AppResources\Pictures\upArrowFillWhite64px.png" />
     <None Remove="AppResources\PowerOffButtonIcon.png" />
+    <None Remove="sorting-pc-application.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <Page Remove="Styles\UserControlStyles\RadioButtonStyles.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="sorting-pc-application.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -741,6 +747,7 @@
     <Resource Include="AppResources\Pictures\SeeRedThemeImages\TriangleArrowMein_64px.png" />
     <Resource Include="AppResources\Pictures\SeeRedThemeImages\UpArrowBorderedFill_64px.png" />
     <Resource Include="AppResources\Pictures\SeeRedThemeImages\UpArrowBordered_64px.png" />
+    <Resource Include="sorting-pc-application.ico" />
     <Resource Include="Styles\UserControlStyles\RadioButtonStyles.xaml" />
   </ItemGroup>
 

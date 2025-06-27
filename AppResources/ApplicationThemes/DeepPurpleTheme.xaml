@@ -105,6 +105,13 @@ UriSource="/AppResources/Pictures/DeepPupleThemeImmages/FilterBordered_64px.png"
     <BitmapImage x:Key="FilterMein" 
 UriSource="/AppResources/Pictures/DeepPupleThemeImmages/FilterMein_64px.png"/>
 
+    <BitmapImage x:Key="UploadFolderBordered2" 
+          UriSource="/AppResources/Pictures/DeepPupleThemeImmages/UploadFolderBordered2_64px.png"/>
+    <BitmapImage x:Key="UploadFolderBordered" 
+          UriSource="/AppResources/Pictures/DeepPupleThemeImmages/UploadFolderBordered_64px.png"/>
+    <BitmapImage x:Key="UploadFolderMein" 
+          UriSource="/AppResources/Pictures/DeepPupleThemeImmages/UploadFolderMein_64px.png"/>
+
     <BitmapImage x:Key="RoundedCrossFillBordered" 
 UriSource="/AppResources/Pictures/DeepPupleThemeImmages/RoundedCrossFillBordered_64px.png"/>
     <BitmapImage x:Key="RoundedCrossFillContrastinng" 

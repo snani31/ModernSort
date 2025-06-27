@@ -62,6 +62,13 @@ UriSource="/AppResources/Pictures/PinappleThemeImages/EditPencelContrasting_512p
     <BitmapImage x:Key="PencilEditMein" 
   UriSource="/AppResources/Pictures/PinappleThemeImages/PencilEditMein_128px.png"/>
 
+    <BitmapImage x:Key="UploadFolderBordered2" 
+      UriSource="/AppResources/Pictures/PinappleThemeImages/UploadFolderBordered2_64px.png"/>
+    <BitmapImage x:Key="UploadFolderBordered" 
+      UriSource="/AppResources/Pictures/PinappleThemeImages/UploadFolderBordered_64px.png"/>
+    <BitmapImage x:Key="UploadFolderMein" 
+      UriSource="/AppResources/Pictures/PinappleThemeImages/UploadFolderMein_64px.png"/>
+
     <BitmapImage x:Key="TrashCanBordered" 
 UriSource="/AppResources/Pictures/PinappleThemeImages/TrashCanBordered_128px.png"/>
     <BitmapImage x:Key="TrashCanContrasting" 

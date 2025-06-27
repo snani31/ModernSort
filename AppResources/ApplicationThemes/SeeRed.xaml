@@ -62,6 +62,13 @@
     <BitmapImage x:Key="PencilEditMein" 
   UriSource="/AppResources/Pictures/SeeRedThemeImages/PencilEditMein_128px.png"/>
 
+    <BitmapImage x:Key="UploadFolderBordered2" 
+      UriSource="/AppResources/Pictures/SeeRedThemeImages/UploadFolderBordered2_64px.png"/>
+    <BitmapImage x:Key="UploadFolderBordered" 
+      UriSource="/AppResources/Pictures/SeeRedThemeImages/UploadFolderBordered_64px.png"/>
+    <BitmapImage x:Key="UploadFolderMein" 
+      UriSource="/AppResources/Pictures/SeeRedThemeImages/UploadFolderMein_64px.png"/>
+
     <BitmapImage x:Key="TrashCanBordered" 
 UriSource="/AppResources/Pictures/SeeRedThemeImages/TrashCanBordered_128px.png"/>
     <BitmapImage x:Key="TrashCanContrasting" 

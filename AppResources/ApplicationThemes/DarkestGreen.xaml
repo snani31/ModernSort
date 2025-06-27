@@ -64,6 +64,13 @@ UriSource="/AppResources/Pictures/DarkestGreenThemeImages/EditPencelContrasting_
     <BitmapImage x:Key="PencilEditMein" 
   UriSource="/AppResources/Pictures/DarkestGreenThemeImages/PencilEditMein_128px.png"/>
 
+    <BitmapImage x:Key="UploadFolderBordered2" 
+      UriSource="/AppResources/Pictures/DarkestGreenThemeImages/UploadFolderBordered2_64px.png"/>
+    <BitmapImage x:Key="UploadFolderBordered" 
+      UriSource="/AppResources/Pictures/DarkestGreenThemeImages/UploadFolderBordered_64px.png"/>
+    <BitmapImage x:Key="UploadFolderMein" 
+      UriSource="/AppResources/Pictures/DarkestGreenThemeImages/UploadFolderMein_64px.png"/>
+
     <BitmapImage x:Key="TrashCanBordered" 
 UriSource="/AppResources/Pictures/DarkestGreenThemeImages/TrashCanBordered_128px.png"/>
     <BitmapImage x:Key="TrashCanContrasting" 

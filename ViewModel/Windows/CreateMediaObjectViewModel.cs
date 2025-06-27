@@ -50,6 +50,8 @@ namespace ModernSort.ViewModel.Windows
             }
         }
 
+        public bool DeleteSelectedMediaObjectsFiles { get; set; } = false;
+
         private string _title;
 
         [MaxLength(20, ErrorMessage = $"Tytle can not be bigger then 20 symbols")]
@@ -140,7 +142,8 @@ namespace ModernSort.ViewModel.Windows
         private void CreateMediaObjactMethod(object? parameter)
         {
             IEnumerable<string> selectedFileNames = SelectedFiles.Select(x => x.MediaImagePath);
-            IOperation createMediaObjectOperation = new CreateMediaObjectOperation(selectedFileNames,Tytle,Descriptyon,SelectedMatchFilters); 
+            IOperation createMediaObjectOperation = new CreateMediaObjectOperation(selectedFileNames,Tytle,Descriptyon,SelectedMatchFilters
+                ,removeSelectedFilesAfterCreating: DeleteSelectedMediaObjectsFiles); 
 
             bool MediaObjectCreationWasSuccesfullyCompleted =
                 OperationService.InvokeOperation<RankingEntityes.Ranking_Entityes.MediaObjacts.MediaObject>(createMediaObjectOperation);

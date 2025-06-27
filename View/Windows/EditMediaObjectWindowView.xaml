@@ -365,7 +365,7 @@ ClipToBounds="True"
                                                                         BorderThickness="0"
                                                                         ItemsSource="{Binding FilterItems}"
                                                                         Background="Transparent"
-                                                                        Padding="0 10 0 30"
+                                                                        Padding="0 10 20 25"
                                                                         ItemContainerStyle="{StaticResource RankingListItemStyle}"
                                                                           >
                                                                             <ListView.ItemTemplate>
@@ -400,11 +400,10 @@ ClipToBounds="True"
                                                                                         Margin="30 0 0 0"
                                                                                         />
                                                                                         <Viewbox
-                                                                                        Grid.Row="0"
-                                                                                        Grid.Column="1"
-                                                                                        Width="50"
-                                                                                        Height="50"
-                                                                                        HorizontalAlignment="Right"
+                                                                                            Grid.Row="0"
+                                                                                            Grid.Column="1"
+                                                                                            Margin="5"
+                                                                                            HorizontalAlignment="Right"
                                                                                         >
                                                                                             <CheckBox
                                                                                             IsChecked="{Binding IsFilterSelected, Mode=TwoWay}"
@@ -559,6 +558,7 @@ ClipToBounds="True"
                         <Grid.RowDefinitions>
                             <RowDefinition Height="100"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="75"/>
                             <RowDefinition Height="120"/>
                         </Grid.RowDefinitions>
 
@@ -614,12 +614,46 @@ ClipToBounds="True"
                             Padding="10"
                             />
 
+                        <Grid 
+                            Grid.Row="2"
+                            Height="75">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="75"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock
+                                Margin="10"
+                                Grid.Column="0"
+                                TextWrapping="Wrap"
+                                TextAlignment="Left"
+                                VerticalAlignment="Center"
+                                Foreground="{DynamicResource MeinThemeColor}"
+                                FontSize="25"
+                                Style="{StaticResource SpanDefoult}"
+                                Text="Delete new selected files from source catalog"
+                                />
+
+                            <Viewbox
+                                Margin="10"
+                                Grid.Column="1"
+                                HorizontalAlignment="Center"
+                                >
+                                <CheckBox
+                                IsChecked="{Binding DeleteSelectedMediaObjectsFiles, Mode=OneWayToSource}"
+                                BorderBrush="{DynamicResource MeinThemeColor}"
+                                Background="{DynamicResource MeinBackgroundColor}"
+                                Style="{StaticResource CheckBoxRoundenStyle}"
+                                >
+                                </CheckBox>
+                            </Viewbox>
+                        </Grid>
 
                         <customCtrs:CustomButton
                             FirstButtonColor="{DynamicResource MeinThemeColor}"
                             SecondButtonColor="{DynamicResource MeinBackgroundColor}"
                             DisabledStateColor="{DynamicResource DimBackgroundColor}"
-                            Grid.Row="2"
+                            Grid.Row="3"
                             BorderThickness="4"
                             FontSize="30"
                             CornerRadius="10"

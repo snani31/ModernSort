@@ -19,17 +19,19 @@ namespace ModernSort.Services.Operations
         private IEnumerable<string> MediaObjectSelectedFiles { get; init; }
         private IEnumerable<Filter> SelectedMatchFilters { get; init; }
         private string Tytle { get; init; }
-
         private string Description { get; init; }
+        private bool RemoveSelectedFilesAfterCreating { get; init; }
         #endregion
 
-        public CreateMediaObjectOperation(IEnumerable<string> mediaObjectSelectedFiles, string tytle, string descryption, IEnumerable<Filter> selectedMatchFilters)
+        public CreateMediaObjectOperation(IEnumerable<string> mediaObjectSelectedFiles,
+            string tytle, string descryption, IEnumerable<Filter> selectedMatchFilters,bool removeSelectedFilesAfterCreating = false)
         {
             base.OperationResult = false;
             MediaObjectSelectedFiles = mediaObjectSelectedFiles;
             Tytle = tytle;
             Description = descryption;
             SelectedMatchFilters = selectedMatchFilters;
+            RemoveSelectedFilesAfterCreating = removeSelectedFilesAfterCreating;
         }
 
         public override void Create(ISerializer serializer)
@@ -58,6 +60,11 @@ namespace ModernSort.Services.Operations
             base.OperationResult = newMediaObjact.Serialize(serializer,
                  base.FilePath,
                 base.OperationFileMode);
+
+            if (OperationResult && RemoveSelectedFilesAfterCreating)
+            {
+                DeleteSelectedMediaObjectsFiles();
+            }
         }
         /// <summary>
         ///  Метод позволяет проверять наличие файлов с тем же именем, что и следующий файл на копирование из очереди
@@ -92,6 +99,16 @@ namespace ModernSort.Services.Operations
             newFilesFinalNames.Add(dynamicFileName + primarFileName.FileExtention);
 
             CopyFilesToDirrectory(copiedFilesPaths, existingFileNames, ref newFilesFinalNames);
+        }
+        /// <summary>
+        /// Метод позволяет удалить все выбранные пользователем для медиа-объекта файлы в изначальной папке
+        /// </summary>
+        void DeleteSelectedMediaObjectsFiles()
+        {
+            foreach (var filePath in MediaObjectSelectedFiles)
+            {
+                File.Delete(filePath);
+            }
         }
 
         public override void SetCatalogData(CatalogStore catalogStore)

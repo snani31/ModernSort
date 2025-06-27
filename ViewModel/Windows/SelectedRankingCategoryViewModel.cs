@@ -1,8 +1,10 @@
-﻿using ModernSort.Commands;
+﻿using Microsoft.Win32;
+using ModernSort.Commands;
 using ModernSort.Services;
 using ModernSort.Services.Dialog;
 using ModernSort.Services.Operations;
 using ModernSort.Services.Searching;
+using ModernSort.Static;
 using ModernSort.Stores.Catalog;
 using ModernSort.Stores.Navigation;
 using ModernSort.ViewModel.Items;
@@ -12,6 +14,9 @@ using RankingEntityes.IO_Entities.Interfaces;
 using RankingEntityes.Ranking_Entityes.MediaObjacts;
 using RankingEntityes.Ranking_Entityes.Ranking_Categories;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ModernSort.ViewModel.Windows
@@ -95,6 +100,7 @@ namespace ModernSort.ViewModel.Windows
         public ICommand CreateFilterCriterionWindowOpen { get; init; }
         public RelayCommand EditMediaObjectWindowOpen { get; init; }
         public ICommand OpenMediaObjectPage { get; init; }
+        public ICommand CopyAllSelectedImages { get; init; }
         public ICommand CloseDialog { get; init; }
 
         public  SearchingService<MediaObject> SearchingService { get; }
@@ -161,6 +167,13 @@ namespace ModernSort.ViewModel.Windows
                             )
                             );
                     SearchMediaObjectQuery = String.Empty;
+                });
+
+            CopyAllSelectedImages = new RelayCommand(
+                (p) =>
+                {
+                    ProjactIoWorker.CopySelectedFilesToDestinationFolder(CatalogStore.MediaFilesCatalogPath, 
+                        MediaObjacts.SelectMany(x => x.Paths).ToList(),destinationFolderName: "Your images");
                 });
 
         }
@@ -245,7 +258,6 @@ namespace ModernSort.ViewModel.Windows
 
             FilterCriterions = new List<FilterCriterion>(ContentService.FilterCriterionContentService.GetUnloadedFilterCriterions());
 
-            CurrentMediaObjectPageViewModel = new SelectedMediaObjectPageViewModel(ContentService);
             NavigationStore.CurrentViewModel = null;
 
             SearchingService.SearchElements = new List<MediaObject>(MediaObjacts.Select(x => x.MediaObject));
@@ -300,7 +312,6 @@ namespace ModernSort.ViewModel.Windows
             var mediaObjectsItemsResult = ExistingMediaObjects.Select(x => new MediaObjectItemViewModel(x, CatalogStore.MediaFilesCatalogPath));
 
             MediaObjacts = new ObservableCollection<MediaObjectItemViewModel>(mediaObjectsItemsResult);
-
         }
 
     }

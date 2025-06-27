@@ -22,7 +22,9 @@ namespace ModernSort.Services.Operations
         private string Tytle { get; init; }
         private string Description { get; init; }
         private IEnumerable<string> BeforeEditFilePaths { get; init; }
-        public IEnumerable<string> SelectedFilesPaths { get; }
+        private IEnumerable<string> SelectedFilesPaths { get; }
+        private IEnumerable<string> NewAddedFilesPaths { get; }
+        private bool RemoveNewAddedFilesAfterCreating { get; }
         public IEnumerable<Filter> SelectedFilters { get; }
         #endregion
 
@@ -40,6 +42,16 @@ namespace ModernSort.Services.Operations
             SelectedFilesPaths = selectedFilesPaths;
             SelectedMediaObjectGuid = selectedMediaObjectGuid;
             SelectedFilters = selectedFilters;
+        }
+
+        public UpdateMediaObjectOperation(string tytle, string description, Guid selectedMediaObjectGuid,
+            IEnumerable<string> beforeEditFilePaths, IEnumerable<string> selectedFilesPaths,
+            IEnumerable<Filter> selectedFilters, IEnumerable<string> newAddedFilesPaths = null, 
+            bool removeNewAddedFilesAfterCreating = false) 
+            : this(tytle, description, selectedMediaObjectGuid, beforeEditFilePaths, selectedFilesPaths, selectedFilters)
+        {
+            NewAddedFilesPaths = newAddedFilesPaths;
+            RemoveNewAddedFilesAfterCreating = removeNewAddedFilesAfterCreating;
         }
 
         public override void Update()
@@ -72,6 +84,11 @@ namespace ModernSort.Services.Operations
             foreach (var filePath in BeforeEditFilePaths)
             {
                 File.Delete(filePath);
+            }
+
+            if (RemoveNewAddedFilesAfterCreating && NewAddedFilesPaths.Count() > 0)
+            {
+                DeleteSelectedMediaObjectsFiles();
             }
         }
 
@@ -108,6 +125,17 @@ namespace ModernSort.Services.Operations
         {
             base.FilePath = catalogStore.MediaObjectsFilePath;
             SelectedCategoryMediaFilesDirectoryPath = catalogStore.MediaFilesCatalogPath;
+        }
+
+        /// <summary>
+        /// Метод позволяет удалить все выбранные пользователем для медиа-объекта файлы в изначальной папке
+        /// </summary>
+        void DeleteSelectedMediaObjectsFiles()
+        {
+            foreach (var filePath in NewAddedFilesPaths)
+            {
+                File.Delete(filePath);
+            }
         }
     }
 }

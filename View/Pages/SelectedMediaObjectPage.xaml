@@ -18,17 +18,24 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Rectangle
-                     Grid.Row="0"
-                    Margin="10"
-                    RadiusX="20"
-                    RadiusY="20"
+                Name="ImagePresentRectangle"
+                Grid.Row="0"
+                Margin="10"
+                RadiusX="20"
+                RadiusY="20"
                     >
                 <Rectangle.Fill>
                     <ImageBrush
                 Stretch="Fill"
-                ImageSource="{Binding ElementName=MediaFilesList, Path=SelectedItem, 
+                ImageSource="{Binding SelectedImagePath, 
                         Converter={StaticResource ToBitmapConverter}}"/>
                 </Rectangle.Fill>
+                <Rectangle.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Сopy photo to clipboard" 
+                                  Command="{Binding CopyPhotoToClipboard}"/>
+                    </ContextMenu>
+                </Rectangle.ContextMenu>
             </Rectangle>
             <Border
                 CornerRadius="15 15 20 20"
@@ -62,7 +69,8 @@
                         >
                         <ListView
                             BorderThickness="0"
-                            SelectedIndex="{Binding Path=SelectedPathIndex}"
+                            SelectedIndex="{Binding Path=SelectedPathIndex, Mode=TwoWay}"
+                            SelectedValue="{Binding Path=SelectedImagePath,Mode=TwoWay}"
                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
                        HorizontalContentAlignment="Stretch"

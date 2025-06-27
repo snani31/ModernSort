@@ -309,16 +309,24 @@
                             <ContentControl Content="{Binding CurrentPage}"/>
                         </Grid>
                     </Border>
-                    <Border 
-                        x:Name="MediaObjactsArea"
-                        BorderThickness="5"
-                        BorderBrush="{DynamicResource MeinThemeColor}"
-                        Grid.Column="0"
-                        CornerRadius="20"
+                    
+                    <Grid
                         Margin="20"
-                        Background="{DynamicResource MeinColorBackgroundFillImage}">
-                        <ListView
-                            
+                        >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+                        
+                        <Border 
+                            x:Name="MediaObjactsArea"
+                            Grid.Row="0"
+                            BorderThickness="5"
+                            BorderBrush="{DynamicResource MeinThemeColor}"
+                            Grid.Column="0"
+                            CornerRadius="20 20 0 0"
+                            Background="{DynamicResource MeinColorBackgroundFillImage}">
+                            <ListView
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                             ScrollViewer.VerticalScrollBarVisibility="Auto"
                             HorizontalContentAlignment="Center"
@@ -427,9 +435,26 @@
                                         />
                                 </ItemsPanelTemplate>
                             </ListView.ItemsPanel>
-                        </ListView>
+                            </ListView>
+                        </Border>
 
-                    </Border>
+                        <customCtrs:CustomButton
+                            Grid.Row="1"
+                            ToolTip="Export selected images"
+                            FirstButtonColor="{DynamicResource MeinThemeColor}"
+                            SecondButtonColor="{DynamicResource MeinBackgroundColor}"
+                            DisabledStateColor="{DynamicResource DimBackgroundColor}"
+                            Command="{Binding CopyAllSelectedImages}"
+                            IsEnabled="{Binding MediaObjectsListIsNotEmpthy}"
+                            BorderThickness="5 0 5 5"
+                            CornerRadius="0 0 20  20"
+                            TextBlockHorizontalAlignment ="Center"
+                            DisabledImageSource="{DynamicResource UploadFolderBordered2}"
+                            DefoultImageSource="{DynamicResource UploadFolderMein}"
+                            MouseHoverImageSource="{DynamicResource UploadFolderBordered}"
+                                />
+                        </Grid>
+
                 </Grid>
                 <Border 
                     x:Name="MultiFunktionArea"

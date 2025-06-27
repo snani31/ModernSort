@@ -176,6 +176,39 @@
                                 Margin="15 5 15 15"
                                 Padding="10"
                                 />
+
+                            <Grid Height="100">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="75"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <TextBlock
+                                    Grid.Column="0"
+                                    TextWrapping="Wrap"
+                                    TextAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Foreground="{DynamicResource MeinThemeColor}"
+                                    FontSize="25"
+                                    Style="{StaticResource SpanDefoult}"
+                                    Text="Delete selected files from source catalog"
+                                    />
+                                
+                                <Viewbox
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Center"
+                                    Margin="15"
+                                    >
+                                    <CheckBox
+                                        IsChecked="{Binding DeleteSelectedMediaObjectsFiles, Mode=OneWayToSource}"
+                                        BorderBrush="{DynamicResource MeinThemeColor}"
+                                        Background="{DynamicResource MeinBackgroundColor}"
+                                        Style="{StaticResource CheckBoxRoundenStyle}"
+                                        >
+                                    </CheckBox>
+                                </Viewbox>
+                            </Grid>
+                            
                             <Label
                                 Margin="10 5 10 0"
                                 FontSize="20"
@@ -433,11 +466,10 @@
                                                             Margin="30 0 0 0"
                                                             />
                                                             <Viewbox
-                                                            Grid.Row="0"
-                                                            Grid.Column="1"
-                                                            Width="50"
-                                                            Height="50"
-                                                            HorizontalAlignment="Right"
+                                                                Grid.Row="0"
+                                                                Grid.Column="1"
+                                                                Margin="5"
+                                                                HorizontalAlignment="Right"
                                                             >
                                                                 <CheckBox
                                                                 BorderBrush="{DynamicResource MeinThemeColor}"

@@ -32,7 +32,7 @@
                             </Grid>
                         </Border>
                         <TextBlock 
-                            Margin="5,0,0,0"  
+                            Margin="{TemplateBinding Margin}"  
                             VerticalAlignment="Center" 
                             Foreground="White" 
                             Text="{TemplateBinding Content}"/>

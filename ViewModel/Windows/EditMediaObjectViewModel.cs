@@ -44,13 +44,6 @@ namespace ModernSort.ViewModel.Windows
         public OperationService OperationService { get; }
         public OutputContentService ContentService { get; }
 
-        private MediaObject _selectedMediaObject;
-
-        private MediaObject SelectedMediaObject
-        {
-            get { return _selectedMediaObject; }
-            init { _selectedMediaObject = value; }
-        }
         private string _mediaObjectDescryption;
 
         [MaxLength(100, ErrorMessage = "Max Lenght for Descryption is 100 symbols")]
@@ -91,7 +84,8 @@ namespace ModernSort.ViewModel.Windows
                 Validate(nameof(SelectedFilePaths), value);
             }
         }
-
+        public bool DeleteSelectedMediaObjectsFiles { get; set; } = false;
+        private List<string> NewSelectedFilePaths { get; init; }
         public ObservableCollection<FilterCriterionItemViewModel> FilterCriterions { get; init; }
 
         public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
@@ -140,6 +134,7 @@ namespace ModernSort.ViewModel.Windows
                        foreach (string filePath in newFilePaths)
                        {
                            SelectedFilePaths.Add(filePath);
+                           NewSelectedFilePaths.Add(filePath);
                        }
                    }
                }
@@ -163,6 +158,7 @@ namespace ModernSort.ViewModel.Windows
 
             BeforeEditFilePaths = new List<string>(ContentService.MediaObjectContentService.GetFilesFullPathsOfSelectedMediaObject());
             SelectedFilePaths = new ObservableCollection<string>(BeforeEditFilePaths);
+            NewSelectedFilePaths = new List<string>();
 
             SelectedFilePaths.CollectionChanged += (object? sender, NotifyCollectionChangedEventArgs e) =>
             {
@@ -203,6 +199,9 @@ namespace ModernSort.ViewModel.Windows
             if (parameter is string mediafile and not null)
             {
                 SelectedFilePaths.Remove(mediafile);
+
+                if (NewSelectedFilePaths.Contains(mediafile)) 
+                    NewSelectedFilePaths.Remove(mediafile);
             }
         }
 
@@ -213,7 +212,9 @@ namespace ModernSort.ViewModel.Windows
                 ContentService.MediaObjectContentService.SelectedMediaObject.ID,
                 BeforeEditFilePaths,
                 SelectedFilePaths,
-                SelectedFilters);
+                SelectedFilters,
+                NewSelectedFilePaths,
+                removeNewAddedFilesAfterCreating: DeleteSelectedMediaObjectsFiles);
 
             bool MediaObjectUpdateWasSuccsesfullyCompleted = OperationService.InvokeOperation<MediaObject>(operation);
 

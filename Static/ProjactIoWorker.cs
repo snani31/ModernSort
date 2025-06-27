@@ -1,8 +1,11 @@
 ﻿using Microsoft.Win32;
+using ModernSort.Stores.Catalog;
+using RankingEntityes.Ranking_Entityes.MediaObjacts;
 using System.IO;
 using System.IO.Pipelines;
 using System.Windows;
-using static System.Net.WebRequestMethods;
+using System.Windows.Media.Imaging;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace ModernSort.Static
 {
@@ -91,9 +94,9 @@ namespace ModernSort.Static
 
                 foreach (var filePath in filePaths)
                 {
-                    if (!System.IO.File.Exists(filePath))
+                    if (!File.Exists(filePath))
                     {
-                        using (System.IO.File.Create(filePath));
+                        using (File.Create(filePath));
                     }
                 }
 
@@ -102,6 +105,50 @@ namespace ModernSort.Static
             {
                 MessageBox.Show("Can not create base dirrectory files");
             }
+        }
+
+        internal static void CopyImageToClipboard(string imagePath,int destinationImageHeight =720, int destinationImageWidth = 720)
+        {
+            using (FileStream BitmapConverterFileStream = File.OpenRead(imagePath))
+            {
+                var resultBitmapImage = new BitmapImage();
+                resultBitmapImage.BeginInit();
+                resultBitmapImage.StreamSource = BitmapConverterFileStream;
+                resultBitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                resultBitmapImage.DecodePixelHeight = destinationImageHeight;
+                resultBitmapImage.DecodePixelWidth = destinationImageWidth;
+                resultBitmapImage.EndInit();
+                Clipboard.SetImage(resultBitmapImage);
+            }
+        }
+
+        internal static void CopySelectedFilesToDestinationFolder(string sourceFolderPath, List<string> copyFileNames,string destinationFolderName)
+        {
+
+            using (CommonOpenFileDialog dialog = new CommonOpenFileDialog())
+            {
+                dialog.InitialDirectory = "C:\\Users";
+                dialog.IsFolderPicker = true;
+                dialog.Title = "Select destination folder for copying";
+                dialog.ShowPlacesList = true;
+                dialog.Multiselect = false;
+                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+                    string destinationFolderPath = $"{dialog.FileName}\\{destinationFolderName}" ;
+
+                    if (!Directory.Exists(destinationFolderPath))
+                    {
+                        Directory.CreateDirectory(destinationFolderPath);
+                        foreach (string file in copyFileNames)
+                        {
+                            File.Copy($@"{sourceFolderPath}\{file}", @$"{destinationFolderPath}\{file}");
+                        }
+                    }
+                }
+            }
+
+
+            
         }
 
     }

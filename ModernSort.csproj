@@ -118,6 +118,9 @@
     <None Remove="AppResources\Pictures\DarkestGreenThemeImages\TriangleArrowMein_64px.png" />
     <None Remove="AppResources\Pictures\DarkestGreenThemeImages\UpArrowBorderedFill_64px.png" />
     <None Remove="AppResources\Pictures\DarkestGreenThemeImages\UpArrowBordered_64px.png" />
+    <None Remove="AppResources\Pictures\DarkestGreenThemeImages\UploadFolderBordered2_64px.png" />
+    <None Remove="AppResources\Pictures\DarkestGreenThemeImages\UploadFolderBordered_64px.png" />
+    <None Remove="AppResources\Pictures\DarkestGreenThemeImages\UploadFolderMein_64px.png" />
     <None Remove="AppResources\Pictures\DeepPupleThemeImmages\AddMultimediaBordered2_128px.png" />
     <None Remove="AppResources\Pictures\DeepPupleThemeImmages\AddMultimediaBordered_128px.png" />
     <None Remove="AppResources\Pictures\DeepPupleThemeImmages\AddMultimediaMein_128px.png" />
@@ -213,6 +216,9 @@
     <None Remove="AppResources\Pictures\DeepPupleThemeImmages\TriangleArrowMein_64px.png" />
     <None Remove="AppResources\Pictures\DeepPupleThemeImmages\UpArrowBorderedFill_64px.png" />
     <None Remove="AppResources\Pictures\DeepPupleThemeImmages\UpArrowBordered_64px.png" />
+    <None Remove="AppResources\Pictures\DeepPupleThemeImmages\UploadFolderBordered2_64px.png" />
+    <None Remove="AppResources\Pictures\DeepPupleThemeImmages\UploadFolderBordered_64px.png" />
+    <None Remove="AppResources\Pictures\DeepPupleThemeImmages\UploadFolderMein_64px.png" />
     <None Remove="AppResources\Pictures\downArrowBorderedWhite128px.png" />
     <None Remove="AppResources\Pictures\downArrowBorderedWhite64px.png" />
     <None Remove="AppResources\Pictures\downArrowFillWhite128px.png" />
@@ -330,6 +336,9 @@
     <None Remove="AppResources\Pictures\PinappleThemeImages\TriangleArrowMein_64px.png" />
     <None Remove="AppResources\Pictures\PinappleThemeImages\UpArrowBorderedFill_64px.png" />
     <None Remove="AppResources\Pictures\PinappleThemeImages\UpArrowBordered_64px.png" />
+    <None Remove="AppResources\Pictures\PinappleThemeImages\UploadFolderBordered2_64px.png" />
+    <None Remove="AppResources\Pictures\PinappleThemeImages\UploadFolderBordered_64px.png" />
+    <None Remove="AppResources\Pictures\PinappleThemeImages\UploadFolderMein_64px.png" />
     <None Remove="AppResources\Pictures\plusFilterBorderedGray128px.png" />
     <None Remove="AppResources\Pictures\plusFilterBorderedPurple128px.png" />
     <None Remove="AppResources\Pictures\plusFilterFillWhite128px.png" />
@@ -429,6 +438,9 @@
     <None Remove="AppResources\Pictures\SeeRedThemeImages\TriangleArrowMein_64px.png" />
     <None Remove="AppResources\Pictures\SeeRedThemeImages\UpArrowBorderedFill_64px.png" />
     <None Remove="AppResources\Pictures\SeeRedThemeImages\UpArrowBordered_64px.png" />
+    <None Remove="AppResources\Pictures\SeeRedThemeImages\UploadFolderBordered2_64px.png" />
+    <None Remove="AppResources\Pictures\SeeRedThemeImages\UploadFolderBordered_64px.png" />
+    <None Remove="AppResources\Pictures\SeeRedThemeImages\UploadFolderMein_64px.png" />
     <None Remove="AppResources\Pictures\selectFilderBorderedGray128px.png" />
     <None Remove="AppResources\Pictures\selectFilderBorderedPurple128px.png" />
     <None Remove="AppResources\Pictures\selectFilderFillWhite128px.png" />
@@ -528,6 +540,9 @@
     <Resource Include="AppResources\Pictures\DarkestGreenThemeImages\TriangleArrowMein_64px.png" />
     <Resource Include="AppResources\Pictures\DarkestGreenThemeImages\UpArrowBorderedFill_64px.png" />
     <Resource Include="AppResources\Pictures\DarkestGreenThemeImages\UpArrowBordered_64px.png" />
+    <Resource Include="AppResources\Pictures\DarkestGreenThemeImages\UploadFolderBordered2_64px.png" />
+    <Resource Include="AppResources\Pictures\DarkestGreenThemeImages\UploadFolderBordered_64px.png" />
+    <Resource Include="AppResources\Pictures\DarkestGreenThemeImages\UploadFolderMein_64px.png" />
     <Resource Include="AppResources\Pictures\DeepPupleThemeImmages\AddMultimediaBordered2_128px.png" />
     <Resource Include="AppResources\Pictures\DeepPupleThemeImmages\AddMultimediaBordered_128px.png" />
     <Resource Include="AppResources\Pictures\DeepPupleThemeImmages\AddMultimediaMein_128px.png" />
@@ -601,6 +616,9 @@
     <Resource Include="AppResources\Pictures\DeepPupleThemeImmages\TriangleArrowMein_64px.png" />
     <Resource Include="AppResources\Pictures\DeepPupleThemeImmages\UpArrowBorderedFill_64px.png" />
     <Resource Include="AppResources\Pictures\DeepPupleThemeImmages\UpArrowBordered_64px.png" />
+    <Resource Include="AppResources\Pictures\DeepPupleThemeImmages\UploadFolderBordered2_64px.png" />
+    <Resource Include="AppResources\Pictures\DeepPupleThemeImmages\UploadFolderBordered_64px.png" />
+    <Resource Include="AppResources\Pictures\DeepPupleThemeImmages\UploadFolderMein_64px.png" />
     <Resource Include="AppResources\Pictures\PinappleThemeImages\AddMultimediaBordered2_128px.png" />
     <Resource Include="AppResources\Pictures\PinappleThemeImages\AddMultimediaBordered_128px.png" />
     <Resource Include="AppResources\Pictures\PinappleThemeImages\AddMultimediaMein_128px.png" />
@@ -674,6 +692,9 @@
     <Resource Include="AppResources\Pictures\PinappleThemeImages\TriangleArrowMein_64px.png" />
     <Resource Include="AppResources\Pictures\PinappleThemeImages\UpArrowBorderedFill_64px.png" />
     <Resource Include="AppResources\Pictures\PinappleThemeImages\UpArrowBordered_64px.png" />
+    <Resource Include="AppResources\Pictures\PinappleThemeImages\UploadFolderBordered2_64px.png" />
+    <Resource Include="AppResources\Pictures\PinappleThemeImages\UploadFolderBordered_64px.png" />
+    <Resource Include="AppResources\Pictures\PinappleThemeImages\UploadFolderMein_64px.png" />
     <Resource Include="AppResources\Pictures\SeeRedThemeImages\AddMultimediaBordered2_128px.png" />
     <Resource Include="AppResources\Pictures\SeeRedThemeImages\AddMultimediaBordered_128px.png" />
     <Resource Include="AppResources\Pictures\SeeRedThemeImages\AddMultimediaMein_128px.png" />
@@ -747,6 +768,9 @@
     <Resource Include="AppResources\Pictures\SeeRedThemeImages\TriangleArrowMein_64px.png" />
     <Resource Include="AppResources\Pictures\SeeRedThemeImages\UpArrowBorderedFill_64px.png" />
     <Resource Include="AppResources\Pictures\SeeRedThemeImages\UpArrowBordered_64px.png" />
+    <Resource Include="AppResources\Pictures\SeeRedThemeImages\UploadFolderBordered2_64px.png" />
+    <Resource Include="AppResources\Pictures\SeeRedThemeImages\UploadFolderBordered_64px.png" />
+    <Resource Include="AppResources\Pictures\SeeRedThemeImages\UploadFolderMein_64px.png" />
     <Resource Include="sorting-pc-application.ico" />
     <Resource Include="Styles\UserControlStyles\RadioButtonStyles.xaml" />
   </ItemGroup>
@@ -756,6 +780,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
   </ItemGroup>
 

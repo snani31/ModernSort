@@ -1,0 +1,103 @@
+﻿<ToolTip x:Class="ModernSort.CustomeControls.CustomUIControls.CustomTooltip"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+         xmlns:local="clr-namespace:ModernSort.CustomeControls.CustomUIControls"
+         mc:Ignorable="d" 
+         d:DesignHeight="450" d:DesignWidth="800"
+         x:Name="ToolTipMein"
+         HasDropShadow="True">
+    <ToolTip.Resources>
+        <ControlTemplate x:Name="WithHedderTooltipTemplate" x:Key="WithHedderTooltipTemplate" TargetType="ToolTip">
+            <Border Background="Transparent"
+                    Padding="10">
+                <Border Background="{TemplateBinding Background}" 
+                    CornerRadius="5" 
+                    BorderThickness="1"
+                    BorderBrush="{TemplateBinding BorderBrush}">
+                    <Grid MaxWidth="{TemplateBinding MaxWidth}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Border
+                            Grid.Row="0"
+                            >
+                            <TextBlock
+                                FontWeight="Bold"
+                                Margin="15 15 15 5"
+                                FontSize="20"
+                                Text="{Binding ElementName=ToolTipMein, Path=HeaderText}"
+                                HorizontalAlignment="Center"
+                                />
+                        </Border>
+
+                        <Separator 
+                        Margin="15 5 15 5" 
+                        Grid.Row="1"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="2"/>
+
+                        <Border
+                            Grid.Row="2"
+                            >
+                            <TextBlock
+                                FontWeight="DemiBold"
+                                Margin="15 5 15 10"
+                                FontSize="15"
+                                TextWrapping="Wrap"
+                                Text="{Binding ElementName=ToolTipMein, Path=ContentText}"
+                                HorizontalAlignment="Left"
+                                TextAlignment="Left"
+                                />
+                        </Border>
+                    </Grid>
+                </Border>
+                <Border.Effect>
+                    <DropShadowEffect
+                        ShadowDepth="0"
+                        Color="Black"
+                        Opacity="0.5"
+                        BlurRadius="18"/>
+                </Border.Effect>
+            </Border>
+        </ControlTemplate>
+        <ControlTemplate x:Name="NoHedderTooltipTemplate" x:Key="NoHedderTooltipTemplate" TargetType="ToolTip">
+            <Border Background="Transparent"
+                Padding="10">
+                <Border Background="{TemplateBinding Background}" 
+                    CornerRadius="5" 
+                    BorderThickness="1"
+                    BorderBrush="{TemplateBinding BorderBrush}">
+                    <Grid MaxWidth="{TemplateBinding MaxWidth}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Border
+                            Grid.Row="0"
+                            >
+                            <TextBlock
+                                FontWeight="DemiBold"
+                                Margin="15 10 15 10"
+                                FontSize="15"
+                                TextWrapping="Wrap"
+                                Text="{Binding ElementName=ToolTipMein, Path=ContentText}"
+                                HorizontalAlignment="Left"
+                                TextAlignment="Left"
+                                />
+                        </Border>
+                    </Grid>
+                </Border>
+                <Border.Effect>
+                    <DropShadowEffect
+             ShadowDepth="0"
+             Color="Black"
+             Opacity="0.5"
+             BlurRadius="18"/>
+                </Border.Effect>
+            </Border>
+        </ControlTemplate>
+    </ToolTip.Resources>
+</ToolTip>

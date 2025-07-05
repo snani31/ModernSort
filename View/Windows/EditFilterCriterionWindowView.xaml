@@ -124,7 +124,6 @@ ClipToBounds="True"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
                         x:Name="TytleTbx"
-                        ToolTip="Category  Descryption"
                         FontSize="30"
                         Foreground="{DynamicResource MeinThemeColor2}"
                         Background="Transparent"
@@ -135,14 +134,23 @@ ClipToBounds="True"
                         Text="{Binding Tytle, Mode=TwoWay}"
                         Margin="100 0 20 35"
                         Padding="10"
-                        />
+                        >
+                        <TextBox.ToolTip>
+                            <customCtrs:CustomTooltip
+                                ContentText="Discryption"
+                                Background="{DynamicResource MeinBackgroundColor}"
+                                Foreground="{DynamicResource MeinThemeColor}"
+                                BorderBrush="{DynamicResource MeinThemeColor}"
+                                Placement="MousePoint"
+                                />
+                        </TextBox.ToolTip>
+                    </TextBox>
 
 
                     <customCtrs:CustomButton
                        Grid.Row="0"
                         Grid.Column="2"
                         Margin="10"
-                        ToolTip="Delete Category"
                         Command="{Binding RemoveFilterCriterion}"
                         FirstButtonColor="{DynamicResource ContrastingColor}"
                         SecondButtonColor="{DynamicResource MeinBackgroundColor}"
@@ -152,13 +160,23 @@ ClipToBounds="True"
                         TextBlockHorizontalAlignment ="Left"
                         DefoultImageSource="{DynamicResource TrashCanContrasting}"
                         MouseHoverImageSource="{DynamicResource TrashCanBordered}"
-                        />
+                        >
+                        <customCtrs:CustomButton.ToolTip>
+                            <customCtrs:CustomTooltip
+                                ContentText="Delete filter criterion"
+                                Background="{DynamicResource MeinBackgroundColor}"
+                                Foreground="{DynamicResource MeinThemeColor}"
+                                BorderBrush="{DynamicResource MeinThemeColor}"
+                                Placement="MousePoint"
+                                />
+                        </customCtrs:CustomButton.ToolTip>
+                    </customCtrs:CustomButton>
 
 
                     <customCtrs:CustomButton
                         Grid.Row="1"
                         Grid.Column="2"
-                        ToolTip="Delete Category"
+                        ToolTip="Add new condition"
                         BorderThickness="4 0 0 0"
                         FirstButtonColor="{DynamicResource MeinThemeColor}"
                         SecondButtonColor="{DynamicResource MeinBackgroundColor}"
@@ -171,7 +189,6 @@ ClipToBounds="True"
 
                     <TextBox
                         x:Name="DescryptioonTbx"
-                        ToolTip="Category  Descryption"
                         Grid.Row="1"
                         FontSize="30"
                         Foreground="{DynamicResource MeinThemeColor2}"
@@ -181,7 +198,17 @@ ClipToBounds="True"
                         Style="{StaticResource TuskDataTextBoxStyle}"
                         Margin="10 0 10 0"
                         Padding="10"
-                        />
+                        >
+                        <TextBox.ToolTip>
+                            <customCtrs:CustomTooltip
+                                ContentText="Description"
+                                Background="{DynamicResource MeinBackgroundColor}"
+                                Foreground="{DynamicResource MeinThemeColor}"
+                                BorderBrush="{DynamicResource MeinThemeColor}"
+                                Placement="MousePoint"
+                                />
+                        </TextBox.ToolTip>
+                    </TextBox>
 
 
 
@@ -274,11 +301,20 @@ ClipToBounds="True"
                                         HorizontalAlignment="Right"
                                         Grid.Row="0"
                                         Grid.Column="1"
-                                        ToolTip="Filter Tytle is required field"
                                         Width="50"
                                         Height="50"
                                         Visibility="Collapsed"
                                         >
+                                        <Button.ToolTip>
+                                            <customCtrs:CustomTooltip
+                                                HeaderText="Warning !"
+                                                ContentText="Filter Title is required field"
+                                                Background="{DynamicResource MeinBackgroundColor}"
+                                                Foreground="{DynamicResource MeinThemeColor}"
+                                                BorderBrush="{DynamicResource MeinThemeColor}"
+                                                Placement="MousePoint"
+                                                />
+                                        </Button.ToolTip>
                                         <Button.Template>
                                             <ControlTemplate TargetType="Button">
                                                 <Image x:Name="icon" Margin="5" Source="{DynamicResource ExclamationMarkContrasting}"/>
@@ -298,10 +334,18 @@ ClipToBounds="True"
                                         Command="{Binding DataContext.RemoveSelectedFilterFromList,
                                             RelativeSource={RelativeSource AncestorType=ListView,Mode=FindAncestor}}"
                                         CommandParameter="{Binding}"
-                                        ToolTip="Remove"
                                         Width="50"
                                         Height="50"
                                         >
+                                        <Button.ToolTip>
+                                            <customCtrs:CustomTooltip
+                                                ContentText="Remove"
+                                                Background="{DynamicResource MeinBackgroundColor}"
+                                                Foreground="{DynamicResource MeinThemeColor}"
+                                                BorderBrush="{DynamicResource MeinThemeColor}"
+                                                Placement="MousePoint"
+                                                />
+                                        </Button.ToolTip>
                                         <Button.Template>
                                             <ControlTemplate TargetType="Button">
                                                 <Image x:Name="icon" Margin="5" Source="{DynamicResource CrossPentagonContrasting}"/>

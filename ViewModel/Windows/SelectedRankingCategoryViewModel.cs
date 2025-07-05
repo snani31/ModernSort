@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using ModernSort.Commands;
+﻿using ModernSort.Commands;
 using ModernSort.Services;
 using ModernSort.Services.Dialog;
 using ModernSort.Services.Operations;
@@ -10,13 +9,9 @@ using ModernSort.Stores.Navigation;
 using ModernSort.ViewModel.Items;
 using ModernSort.ViewModel.Pages;
 using RankingEntityes.Filters;
-using RankingEntityes.IO_Entities.Interfaces;
 using RankingEntityes.Ranking_Entityes.MediaObjacts;
 using RankingEntityes.Ranking_Entityes.Ranking_Categories;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Windows;
 using System.Windows.Input;
 
 namespace ModernSort.ViewModel.Windows
@@ -249,7 +244,7 @@ namespace ModernSort.ViewModel.Windows
                 ContentService.MediaObjectContentService
                 .GetUnloadedMediaObjects()
                 .Select(x => new MediaObjectItemViewModel(x, CatalogStore.MediaFilesCatalogPath)));
-            
+
             IsMediaObjectPageSelected = false;
             OnPropertyChenged(nameof(IsMediaObjectPageSelected));
 

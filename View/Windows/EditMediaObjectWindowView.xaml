@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:customUI="clr-namespace:ModernSort.CustomeControls"
         xmlns:local="clr-namespace:ModernSort.View.Windows"
         xmlns:customCtrs ="clr-namespace:ModernSort.CustomeControls.CustomUIControls"
         xmlns:enums="clr-namespace:ModernSort.Enums"
@@ -244,7 +243,6 @@ ClipToBounds="True"
                                                                                     FirstButtonColor="{DynamicResource MeinThemeColor}"
                                                                                     SecondButtonColor="{DynamicResource DimBackgroundColor}"
                                                                                     CornerRadius="0 10 0 0"
-                                                                                    ToolTip="Remove file"
                                                                                     ImageMargin="5"
                                                                                     
                                                                                     Command="{Binding DataContext.RemoveFileFromList, 
@@ -255,7 +253,17 @@ ClipToBounds="True"
                                                                                     DefoultImageSource="{DynamicResource RoundedCrossContrastinng}"
                                                                                     MouseHoverImageSource="{DynamicResource RoundedCrossFillContrastinng}"
                                                                                     
-                                                                                    />
+                                                                                    >
+                                                                                    <customCtrs:CustomButton.ToolTip>
+                                                                                        <customCtrs:CustomTooltip
+                                                                                            ContentText="Remove file"
+                                                                                            Background="{DynamicResource MeinBackgroundColor}"
+                                                                                            Foreground="{DynamicResource MeinThemeColor}"
+                                                                                            BorderBrush="{DynamicResource MeinThemeColor}"
+                                                                                            Placement="MousePoint"
+                                                                                            />
+                                                                                    </customCtrs:CustomButton.ToolTip>
+                                                                                </customCtrs:CustomButton>
                                                                             </StackPanel>
                                                                         </Border>
                                                                         <Border
@@ -569,13 +577,12 @@ ClipToBounds="True"
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            
+
                             <customCtrs:CustomButton
                                 FirstButtonColor="{DynamicResource ContrastingColor}"
                                 SecondButtonColor="{DynamicResource MeinBackgroundColor}"
                                 CornerRadius="10"
                                 BorderThickness="5"
-                                ToolTip="Delete media object"
                                 ImageMargin="10"
                                 Command="{Binding DeleteMediaObjact}"
                                 TextBlockHorizontalAlignment ="Left"
@@ -583,12 +590,21 @@ ClipToBounds="True"
                                 MouseHoverImageSource="{DynamicResource RemoveMultimediaBordered}"
                                 Margin="10"
                                 Grid.Row="0"
-                                />
-                                
+                                >
+                                <customCtrs:CustomButton.ToolTip>
+                                    <customCtrs:CustomTooltip
+                                        ContentText="Delete media object"
+                                        Background="{DynamicResource MeinBackgroundColor}"
+                                        Foreground="{DynamicResource MeinThemeColor}"
+                                        BorderBrush="{DynamicResource MeinThemeColor}"
+                                        Placement="MousePoint"
+                                        />
+                                </customCtrs:CustomButton.ToolTip>
+                            </customCtrs:CustomButton>
+
                             <TextBox 
                             Grid.Column="1"
                             x:Name="TytleTbx"
-                            ToolTip="Category Tytle"
                             FontSize="30"
                             Foreground="{DynamicResource MeinThemeColor2}"
                             TextWrapping="Wrap"
@@ -597,12 +613,21 @@ ClipToBounds="True"
                             Style="{StaticResource TuskDataTextBoxStyle}"
                             Margin="10"
                             Padding="10"
-                            />
+                            >
+                                <TextBox.ToolTip>
+                                    <customCtrs:CustomTooltip
+                                        ContentText="Tytle"
+                                        Background="{DynamicResource MeinBackgroundColor}"
+                                        Foreground="{DynamicResource MeinThemeColor}"
+                                        BorderBrush="{DynamicResource MeinThemeColor}"
+                                        Placement="MousePoint"
+                                        />
+                                </TextBox.ToolTip>
+                            </TextBox>
                         </Grid>
 
                         <TextBox
                             x:Name="DescryptioonTbx"
-                            ToolTip="Category  Descryption"
                             Grid.Row="1"
                             FontSize="30"
                             Foreground="{DynamicResource MeinThemeColor2}"
@@ -612,7 +637,17 @@ ClipToBounds="True"
                             Style="{StaticResource TuskDataTextBoxStyle}"
                             Margin="10"
                             Padding="10"
-                            />
+                            >
+                            <TextBox.ToolTip>
+                                <customCtrs:CustomTooltip
+                                    ContentText="Description"
+                                    Background="{DynamicResource MeinBackgroundColor}"
+                                    Foreground="{DynamicResource MeinThemeColor}"
+                                    BorderBrush="{DynamicResource MeinThemeColor}"
+                                    Placement="MousePoint"
+                                    />
+                            </TextBox.ToolTip>
+                        </TextBox>
 
                         <Grid 
                             Grid.Row="2"

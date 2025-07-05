@@ -5,22 +5,12 @@ using ModernSort.Services.Dialog;
 using ModernSort.Services.Operations;
 using ModernSort.Services.Operatios;
 using ModernSort.Static;
-using ModernSort.ViewModel.Items;
 using ModernSort.ViewModel.Items.FiltrationItems;
 using RankingEntityes.Filters;
-using RankingEntityes.IO_Entities.Interfaces;
 using RankingEntityes.Ranking_Entityes.MediaObjacts;
-using RankingEntityes.Ranking_Entityes.Ranking_Categories;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace ModernSort.ViewModel.Windows
@@ -46,7 +36,7 @@ namespace ModernSort.ViewModel.Windows
 
         private string _mediaObjectDescryption;
 
-        [MaxLength(100, ErrorMessage = "Max Lenght for Descryption is 100 symbols")]
+        [MaxLength(500, ErrorMessage = "Max lenght for description is 500 symbols")]
         public string MediaObjectDescryption
         {
             get { return _mediaObjectDescryption; }
@@ -60,7 +50,7 @@ namespace ModernSort.ViewModel.Windows
 
         private string _mediaObjectTytle;
 
-        [MaxLength(30, ErrorMessage = "Max Lenght for Tytle is 30 symbols")]
+        [MaxLength(60, ErrorMessage = "Max lenght for title is 60 symbols")]
         public string MediaObjectTytle
         {
             get { return _mediaObjectTytle; }

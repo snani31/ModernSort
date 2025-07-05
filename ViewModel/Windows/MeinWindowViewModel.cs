@@ -6,7 +6,6 @@ using System.Collections.ObjectModel;
 using ModernSort.ViewModel.Items;
 using ModernSort.ViewModel.Windows;
 using ModernSort.Services.Dialog;
-using RankingEntityes.IO_Entities.Classes;
 using ModernSort.Stores.Catalog;
 using ModernSort.Services.Operations;
 using ModernSort.Services;

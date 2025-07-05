@@ -66,18 +66,30 @@
                                                 <ColumnDefinition Width="60"/>
                                             </Grid.ColumnDefinitions>
                                             <TextBlock
-                                            Grid.Column="0"
-                                            TextWrapping="Wrap"
-                                            Foreground="{DynamicResource MeinBackgroundColor}"
-                                            FontSize="25"
-                                            Style="{StaticResource SpanDefoult}"
-                                            TextAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            HorizontalAlignment="Center"
-                                            x:Name="FilterCriterionTytleTextBlock"
-                                            Text="{Binding Tytle}"
-                                            ToolTip="{Binding Tytle}"
-                                            />
+                                                Grid.Column="0"
+                                                TextWrapping="NoWrap"
+                                                Margin="10"
+                                                Foreground="{DynamicResource MeinBackgroundColor}"
+                                                FontSize="25"
+                                                Style="{StaticResource SpanDefoult}"
+                                                TextAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                x:Name="FilterCriterionTytleTextBlock"
+                                                Text="{Binding Tytle}"
+                                            >
+                                                <TextBlock.ToolTip>
+                                                    <customCtrs:CustomTooltip
+                                                        FontFamily="Tahoma"
+                                                        MaxWidth="400"
+                                                        ContentText="{Binding Tytle}"
+                                                        Background="{DynamicResource MeinBackgroundColor}"
+                                                        Foreground="{DynamicResource MeinThemeColor}"
+                                                        BorderBrush="{DynamicResource MeinThemeColor}"
+                                                        Placement="MousePoint"
+                                                        />
+                                                </TextBlock.ToolTip>
+                                            </TextBlock>
                                             <CheckBox
                                                 Name="FilterCriterionExpanderCheckBox"
                                                 Checked="ExpandCheckBoxCheckHandler"
@@ -116,8 +128,18 @@
                                             
                                             <Button
                                             Grid.Column="2"
-                                            ToolTip="{Binding Description}"
                                             Margin="10 10 10 10">
+                                                <Button.ToolTip>
+                                                    <customCtrs:CustomTooltip
+                                                        MaxWidth="400"
+                                                        HeaderText="Filter description"
+                                                        ContentText="{Binding Description}"
+                                                        Background="{DynamicResource MeinBackgroundColor}"
+                                                        Foreground="{DynamicResource MeinThemeColor}"
+                                                        BorderBrush="{DynamicResource MeinThemeColor}"
+                                                        Placement="MousePoint"
+                                                        />
+                                                </Button.ToolTip>
                                                 <Button.Template>
                                                     <ControlTemplate TargetType="Button">
                                                         <Border
@@ -146,8 +168,16 @@
                                             Grid.Column="3"
                                             Command="{Binding DataContext.OpenEditWindow, RelativeSource={RelativeSource AncestorType= ListView,Mode=FindAncestor}}"
                                             CommandParameter="{Binding}"
-                                            ToolTip="Edit filter criterionn"
                                             Margin="10 10 10 10">
+                                                <Button.ToolTip>
+                                                    <customCtrs:CustomTooltip
+                                                        ContentText="Edit"
+                                                        Background="{DynamicResource MeinBackgroundColor}"
+                                                        Foreground="{DynamicResource MeinThemeColor}"
+                                                        BorderBrush="{DynamicResource MeinThemeColor}"
+                                                        Placement="MousePoint"
+                                                        />
+                                                </Button.ToolTip>
                                                 <Button.Template>
                                                     <ControlTemplate TargetType="Button">
                                                         <Border
@@ -213,12 +243,22 @@
                                                         FontSize="20"
                                                         TextWrapping="Wrap"
                                                         Background="Transparent"
-                                                        ToolTip="{Binding ConditionTytle}"
                                                         Text="{Binding ConditionTytle}"
                                                         Width="250"
                                                         Height="50"
                                                         Margin="30 0 0 0"
-                                                        />
+                                                        >
+                                                        <TextBlock.ToolTip>
+                                                            <customCtrs:CustomTooltip
+                                                                MaxWidth="400"
+                                                                ContentText="{Binding ConditionTytle}"
+                                                                Background="{DynamicResource MeinBackgroundColor}"
+                                                                Foreground="{DynamicResource MeinThemeColor}"
+                                                                BorderBrush="{DynamicResource MeinThemeColor}"
+                                                                Placement="MousePoint"
+                                                                />
+                                                        </TextBlock.ToolTip>
+                                                    </TextBlock>
                                                     <Viewbox
                                                     Grid.Row="0"
                                                     Grid.Column="1"
@@ -285,7 +325,6 @@
 
                 <customCtrs:CustomButton
                     Grid.Column="2"
-                    ToolTip="Refresh"
                     Command="{Binding RefreshFilterSelectionList}"
                     FirstButtonColor="{DynamicResource DimMeinThemeColor3}"
                     SecondButtonColor="Transparent"
@@ -294,7 +333,17 @@
                     TextBlockHorizontalAlignment ="Left"
                     DefoultImageSource="{DynamicResource RefreshmeinMein}"
                     MouseHoverImageSource="{DynamicResource RefreshmeinMein}"
-                    />
+                    >
+                    <customCtrs:CustomButton.ToolTip>
+                        <customCtrs:CustomTooltip
+                            ContentText="Refresh"
+                            Background="{DynamicResource MeinBackgroundColor}"
+                            Foreground="{DynamicResource MeinThemeColor}"
+                            BorderBrush="{DynamicResource MeinThemeColor}"
+                            Placement="MousePoint"
+                            />
+                    </customCtrs:CustomButton.ToolTip>
+                </customCtrs:CustomButton>
 
             </Grid>
         </Border>

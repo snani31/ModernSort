@@ -52,7 +52,6 @@
                     <customCtrs:CustomButton
                         Grid.Column="0"
                         Command="{Binding ScrollPresenterLeft}"
-                        ToolTip="Left scroll"
                         FirstButtonColor="{DynamicResource MeinThemeColor}"
                         SecondButtonColor="{DynamicResource MeinBackgroundColor}"
                         ImageMargin="5"
@@ -164,7 +163,6 @@
                         Grid.Column="2"
                         CornerRadius="0 0 20 0"
                         Command="{Binding ScrollPresenterRight}"
-                        ToolTip="Left scroll"
                         FirstButtonColor="{DynamicResource MeinThemeColor}"
                         SecondButtonColor="{DynamicResource MeinBackgroundColor}"
                         ImageMargin="5"

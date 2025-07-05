@@ -54,7 +54,7 @@ namespace ModernSort.ViewModel.Windows
 
         private string _title;
 
-        [MaxLength(20, ErrorMessage = $"Tytle can not be bigger then 20 symbols")]
+        [MaxLength(20, ErrorMessage = $"Title can not be bigger then 20 symbols")]
         public string Tytle
         {
             get
@@ -70,7 +70,7 @@ namespace ModernSort.ViewModel.Windows
 
         private string _descriptyon;
 
-        [MaxLength(100, ErrorMessage = $"Descriptyon can not be bigger then 100 symbols")]
+        [MaxLength(100, ErrorMessage = $"Description can not be bigger then 100 symbols")]
         public string Descriptyon
         {
             get

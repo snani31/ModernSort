@@ -1,5 +1,4 @@
 ﻿using ModernSort.Commands;
-using ModernSort.Stores.Catalog;
 using ModernSort.Services.Dialog;
 using ModernSort.Services.Operations;
 using ModernSort.Static;
@@ -17,8 +16,8 @@ namespace ModernSort.ViewModel.Windows
         private bool IconWasChange { get; set; }
         private string _categoryDescryption;
 
-        [Required(ErrorMessage = "Descryption can not be Empthy")]
-        [MaxLength(100, ErrorMessage = "Max Lenght for Descryption is 100 symbols")]
+        [Required(ErrorMessage = "Description can not be empthy")]
+        [MaxLength(500, ErrorMessage = "Max lenght for description is 500 symbols")]
         public string CategoryDescryption
         {
             get { return _categoryDescryption; }
@@ -33,7 +32,7 @@ namespace ModernSort.ViewModel.Windows
         private string _categoryTytle;
 
         [Required(ErrorMessage ="Tytle can not be Empthy")]
-        [MaxLength(30,ErrorMessage ="Max Lenght for Tytle is 30 symbols")]
+        [MaxLength(60,ErrorMessage ="Max lenght for title is 60 symbols")]
         public string CategoryTytle
         {
             get { return _categoryTytle; }

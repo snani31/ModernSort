@@ -127,7 +127,19 @@
                       >
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource RankingListItemStyle}">
-                                    <Setter Property="ToolTip" Value="{Binding Descryption}"/>
+                                    <Setter Property="ToolTip">
+                                        <Setter.Value>
+                                            <customCtrs:CustomTooltip
+                                                MaxWidth="400"
+                                                HeaderText="Description"
+                                                ContentText="{Binding Descryption}"
+                                                Background="{DynamicResource MeinBackgroundColor}"
+                                                Foreground="{DynamicResource MeinThemeColor}"
+                                                BorderBrush="{DynamicResource MeinThemeColor}"
+                                                Placement="MousePoint"
+                                                />
+                                        </Setter.Value>
+                                    </Setter>
                                     <Setter Property="VerticalContentAlignment" Value="Stretch"/>
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                                     <Setter Property="Margin" Value="0 0 20 0"/>
@@ -176,9 +188,18 @@
                                         Grid.Column="0"
                                         Command="{Binding DataContext.OpenEditRankingWindow, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
                                         CommandParameter="{Binding}"
-                                        ToolTip="Edit Category"
                                         Background="Transparent"
                                         >
+                                            <Button.ToolTip>
+                                                <customCtrs:CustomTooltip
+                                                    MaxWidth="400"
+                                                    ContentText="Edit Ranking"
+                                                    Background="{DynamicResource MeinBackgroundColor}"
+                                                    Foreground="{DynamicResource MeinThemeColor}"
+                                                    BorderBrush="{DynamicResource MeinThemeColor}"
+                                                    Placement="MousePoint"
+                                                    />
+                                            </Button.ToolTip>
                                             <Button.Template>
                                                 <ControlTemplate TargetType="Button">
                                                     <Border 
@@ -268,8 +289,8 @@
                         DisabledImageSource="{DynamicResource PaletteBordered2}"
                         DefoultImageSource="{DynamicResource PaletteMein}"
                         MouseHoverImageSource="{DynamicResource PaletteBordered}"
-                            
-                        />
+                          >
+                    </customCtrs:CustomButton>
 
                     <customCtrs:CustomButton
                         BorderColorBrush="Red"

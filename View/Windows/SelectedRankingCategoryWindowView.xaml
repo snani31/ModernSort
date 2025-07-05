@@ -7,7 +7,6 @@
     xmlns:vmsWin="clr-namespace:ModernSort.ViewModel.Windows"
     xmlns:vmsPgs="clr-namespace:ModernSort.ViewModel.Pages"
     xmlns:viewPgs="clr-namespace:ModernSort.View.Pages"
-    xmlns:customUI="clr-namespace:ModernSort.CustomeControls"
     xmlns:customCtrs ="clr-namespace:ModernSort.CustomeControls.CustomUIControls"
     xmlns:local="clr-namespace:ModernSort.View.Windows"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
@@ -57,7 +56,7 @@
 
 
                     <Button Grid.Column="1"
-         ToolTip="Закрыть"
+         ToolTip="Hide"
             Click="HideButton_Click">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
@@ -74,7 +73,7 @@
                     </Button>
 
                     <Button Grid.Column="2"
-                        ToolTip="Свернуть"
+                        ToolTip="Maximize"
                         Click="MaximizeButton_Click">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
@@ -92,7 +91,7 @@
 
                     <Button Grid.Column="3"
         Command="{Binding CloseDialog}"
-        ToolTip="Закрыть">
+        ToolTip="Close">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=TopRightCloseButtonBorderCornerRadius}">
@@ -147,7 +146,6 @@
 
                             <TextBox
                                x:Name="SearchTbox"
-                                ToolTip="Category  Descryption"
                                 Grid.Column="1"
                                 FontSize="25"
                                 Background="{DynamicResource MeinBackgroundColor}"
@@ -361,16 +359,25 @@
                                                 Padding="4"
                                                 Width="150"
                                                 Height="150">
-                                                <Image
+                                                    <Image
                                                     Stretch="Fill"
                                                     Width="140"
                                                     Height="140"
-                                                    ToolTip="{Binding Descryption}"
                                                     Source="{Binding Path =FirstImagePath, 
-                                                    Converter={StaticResource ToBitmapConverter}}"
-                                                    
-                                                       />
-                                            </Border>
+                                                    Converter={StaticResource ToBitmapConverter}}">
+                                                        <Image.ToolTip>
+                                                            <customCtrs:CustomTooltip
+                                                                MaxWidth="400"
+                                                                HeaderText="Description"
+                                                                ContentText="{Binding Descryption}"
+                                                                Background="{DynamicResource MeinBackgroundColor}"
+                                                                Foreground="{DynamicResource MeinThemeColor}"
+                                                                BorderBrush="{DynamicResource MeinThemeColor}"
+                                                                Placement="MousePoint"
+                                                                />
+                                                        </Image.ToolTip>
+                                                    </Image>
+                                                </Border>
                                             <Grid Grid.Row="1">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="4*"/>
@@ -440,7 +447,6 @@
 
                         <customCtrs:CustomButton
                             Grid.Row="1"
-                            ToolTip="Export selected images"
                             FirstButtonColor="{DynamicResource MeinThemeColor}"
                             SecondButtonColor="{DynamicResource MeinBackgroundColor}"
                             DisabledStateColor="{DynamicResource DimBackgroundColor}"
@@ -452,8 +458,18 @@
                             DisabledImageSource="{DynamicResource UploadFolderBordered2}"
                             DefoultImageSource="{DynamicResource UploadFolderMein}"
                             MouseHoverImageSource="{DynamicResource UploadFolderBordered}"
-                                />
-                        </Grid>
+                                >
+                            <customCtrs:CustomButton.ToolTip>
+                                <customCtrs:CustomTooltip
+                                    ContentText="Export selected medias"
+                                    Background="{DynamicResource MeinBackgroundColor}"
+                                    Foreground="{DynamicResource MeinThemeColor}"
+                                    BorderBrush="{DynamicResource MeinThemeColor}"
+                                    Placement="MousePoint"
+                                    />
+                            </customCtrs:CustomButton.ToolTip>
+                        </customCtrs:CustomButton>
+                    </Grid>
 
                 </Grid>
                 <Border 

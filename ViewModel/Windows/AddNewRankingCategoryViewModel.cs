@@ -1,18 +1,9 @@
 ﻿using ModernSort.Commands;
-using ModernSort.Stores.Catalog;
 using ModernSort.Services.Dialog;
 using ModernSort.Services.Operations;
 using ModernSort.Static;
-using RankingEntityes.IO_Entities.Interfaces;
 using RankingEntityes.Ranking_Entityes.Ranking_Categories;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using ModernSort.Services;
 
@@ -40,8 +31,8 @@ namespace ModernSort.ViewModel.Windows
             } 
         }
         private string _newRankingTytle;
-        [Required(ErrorMessage = "Tytle can not be Empthy")]
-        [MaxLength(30, ErrorMessage = "Max Lenght for Tytle is 30 symbols")]
+        [Required(ErrorMessage = "Title can not be Empthy")]
+        [MaxLength(30, ErrorMessage = "Max Lenght for Title is 30 symbols")]
         public string NewRankingTytle
         {
             get { return _newRankingTytle; }
@@ -54,8 +45,8 @@ namespace ModernSort.ViewModel.Windows
 
         private string _newRankingDescryption;
 
-        [Required(ErrorMessage = "Descryption can not be Empthy")]
-        [MaxLength(100, ErrorMessage = "Max Lenght for Descryption is 100 symbols")]
+        [Required(ErrorMessage = "Description can not be Empthy")]
+        [MaxLength(100, ErrorMessage = "Max Lenght for Description is 100 symbols")]
         public string NewRankingDescryption
         {
             get { return _newRankingDescryption; }

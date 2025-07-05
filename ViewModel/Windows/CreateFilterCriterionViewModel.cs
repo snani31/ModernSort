@@ -17,7 +17,7 @@ namespace ModernSort.ViewModel.Windows
         private OperationService OperationService { get; init; }
 
         private ObservableCollection<ConditionFilterCreatingItem> _createdFilters;
-        [MinLength(1, ErrorMessage = "You need to create just 1 filter at Least")]
+        [MinLength(1, ErrorMessage = "You need to create just 1 filter at least")]
         public ObservableCollection<ConditionFilterCreatingItem> CreatedFilters {
             get
             {
@@ -41,8 +41,8 @@ namespace ModernSort.ViewModel.Windows
 
         private string _title;
 
-        [Required(ErrorMessage = "Tytle can not be Empthy")]
-        [MaxLength(30, ErrorMessage = "Max Lenght for Tytle is 30 symbols")]
+        [Required(ErrorMessage = "Title can not be empthy")]
+        [MaxLength(60, ErrorMessage = "Max lenght for title is 60 symbols")]
         public string Tytle
         {
             get
@@ -58,8 +58,8 @@ namespace ModernSort.ViewModel.Windows
 
         private string _descriptyon;
 
-        [Required(ErrorMessage = "Descryption can not be Empthy")]
-        [MaxLength(100, ErrorMessage = "Max Lenght for Descryption is 100 symbols")]
+        [Required(ErrorMessage = "Description can not be empthy")]
+        [MaxLength(500, ErrorMessage = "Max lenght for description is 500 symbols")]
         public string Descriptyon
         {
             get
@@ -121,7 +121,7 @@ namespace ModernSort.ViewModel.Windows
             uint newFilterStartNumber = 0;
             return (object? p) =>
             {
-                string newFilterBaseTytle = $"New Filter {++newFilterStartNumber}";
+                string newFilterBaseTytle = $"New filter {++newFilterStartNumber}";
                 var newConditionFilterCreationItem = new ConditionFilterCreatingItem((ConditionFilter)CreateFilterCommandMethod(newFilterBaseTytle), CreateFilterCriterionCommand);
                 CreatedFilters.Add(newConditionFilterCreationItem);
                 CreateFilterCriterionCommand.CanExecutePredicate += newConditionFilterCreationItem.CanExecuteByValidation;

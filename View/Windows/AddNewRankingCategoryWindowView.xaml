@@ -56,7 +56,7 @@
 
 
                     <Button Grid.Column="1"
-         ToolTip="Закрыть"
+         ToolTip="Hide"
             Click="HideButton_Click">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
@@ -73,7 +73,7 @@
                     </Button>
 
                     <Button Grid.Column="2"
-         ToolTip="Свернуть"
+         ToolTip="Maximize"
             Click="MaximizeButton_Click">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
@@ -91,7 +91,7 @@
 
                     <Button Grid.Column="3"
                         Command="{Binding CloseDialog}"
-                        ToolTip="Закрыть">
+                        ToolTip="Close">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border BorderThickness="0" Margin="0" Name="brd" Background="Transparent" CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=customCtrs:BaseWindow,Mode=FindAncestor},Path=TopRightCloseButtonBorderCornerRadius}">
@@ -129,7 +129,7 @@
                             Foreground="{DynamicResource MeinThemeColor}"
                             FontSize="25"
                             Style="{StaticResource SpanDefoult}"
-                            Text="Select tytle for new Category"
+                            Text="Select title for new Category"
                             />
                         <TextBlock
                             TextWrapping="Wrap"
@@ -154,7 +154,7 @@
                             Foreground="{DynamicResource MeinThemeColor}"
                             FontSize="25"
                             Style="{StaticResource SpanDefoult}"
-                            Text="Write some descripryons for your category"
+                            Text="Write some descriptions for your category"
                             />
                         <TextBlock
                             TextWrapping="Wrap"
@@ -198,7 +198,6 @@
                                  />
 
                             <customCtrs:CustomButton
-                               ToolTip="Select picture"
                                 Command="{Binding SelectImageFile}"
                                 Height="60"
                                 Grid.Column="1"

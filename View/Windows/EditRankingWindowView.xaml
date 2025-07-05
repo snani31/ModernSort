@@ -231,7 +231,6 @@
                             Grid.Column="1"
                             Command="{Binding DeleteCategory}"
                             Margin="10"
-                            ToolTip="Delete Category"
                             FirstButtonColor="{DynamicResource ContrastingColor}"
                             SecondButtonColor="{DynamicResource MeinBackgroundColor}"
                             CornerRadius="10"
@@ -241,13 +240,22 @@
                             DefoultImageSource="{DynamicResource TrashCanContrasting}"
                             MouseHoverImageSource="{DynamicResource TrashCanBordered}"
                             Grid.Row="0"
-                            />
+                            >
+                            <customCtrs:CustomButton.ToolTip>
+                                <customCtrs:CustomTooltip
+                                    ContentText="Delete Ranking"
+                                    Background="{DynamicResource MeinBackgroundColor}"
+                                    Foreground="{DynamicResource MeinThemeColor}"
+                                    BorderBrush="{DynamicResource MeinThemeColor}"
+                                    Placement="MousePoint"
+                                    />
+                            </customCtrs:CustomButton.ToolTip>
+                        </customCtrs:CustomButton>
 
-                        
-                        
+
+
                         <TextBox 
                             x:Name="TytleTbx"
-                            ToolTip="Category Tytle"
                             FontSize="30"
                             Foreground="{DynamicResource MeinThemeColor2}"
                             TextWrapping="Wrap"
@@ -256,12 +264,21 @@
                             Margin="10"
                             Padding="10"
                             Text="{Binding CategoryTytle, Mode=TwoWay}"
-                            />
+                            >
+                            <TextBox.ToolTip>
+                                <customCtrs:CustomTooltip
+                                    ContentText="Tytle"
+                                    Background="{DynamicResource MeinBackgroundColor}"
+                                    Foreground="{DynamicResource MeinThemeColor}"
+                                    BorderBrush="{DynamicResource MeinThemeColor}"
+                                    Placement="MousePoint"
+                                    />
+                            </TextBox.ToolTip>
+                        </TextBox>
                     </Grid>
 
                     <TextBox
                         x:Name="DescryptioonTbx"
-                        ToolTip="Category Descryption"
                         Grid.Row="1"
                         FontSize="30"
                         Foreground="{DynamicResource MeinThemeColor2}"
@@ -271,7 +288,17 @@
                         Margin="10"
                         Padding="10"
                         Text="{Binding CategoryDescryption, Mode=TwoWay}"
-                        />
+                        >
+                        <TextBox.ToolTip>
+                            <customCtrs:CustomTooltip
+                                ContentText="Description"
+                                Background="{DynamicResource MeinBackgroundColor}"
+                                Foreground="{DynamicResource MeinThemeColor}"
+                                BorderBrush="{DynamicResource MeinThemeColor}"
+                                Placement="MousePoint"
+                                />
+                        </TextBox.ToolTip>
+                    </TextBox>
 
                     <customCtrs:CustomButton
                         SecondButtonColor="{DynamicResource MeinBackgroundColor}"

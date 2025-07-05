@@ -146,10 +146,6 @@ namespace ModernSort.Static
                     }
                 }
             }
-
-
-            
         }
-
     }
 }

@@ -26,8 +26,8 @@ namespace ModernSort.ViewModel.Windows
 
         private string _title;
 
-        [Required(ErrorMessage = "Tytle can not be Empthy")]
-        [MaxLength(30, ErrorMessage = "Max Lenght for Tytle is 30 symbols")]
+        [Required(ErrorMessage = "Tytle can not be empthy")]
+        [MaxLength(60, ErrorMessage = "Max lenght for Title is 60 symbols")]
         public string Tytle
         {
             get
@@ -43,8 +43,8 @@ namespace ModernSort.ViewModel.Windows
         }
 
         private string _descriptyon;
-        [Required(ErrorMessage = "Description can not be Empthy")]
-        [MaxLength(100, ErrorMessage = "Max Lenght for Description is 100 symbols")]
+        [Required(ErrorMessage = "Description can not be empthy")]
+        [MaxLength(500, ErrorMessage = "Max lenght for description is 500 symbols")]
         public string Descriptyon
         {
             get
@@ -220,7 +220,7 @@ namespace ModernSort.ViewModel.Windows
             uint newFilterStartNumber = 0;
             return (object? p) =>
             {
-                string newFilterBaseTytle = $"New Filter {++newFilterStartNumber}";
+                string newFilterBaseTytle = $"New filter {++newFilterStartNumber}";
                 Filter newFilter = CreateFilterCommandMethod(newFilterBaseTytle);
 
                 var newConditionFilterCreationItem = new ConditionFilterCreatingItem((ConditionFilter)newFilter, EditFilterCriterion);

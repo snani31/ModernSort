@@ -785,7 +785,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RankingEntityes\RankingEntityes.csproj" />
+    <Reference Include="RankingEntityes">
+      <HintPath>..\RankingEntityes\bin\Debug\net9.0\RankingEntityes.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

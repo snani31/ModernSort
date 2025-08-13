@@ -1,6 +1,5 @@
 ﻿using ModernSort.Commands;
 using System.Windows.Input;
-using System.Windows;
 using RankingEntityes.Ranking_Entityes.Ranking_Categories;
 using System.Collections.ObjectModel;
 using ModernSort.ViewModel.Items;
@@ -24,7 +23,7 @@ namespace ModernSort.ViewModel
         private OperationService OperationService { get; init; }
         private OutputContentService ContentService { get; init; }
 
-        private UIThemeService ThemeService { get; init; }
+        private IApplicationThemeService ApplicationThemeService { get; init; }
 
         private CatalogStore CatalogStore { get; init; }
 
@@ -40,14 +39,13 @@ namespace ModernSort.ViewModel
             } 
         }
 
-        public MeinWindowViewModel(OutputContentService outputContentService,OperationService operationService, 
-            CatalogStore catalogService,IDialogService dialogService,UIThemeService themeService)
+        public MeinWindowViewModel(OutputContentService outputContentService, OperationService operationService,
+            CatalogStore catalogService, IDialogService dialogService, IApplicationThemeService applicationThemeService)
         {
             DialogService = dialogService;
             CatalogStore = catalogService;
             OperationService = operationService;
             ContentService = outputContentService;
-            ThemeService = themeService;
 
             OpenEditRankingWindow = new RelayCommand(OpenEditRankingCategoryWindow);
             OpenNewRankingWindow = new RelayCommand(GetOpenNewRankingWindow);
@@ -55,19 +53,19 @@ namespace ModernSort.ViewModel
 
             _rankingCategories = ContentService.GetUnloadedRankingCategories();
 
+            ApplicationThemeService = applicationThemeService;
             ChangeUITheme = new RelayCommand(
                 (p) =>
                 {
-                    ThemeService.ChangeTheme();
+                    ApplicationThemeService.SwitchApplicationthemeState();
                 }
                 );
 
             CloseApplication = new RelayCommand(
-                (a) => 
+                (a) =>
                 {
-                   Environment.Exit(0);
+                    Environment.Exit(0);
                 });
-
         }
 
         private void GetOpenNewRankingWindow(object? parameter)
@@ -108,10 +106,7 @@ namespace ModernSort.ViewModel
                 var selectedRankingCategoryViewModel = new SelectedRankingCategoryViewModel(ContentService,CatalogStore,OperationService,
                     selectedCategory, DialogService);
 
-                if (DialogService.ShowDialog(selectedRankingCategoryViewModel) ?? false)
-                {
-                    MessageBox.Show("adasd");
-                }
+                DialogService.ShowDialog(selectedRankingCategoryViewModel);
             }
            
         }

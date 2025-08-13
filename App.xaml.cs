@@ -1,4 +1,5 @@
-﻿using ModernSort.Enums;
+﻿global using System.IO;
+using ModernSort.Enums;
 using ModernSort.Services;
 using ModernSort.Services.Dialog;
 using ModernSort.Services.Operations;
@@ -16,7 +17,6 @@ using RankingEntityes.Json.Converters;
 using RankingEntityes.Ranking_Entityes.MediaObjacts;
 using RankingEntityes.Ranking_Entityes.Ranking_Categories;
 using System;
-using System.IO;
 using System.Windows;
 
 namespace ModernSort
@@ -33,7 +33,8 @@ namespace ModernSort
         private readonly CatalogStore _catalogStore;
         private readonly OperationService _operationService ;
         private readonly OutputContentService _outputContentService;
-        private readonly UIThemeService _themeService;
+
+        private readonly IApplicationThemeService _themeServiceDemo;
 
 
         App()
@@ -83,17 +84,23 @@ namespace ModernSort
                 pathsOfRequiredFiles
                 );
 
-            _themeService = new UIThemeService(_catalogStore, UIThemes.DeepPurple, new Uri("AppResources/ApplicationThemes/DeepPurpleTheme.xaml", UriKind.Relative));
-            _themeService.ThemeRegister(UIThemes.DarkestGreen, new Uri("AppResources/ApplicationThemes/DarkestGreen.xaml", UriKind.Relative));
-            _themeService.ThemeRegister(UIThemes.Pinapple, new Uri("AppResources/ApplicationThemes/PinappleTheme.xaml", UriKind.Relative));
-            _themeService.ThemeRegister(UIThemes.SeeRed, new Uri("AppResources/ApplicationThemes/SeeRed.xaml", UriKind.Relative));
+
+            var existingApplicationThemeStatesList = new List<IApplicationThemeState>()
+            {
+                new DeepPurpleApplicationThemeState(),
+                new DarkestGreenApplicationThemeState(),
+                new PinappleApplicationThemeState(),
+                new SeeRedApplicationThemeState()
+            };
+
+            _themeServiceDemo = new ApplicationThemeService(_catalogStore.SelectedUIThemeFilePath, existingApplicationThemeStatesList);
 
 
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _themeService.SetApplicationThemeToSelected();
+            _themeServiceDemo.SetSelectedApplicationTheme();
 
             MainWindow = new MainWindow();
 
@@ -106,7 +113,7 @@ namespace ModernSort
             _dialogService.Register<CreateFilterCriterionViewModel, CreateFilterCriterionWindowView>();
             _dialogService.Register<EditFilterCriterionViewModel, EditFilterCriterionWindowView>();
 
-            var a = new MeinWindowViewModel(_outputContentService, _operationService, _catalogStore, _dialogService,_themeService);
+            var a = new MeinWindowViewModel(_outputContentService, _operationService, _catalogStore, _dialogService,_themeServiceDemo);
 
             MainWindow.DataContext = a;
 
